@@ -68,8 +68,9 @@
 | out/clone_test_2.wav(银行/行长/很行) | 6.7s | 13.1s | -21.5dB | **逐字全对,三处"行"多音字全正确** ✅ |
 | out/clone_test_3.wav(差强人意/差距) | 5.4s | 11.9s | -21.6dB | "差强人意"听成"差强争议"(该成语本身高频易错,人耳待判) |
 
-- **显存峰值 3.62GB,无 OOM**(预期 4-5GB,12GB 卡大富余)✅
-- 每句 12-13s(5-7s 语音)≈ RTF 2.2,批量配音吞吐可接受;引擎调用方式已回写 `src/boke/synthesize.py`(CosyVoiceEngine),流水线 `--tts-engine cosyvoice3` 直接可用
+- **显存峰值 3.62GB(cross)/ 5.03GB(zero),无 OOM**(预期 4-5GB,12GB 卡大富余)✅
+- **A/B 对照已备好**:同一参考音两种模式各出 3 句——`out/clone_test_1/2/3.wav`(cross 无文本)vs `out/clone_test_1/2/3_zero.wav`(zero_shot + whisper small 转写稿)。**预判 cross 更像**:whisper small 转写有明显错误(参考段讲"贫困线",被转成"LSLINE/愛丽思线"等),zero_shot 的参考文本"必须严格一致"不满足,相似度应受损——正好验证任务书"参考段无逐字稿就用无文本模式"的分支
+- 每句 12-17s(5-7s 语音)≈ RTF 2-3;引擎调用方式已回写 `src/boke/synthesize.py`(CosyVoiceEngine),流水线 `--tts-engine cosyvoice3` 直接可用
 
 ### T6 本汇报 ✅
 
@@ -92,7 +93,7 @@
 1. **导出 B 站 cookie(10 秒,解锁专属下载)**:Edge 装 [Get cookies.txt LOCALLY] 扩展 → 打开 bilibili.com 已登录页 → 导出 → 存为 `work/cookies_full.txt`。之后跑 `work/tools/download_batch.py`(需把 PLAN 改成专属 BV 列表 + cookie 参数换新文件)即可批量下 39 个专属
 2. **HF 页面点接受(10 秒,解锁真实声纹分人)**:登录 allanpk716 访问 https://huggingface.co/pyannote/speaker-diarization-community-1 点 Agree(token 已在 `~/.cache/huggingface/token`,无需新建)→ 重跑 `--stage diarize`(删掉 work 里旧 diar.rttm)即可换真
 3. **参考音抽听(1 分钟)**:`refs/yuanlian_chinese_01.wav` 和 `_02.wav`,确认是圆脸本人、无音乐垫底(我是用频谱图核验的,没耳朵)
-4. **克隆试合成 A/B 试听**:`out/clone_test_1/2/3.wav`,判断像不像圆脸;顺便听多音字(重庆/银行/差强人意)读对没
+4. **克隆试合成 A/B 试听**:`out/clone_test_1/2/3.wav`(无文本模式)vs `out/clone_test_1/2/3_zero.wav`(带转写稿模式),判断哪组更像圆脸;顺便听多音字(重庆/银行/差强人意)读对没
 5. **归人准确率抽检(05 分钟,真实 diarization 之后才有意义)**:抽 `work/smoke_*/review.csv` 或 tagged.srt 20 句对原片核
 
 ## 卡点与已试办法(备查)
