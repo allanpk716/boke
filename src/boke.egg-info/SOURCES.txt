@@ -1,0 +1,17 @@
+README.md
+pyproject.toml
+src/boke/__init__.py
+src/boke/align_mix.py
+src/boke/attribute.py
+src/boke/common.py
+src/boke/diarize.py
+src/boke/extract_audio.py
+src/boke/ocr_subtitles.py
+src/boke/pipeline.py
+src/boke/synthesize.py
+src/boke.egg-info/PKG-INFO
+src/boke.egg-info/SOURCES.txt
+src/boke.egg-info/dependency_links.txt
+src/boke.egg-info/requires.txt
+src/boke.egg-info/top_level.txt
+tests/test_attribute.py

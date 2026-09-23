@@ -1,0 +1,27 @@
+# 媒体大文件不入库（存 D:\boke_media）
+in/
+work/
+out/
+refs/
+*.mp4
+*.mkv
+*.flv
+*.m4a
+*.mp3
+*.wav
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 模型权重
+*.ckpt
+*.pt
+*.onnx
+models/
+
+# 其他
+Thumbs.db
+Desktop.ini

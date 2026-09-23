@@ -1,0 +1,35 @@
+# voices.yaml —— 全局音色库 + 每期映射 (骨架,照 01 §5)
+# 人工指认环节(E1)后填 episode_map
+
+global:
+  # CosyVoice3 克隆引擎参数(synthesize.py 用)
+  cosyvoice_repo: D:/boke_media/tools/CosyVoice
+  cosyvoice_model: D:/boke_media/models/Fun-CosyVoice3-0.5B-2512
+  edge_fallback_voice: zh-CN-YunxiNeural
+
+library:
+  # 博主本人:中文参考音(同语言克隆,最优档)
+  yuanlian_chinese:
+    type: clone
+    engine: cosyvoice3
+    ref_audio: refs/yuanlian_chinese_01.wav   # T2 产物
+    ref_text: ""          # 参考文本:与参考音频严格一致;空=需 ASR 转写或无文本模式
+    note: "波士顿圆脸本人,中文日常视频提取"
+
+  # 预设音色兜底(克隆不过关/未知说话人)
+  preset_male_01:
+    type: preset
+    engine: edge
+    voice: zh-CN-YunxiNeural
+    note: "男声预设"
+  preset_female_01:
+    type: preset
+    engine: edge
+    voice: zh-CN-XiaoxiaoNeural
+    note: "女声预设"
+
+episode_map:
+  # file: smoke_BV17UPszhE6o.mp4   # 冒烟用,人工指认后填 map
+  map:
+    SPK_00: { voice: preset_male_01, who: 待指认 }
+    SPK_01: { voice: preset_female_01, who: 待指认 }
