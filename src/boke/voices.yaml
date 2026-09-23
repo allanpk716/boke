@@ -9,12 +9,14 @@ global:
 
 library:
   # 博主本人:中文参考音(同语言克隆,最优档)
+  # ref_text 为空 → synthesize 自动走 cross_lingual 无文本模式(夜班实测可用)
+  # 有逐字稿填入 → zero_shot 模式(效果更优,标记由引擎自动加)
   yuanlian_chinese:
     type: clone
     engine: cosyvoice3
-    ref_audio: refs/yuanlian_chinese_01.wav   # T2 产物
-    ref_text: ""          # 参考文本:与参考音频严格一致;空=需 ASR 转写或无文本模式
-    note: "波士顿圆脸本人,中文日常视频提取"
+    ref_audio: refs/yuanlian_chinese_01.wav
+    ref_text: ""          # 参考段无逐字稿;需要时填 refs/ref01_transcript.txt 内容
+    note: "波士顿圆脸本人,斩杀线视频 728.7~753.7s,频谱核验纯人声"
 
   # 预设音色兜底(克隆不过关/未知说话人)
   preset_male_01:

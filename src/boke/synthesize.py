@@ -64,37 +64,46 @@ def synth_edge(text: str, out: Path, voice: str = None, retries=3):
 # ---------------- cosyvoice3 克隆 ----------------
 
 class CosyVoiceEngine:
-    """CosyVoice3 零样本克隆。repo 路径与模型目录来自 voices.yaml global 段。"""
+    """CosyVoice3 零样本克隆(repo/模型路径来自 voices.yaml global 段)。
 
-    def __init__(self, repo_dir: str, model_dir: str, device="cuda"):
+    实测可用调用(2026-09-23 夜班验证):
+      model = CosyVoice3(model_dir, load_trt=False, load_vllm=False, fp16=False)
+      # 无参考逐字稿时:cross_lingual + tts_text 头部加 <|endofprompt|> 标记
+      it = model.inference_cross_lingual(f"<|endofprompt|>{text}", ref_path)
+      # 有逐字稿时(zero_shot 更优):
+      it = model.inference_zero_shot(text, "You are a helpful assistant.<|endofprompt|>"
+                                     + ref_transcript, ref_path)
+    注意 prompt_wav 接收路径字符串;cross_lingual 直接裸调会触发
+    '<|endofprompt|> not detected' 断言(标记必须在文本里)。
+    """
+
+    MARKER = "<|endofprompt|>"
+    SYS = "You are a helpful assistant."
+
+    def __init__(self, repo_dir: str, model_dir: str, device=None):
         import sys
         repo = Path(repo_dir)
         for sub in (repo, repo / "third_party" / "Matcha-TTS"):
             s = str(sub)
             if s not in sys.path:
                 sys.path.insert(0, s)
-        import torch
-        from cosyvoice.cli.cosyvoice import CosyVoice3  # noqa: F401
+        from cosyvoice.cli.cosyvoice import CosyVoice3
 
-        self.torch = torch
-        self.device = device if torch.cuda.is_available() else "cpu"
-        self.model = CosyVoice3(model_dir, load_jit=False, load_trt=False,
-                                load_vllm=False, device=self.device)
+        self.model = CosyVoice3(str(model_dir), load_trt=False,
+                                load_vllm=False, fp16=False)
         self.sr = getattr(self.model, "sample_rate", TTS_SR)
 
-    def zero_shot(self, text: str, prompt_text: str, ref_wav: Path, out: Path):
-        import torchaudio
-        ref, sr = torchaudio.load(str(ref_wav))
-        if sr != 16000:
-            ref = torchaudio.functional.resample(ref, sr, 16000)
-        res = next(self.model.inference_zero_shot(
-            text, prompt_text, ref, stream=False))
+    def synth(self, text: str, ref_wav: Path, ref_text: str, out: Path):
+        if ref_text:
+            prompt = f"{self.SYS}{self.MARKER}{ref_text}"
+            it = self.model.inference_zero_shot(text, prompt, str(ref_wav),
+                                                stream=False)
+        else:
+            it = self.model.inference_cross_lingual(
+                f"{self.MARKER}{text}", str(ref_wav), stream=False)
+        res = next(it)
         wav = res["tts_speech"].detach().cpu()
         self.save_wav(wav, out)
-
-    def torchaudio_load(self, path: Path):
-        import torchaudio
-        return torchaudio.load(str(path))
 
     def save_wav(self, wav_tensor, out: Path):
         import torchaudio
@@ -170,9 +179,9 @@ def run(video, work_dir="work", srt=None, voices_yaml=None,
                     repo_dir=global_cfg.get("cosyvoice_repo"),
                     model_dir=global_cfg.get("cosyvoice_model"))
             ref_audio = Path(kw["ref_audio"])
-            ref_text = kw.get("ref_text", "")
+            ref_text = kw.get("ref_text", "")   # 空则自动走 cross_lingual 无文本模式
             tmp = raw.with_suffix(".wav")
-            cosy.zero_shot(text, ref_text, ref_audio, tmp)
+            cosy.synth(text, ref_audio, ref_text, tmp)
             normalize_wav(tmp, out)
             tmp.unlink(missing_ok=True)
         engine_used[eng] = engine_used.get(eng, 0) + 1

@@ -21,6 +21,18 @@ def _norm(text: str) -> str:
     return "".join(text.split())
 
 
+def _clean_text(text: str) -> str:
+    """去角标杂质:剥离边缘短 ASCII 数字/字母串(保留行内合法数字),丢弃纯杂行。"""
+    import re
+    has_cjk = re.search(r"[一-鿿]", text)
+    if not has_cjk:
+        return text if re.fullmatch(r"[0-9A-Za-z.%]{6,}", text) else ""
+    # 边缘 1~5 位 ASCII 串后接中文 → 是角标污染,剥掉
+    text = re.sub(r"^[0-9A-Za-z.]{1,5}(?=[一-鿿])", "", text)
+    text = re.sub(r"(?<=[一-鿿])[0-9A-Za-z.]{1,5}$", "", text)
+    return text.strip()
+
+
 def similar(a: str, b: str) -> float:
     a, b = _norm(a), _norm(b)
     if not a or not b:
@@ -108,8 +120,10 @@ def merge_to_lines(hits, interval) -> list:
     prev_t1 = 0.0
     half = interval / 2.0
     for i, (texts, t0f, t1f) in enumerate(lines, 1):
-        # 行文本取"最长"的那次(中间帧可能有部分识别更好的)
-        text = max(texts, key=len)
+        # 行文本取"最长"的那次(中间帧可能有部分识别更好的),并净化角标杂质
+        text = _clean_text(max(texts, key=len))
+        if not text:
+            continue
         t0 = max(0.0, t0f - half)
         t1 = t1f + half
         # 单调化:不与上一行重叠

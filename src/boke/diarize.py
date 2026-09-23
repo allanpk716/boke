@@ -43,7 +43,10 @@ def run(video, work_dir="work", audio=None, mock=False, min_speakers=1,
     import torch
     from pyannote.audio import Pipeline
 
-    pl = Pipeline.from_pretrained(MODEL_ID, use_auth_token=token)
+    try:
+        pl = Pipeline.from_pretrained(MODEL_ID, token=token)          # pyannote>=3.1/4.x
+    except TypeError:
+        pl = Pipeline.from_pretrained(MODEL_ID, use_auth_token=token)  # 旧版兼容
     if torch.cuda.is_available():
         pl.to(torch.device("cuda"))
         print("[diarize] on cuda:", torch.cuda.get_device_name(0))
