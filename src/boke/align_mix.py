@@ -58,6 +58,19 @@ def plan_line(i: int, t0: float, t1: float, dur: float, next_t0, prev_end):
             "win_end": win_end, "mode": mode}
 
 
+def _trim_silence(frames: array.array, thresh=300):
+    """裁掉首尾近静音(edge-tts 每句自带 0.3~0.5s 垫,不裁则塞窗必然超速)。"""
+    n = len(frames)
+    i0, i1 = 0, n
+    while i0 < n and abs(frames[i0]) < thresh:
+        i0 += 1
+    while i1 > i0 and abs(frames[i1 - 1]) < thresh:
+        i1 -= 1
+    if i1 - i0 < 800:            # 全静音(≤33ms@24k)不裁
+        return frames, n
+    return frames[i0:i1], i1 - i0
+
+
 def build_track(manifest_lines, total_dur: float, out_wav: Path):
     """manifest 行 → 完整音轨 wav(静音垫满到 total_dur)。"""
     pcm = array.array("h")
@@ -76,39 +89,45 @@ def build_track(manifest_lines, total_dur: float, out_wav: Path):
     prev_end = 0.0
     for i, ln in enumerate(manifest_lines):
         wav_path = Path(ln["wav"])
+        frames = None
         if not wav_path.exists():
             print(f"[mix] WARN 缺 wav: {wav_path.name}, 跳过(该句静音)")
             dur = ln["t1"] - ln["t0"]
         else:
-            dur, wsr, wch = wav_info(wav_path)
-            if wsr != sr:
-                raise RuntimeError(f"{wav_path} 采样率 {wsr} != {sr},需先 normalize")
+            with wave.open(str(wav_path), "rb") as w:
+                if w.getframerate() != sr or w.getnchannels() != 1:
+                    raise RuntimeError(f"{wav_path} 不是 {sr}Hz mono,需先 normalize")
+                raw = array.array("h", w.readframes(w.getnframes()))
+            frames, _n = _trim_silence(raw)
+            dur = len(frames) / sr
         nxt = manifest_lines[i + 1]["t0"] if i + 1 < len(manifest_lines) else None
         plan = plan_line(i, ln["t0"], ln["t1"], dur, nxt, prev_end)
 
-        if wav_path.exists():
-            if plan["tempo"] > 1.001:
-                tmp = wav_path.with_suffix(".tmp.wav")
-                atempo_render(wav_path, tmp, plan["tempo"])
-                src = tmp
-                dur2, _, _ = wav_info(tmp)
-            else:
-                src = wav_path
-                dur2 = dur
+        if frames is not None:
             stats[plan["mode"]] += 1
             if plan["mode"] == "atempo" and plan["tempo"] > MAX_TEMPO:
                 stats["atempo_over"] += 1
+            if plan["tempo"] > 1.001:
+                # 变速:裁边后的帧写临时 wav,ffmpeg atempo,读回
+                tmp = wav_path.with_suffix(".tmp.wav")
+                with wave.open(str(tmp), "wb") as w:
+                    w.setnchannels(1)
+                    w.setsampwidth(2)
+                    w.setframerate(sr)
+                    w.writeframes(frames.tobytes())
+                tmp2 = wav_path.with_suffix(".tmp2.wav")
+                atempo_render(tmp, tmp2, plan["tempo"])
+                with wave.open(str(tmp2), "rb") as w:
+                    frames = array.array("h", w.readframes(w.getnframes()))
+                tmp.unlink(missing_ok=True)
+                tmp2.unlink(missing_ok=True)
             # 静音垫到 place_t
             lead = plan["place_t"] - cursor
             if lead > 0.001:
                 pcm.extend(silence(lead))
-            with wave.open(str(src), "rb") as w:
-                frames = array.array("h", w.readframes(w.getnframes()))
-                pcm.extend(frames)
-            cursor = plan["place_t"] + dur2
+            pcm.extend(frames)
+            cursor = plan["place_t"] + len(frames) / sr
             prev_end = cursor
-            if plan["tempo"] > 1.001:
-                src.unlink(missing_ok=True)
 
     # 尾部垫到原视频时长
     if total_dur > 0 and cursor < total_dur:
