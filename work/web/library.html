@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>剥壳配音 · 片库(mock)</title><style>
+body{font-family:system-ui,'Microsoft YaHei';margin:0;background:#f0f2f5;color:#222}
+header{background:#1c2b3a;color:#fff;padding:12px 22px;display:flex;gap:18px;align-items:center}
+header h1{margin:0;font-size:19px}
+header .mock{background:#e8a13a;color:#333;font-size:12px;padding:2px 10px;border-radius:10px}
+header a{color:#9fc3e8;font-size:13px;margin-left:auto;text-decoration:none;margin-left:8px}
+#cookie{padding:8px 22px;font-size:13px;display:flex;gap:10px;align-items:center}
+#cookie.ok{background:#e8f6ee;color:#27764a}#cookie.bad{background:#fdecec;color:#c0392b}
+main{max-width:1280px;margin:12px auto;padding:0 14px}
+#pipe{display:flex;gap:6px;background:#fff;border-radius:10px;padding:10px 14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);flex-wrap:wrap;align-items:center}
+.pipeStep{padding:5px 13px;border-radius:16px;background:#eef1f5;font-size:13px}
+.pipeStep b{margin-left:5px}
+.pipeStep.hot{background:#2b6cb0;color:#fff}
+.pipeStep.done{background:#e8f6ee;color:#27764a}
+#bar{display:flex;gap:10px;align-items:center;background:#fff;border-radius:10px;padding:10px 14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);flex-wrap:wrap}
+#bar select,#bar input{padding:6px 9px;border:1px solid #cfd6dd;border-radius:6px;font-size:13px}
+button{background:#2b6cb0;color:#fff;border:0;border-radius:6px;padding:7px 16px;font-size:14px;cursor:pointer}
+button.ghost{background:#fff;color:#2b6cb0;border:1px solid #2b6cb0}
+button:disabled{background:#aaa}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+th{position:sticky;top:0;background:#f6f8fa;font-size:13px;color:#555;text-align:left;padding:8px 10px}
+td{padding:7px 10px;border-top:1px solid #f0f2f5;font-size:13px;vertical-align:middle}
+tr:hover td{background:#f8fafd}
+.t{max-width:520px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag{border-radius:4px;font-size:11px;padding:1px 7px;white-space:nowrap}
+.tag.ex{background:#fdecec;color:#c0392b}.tag.iv{background:#e8ecfd;color:#4356a8}
+.st-未下载{color:#98a1ab}.st-待核对{color:#2b6cb0;font-weight:600}
+.st-已交付{color:#27764a;font-weight:600}.st-已归档(参考音源),.st-已归档(备选){color:#7a848e}
+#selbar{position:fixed;bottom:0;left:0;right:0;background:#1c2b3a;color:#fff;padding:10px 24px;display:none;align-items:center;gap:16px;font-size:14px}
+#selbar.on{display:flex}
+.note{font-size:12px;color:#999}
+</style></head><body>
+<header><h1>剥壳配音 · 片库</h1><span class="mock">MOCK · 勾选/筛选可用,下载动作为占位</span>
+<a href="/review.html">核对台 →</a><a href="/">试听台</a></header>
+<div id="cookie" class="ok">🍪 B 站登录:有效(上次校验 10:27) · 专属视频可下全片 · <span class="note">约 30 天过期,过期时此处变红并暂停导入</span></div>
+<main>
+<div id="pipe"></div>
+<div id="bar">
+  <b style="font-size:14px">播主:波士顿圆脸</b>
+  <span class="note">共 2113 个视频 · 已拉取 300(风控限制,带 cookie 可全量)</span>
+  <select id="fKind"><option value="all">全部</option><option value="ex">仅充电专属</option><option value="iv">仅采访类</option><option value="dl">未下载</option></select>
+  <input id="fText" placeholder="搜标题/BV" size="14">
+  <button class="ghost" onclick="alert('Mock:重新拉取播主清单(需 cookie)')">↻ 刷新清单</button>
+  <button class="ghost" onclick="alert('Mock:粘贴 BV 号/链接单个导入')">＋ BV 号导入</button>
+</div>
+<table><thead><tr><th><input type="checkbox" onclick="toggleAll(this)"></th><th>BV</th><th>标题</th><th>时长</th><th>日期</th><th>标记</th><th>状态</th></tr></thead>
+<tbody id="rows"></tbody></table>
+</main>
+<div id="selbar"><span id="selInfo"></span><button onclick="fakeDl()">⬇ 下载所选(进入待分析)</button><span class="note">mock:正式版走 yt-dlp 队列,cookie 失效自动挂红条</span><button class="ghost" style="background:transparent;color:#fff;border-color:#fff" onclick="clearSel()">取消选择</button></div>
+<script>
+const ST_ORDER=["未下载","待下载","待分析","待核对","小样待听","已交付","已排除","失败"];
+let LIB=[];
+fetch('lib_data.json').then(r=>r.json()).then(d=>{LIB=d;render();});
+function esc(s){return s.replace(/</g,"&lt;")}
+function render(){
+ const kind=document.getElementById("fKind").value,q=document.getElementById("fText").value.trim();
+ const rows=LIB.filter(v=>(kind==="all"||(kind==="ex"&&v.ex)||(kind==="iv"&&v.interview)||(kind==="dl"&&v.st==="未下载"))
+   &&(!q||v.t.includes(q)||v.bv.includes(q.toUpperCase())));
+ document.getElementById("rows").innerHTML=rows.map((v,i)=>`<tr>
+  <td>${v.st==="未下载"?`<input type="checkbox" class="ck" data-bv="${v.bv}" data-len="${v.len}" onchange="selCount()">`:""}</td>
+  <td class="note">${v.bv}</td><td class="t" title="${esc(v.t)}">${esc(v.t)}</td>
+  <td>${v.len}</td><td class="note">${v.date}</td>
+  <td>${v.ex?'<span class="tag ex">专属</span>':""}${v.interview?'<span class="tag iv">采访</span>':""}</td>
+  <td class="st-${v.st.split("(")[0]}">${v.st}</td></tr>`).join("");
+ const c={};LIB.forEach(v=>c[v.st]=(c[v.st]||0)+1);c["未下载"]=(c["未下载"]||0);
+ const pipe=[["待下载",c["待下载"]||0],["待分析",c["待分析"]||0],["待核对",c["待核对"]||0],["小样待听",c["小样待听"]||0],["已交付",c["已交付"]||0],["已排除",c["已排除"]||0]];
+ document.getElementById("pipe").innerHTML="<b style='font-size:13px;margin-right:6px'>流水管道</b>"+
+  pipe.map(([n,k])=>`<div class="pipeStep ${k?"hot":""}">${n}<b>${k}</b></div>`).join("")+
+  `<span class="note">→ 点"核对台"处理"待核对"</span>`;
+ document.getElementById("fText").oninput=document.getElementById("fKind").onchange=render;}
+function toggleAll(m){document.querySelectorAll(".ck").forEach(c=>c.checked=m.checked);selCount();}
+function selCount(){const cks=[...document.querySelectorAll(".ck:checked")];const bar=document.getElementById("selbar");
+ bar.classList.toggle("on",cks.length>0);
+ const mins=cks.reduce((a,c)=>{const p=c.dataset.len.split(":").map(Number);return a+p.reduce((x,y)=>x*60+y,0)},0);
+ document.getElementById("selInfo").textContent=`已选 ${cks.length} 个 · 约 ${Math.round(mins)} 分钟 · 预计 ${Math.round(mins*0.09)}GB`;}
+function clearSel(){document.querySelectorAll(".ck").forEach(c=>c.checked=false);selCount();}
+function fakeDl(){const cks=[...document.querySelectorAll(".ck:checked")];
+ cks.forEach(c=>{const v=LIB.find(x=>x.bv===c.dataset.bv);if(v)v.st="待下载";});
+ clearSel();render();alert(`Mock:${cks.length} 个已加入下载队列。\n正式版:yt-dlp 逐个下载→自动跑分析(OCR/分人/语言)→状态推进到"待核对",核对台里出现新卡片`);}
+render();
+</script></body></html>
