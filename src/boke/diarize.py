@@ -20,6 +20,19 @@ def hf_token() -> str:
     return os.environ.get("HF_TOKEN", "")
 
 
+def emb_artifacts(wdir) -> dict:
+    """票01:声纹落盘产物登记(沿用产物清单惯例:路径 dict)。
+
+    两件都在才登记;mock/桩/无 embeddings 的分 P 文件不存在 → 空 dict,
+    下游以"文件不存在"判定该分 P 无声纹建议(优雅缺省,不报错)。
+    """
+    wdir = Path(wdir)
+    npy, js = wdir / "spk_emb.npy", wdir / "spk_emb.json"
+    if npy.exists() and js.exists():
+        return {"spk_emb": str(npy), "spk_emb_json": str(js)}
+    return {}
+
+
 def run(video, work_dir="work", audio=None, mock=False, min_speakers=1,
         max_speakers=6, force=False) -> dict:
     vid = Path(video).stem
@@ -61,7 +74,8 @@ def run(video, work_dir="work", audio=None, mock=False, min_speakers=1,
     segs = parse_rttm(rttm)
     speakers = sorted({s.spk for s in segs})
     print(f"[diarize] {len(segs)} segments(合并后), speakers: {speakers}")
-    return {"rttm": str(rttm), "n_seg": len(segs), "speakers": speakers}
+    return {"rttm": str(rttm), "n_seg": len(segs), "speakers": speakers,
+            **emb_artifacts(wdir)}
 
 
 def _diarize_inproc(audio, rttm, token, min_speakers, max_speakers):
