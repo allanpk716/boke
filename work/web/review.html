@@ -10,7 +10,8 @@ main{max-width:1280px;margin:14px auto;padding:0 14px;display:flex;gap:14px;alig
 #eps{width:250px;background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 #eps .ep{padding:9px 10px;border-radius:8px;cursor:pointer;font-size:14px;margin-bottom:6px;border:1px solid #e3e6ea}
 #eps .ep.on{background:#e8f0fe;border-color:#2b6cb0;font-weight:600}
-#eps .ep small{display:block;color:#888;font-weight:400;font-size:12px}
+#eps .ep .epTitle{font-size:13px;line-height:1.35;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#eps .ep small{display:block;color:#888;font-weight:400;font-size:11px;margin-top:3px}
 #stage{flex:1;display:flex;flex-direction:column;gap:12px;min-width:0}
 #playerCard{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 #playerCard video{width:100%;max-height:420px;background:#000;border-radius:6px}
@@ -103,14 +104,14 @@ const PRESETS = [["zh-CN-YunjianNeural","云健·男沉稳"],["zh-CN-YunxiNeural
 ["zh-CN-liaoning-XiaobeiNeural","小北·女东北"],["zh-TW-HsiaoChenNeural","曉臻·女台湾"],["zh-HK-HiuMaanNeural","曉曼·女粤语"]];
 
 const DATA = [
- {ep:"北爱威尔士脱英 26-09-19", bvid:"BV1SGem6uEU9", parts:[
+ {ep:"北爱威尔士苏格兰想要脱英,跟中国台湾可不是一回事", short:"北爱威尔士脱英", date:"26-09-19", bvid:"BV1SGem6uEU9", parts:[
   {p:"P1", video:"/media/BV1SGem6uEU9_P1.mp4", verdict:"dub", note:"两位说话人均为英语 → 建议配音", spks:[
     {id:"SPK_00",lang:"en",talk:"20.3分钟",sample:"speaker_BV1SGem6uEU9_P1_SPK_00_sample.wav",who:"",host:false,merge:"",voice:"clone"},
     {id:"SPK_01",lang:"en",talk:"1.9分钟",sample:"speaker_BV1SGem6uEU9_P1_SPK_01_sample.wav",who:"",host:false,merge:"",voice:"clone"}]},
   {p:"P2", video:"/media/BV1SGem6uEU9_P2.mp4", verdict:"skip", note:"两位说话人均为中文 → 建议跳过(解说部分)", spks:[
     {id:"SPK_00",lang:"zh",talk:"1.3分钟",sample:"speaker_BV1SGem6uEU9_P2_SPK_00_sample.wav",who:"",host:false,merge:"",voice:"preset"},
     {id:"SPK_01",lang:"zh",talk:"17.1分钟",sample:"speaker_BV1SGem6uEU9_P2_SPK_01_sample.wav",who:"",host:false,merge:"",voice:"preset"}]}]},
- {ep:"剥壳嘉宾中国行 26-09-15", bvid:"BV1gpeJ6fEAk", parts:[
+ {ep:"剥壳嘉宾中国行:高市是个纯外行,我们也很难绷", short:"嘉宾中国行", date:"26-09-15", bvid:"BV1gpeJ6fEAk", parts:[
   {p:"P1", video:"/media/BV1gpeJ6fEAk_P1.mp4", verdict:"dub", note:"四人日语场(圆脸疑似未出镜)→ 建议配音;SPK_03 疑似分身", spks:[
     {id:"SPK_00",lang:"ja",talk:"8.9分钟",sample:"speaker_BV1gpeJ6fEAk_P1_SPK_00_sample.wav",who:"",host:false,merge:"",voice:"clone"},
     {id:"SPK_01",lang:"ja",talk:"10.5分钟",sample:"speaker_BV1gpeJ6fEAk_P1_SPK_01_sample.wav",who:"",host:false,merge:"",voice:"clone",warn:"机器曾误判中文,用户耳朵已纠正"},
@@ -121,7 +122,7 @@ const DATA = [
     {id:"SPK_01",lang:"zh",talk:"11.4分钟",sample:"speaker_BV1gpeJ6fEAk_P2_SPK_01_sample.wav",who:"",host:false,merge:"",voice:"preset"},
     {id:"SPK_02",lang:"zh",talk:"8.3分钟",sample:"speaker_BV1gpeJ6fEAk_P2_SPK_02_sample.wav",who:"",host:false,merge:"",voice:"preset"},
     {id:"SPK_03",lang:"zh",talk:"2.9分钟",sample:"speaker_BV1gpeJ6fEAk_P2_SPK_03_sample.wav",who:"",host:false,merge:"",voice:"preset"}]}]},
- {ep:"圆脸X小外 伊朗锐评(v2已完成)", bvid:"BV17UPszhE6o", parts:[
+ {ep:"圆脸X小外:伊朗人在线锐评美以入侵?", short:"圆脸X小外", date:"26-01-16", bvid:"BV17UPszhE6o", parts:[
   {p:"全片", video:"/media/BV17UPszhE6o_full.mp4", verdict:"dub", note:"v2 已出片(SPK_00=圆脸克隆/SPK_01=云健),此处展示已核对状态", spks:[
     {id:"SPK_00",lang:"zh",talk:"13.1分钟",sample:"speaker_SPK_00_sample.wav",who:"圆脸",host:true,merge:"",voice:"clone"},
     {id:"SPK_01",lang:"en",talk:"25.2分钟",sample:"speaker_SPK_01_sample.wav",who:"小外",host:false,merge:"",voice:"preset"}]}]}
@@ -132,7 +133,7 @@ function langTag(l){const m={zh:["zh","中文"],en:["en","英语"],ja:["ja","日
 
 function renderEps(){const box=document.getElementById("eps");box.innerHTML="";
  DATA.forEach((e,i)=>{const d=document.createElement("div");d.className="ep"+(i===curEp?" on":"");
-  d.innerHTML=`${e.ep}<small>${e.bvid} · ${e.parts.map(p=>p.p).join("/")}</small>`;
+  d.innerHTML=`<div class="epTitle">${e.ep}</div><small>${e.date} · ${e.bvid} · ${e.parts.map(p=>p.p).join("/")}</small>`;
   d.onclick=()=>{curEp=i;curPart=0;renderAll()};box.appendChild(d)});}
 
 function renderPart(){const e=DATA[curEp],p=e.parts[curPart];
@@ -251,7 +252,7 @@ function confirmLibSave(){if(!libCtx)return;const {e,p,s}=libCtx;
  else{person=PERSONS.find(x=>x.name===document.getElementById("mExist").value)||PERSONS[0];
   person.lang=lang;
   if(note&&!(person.note||"").includes(note))person.note=(person.note?person.note+" · ":"")+note;}
- person.refs.push([pick[0],`收录自 ${e.ep.split(" ")[0]} ${p.p} · ${s.id} · ${pick[1]}`]);
+ person.refs.push([pick[0],`收录自 ${e.short} ${p.p} · ${s.id} · ${pick[1]}`]);
  renderPersons();closeLibModal();
  document.getElementById("status").textContent=`✅ 已存入人物「${person.name}」`;}
 
