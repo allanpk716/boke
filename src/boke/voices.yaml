@@ -19,6 +19,11 @@ library:
     note: "波士顿圆脸本人,斩杀线视频 728.7~753.7s,频谱核验纯人声;转写=whisper small(个别专名有误,用户验收过效果)"
 
   # 预设音色兜底(克隆不过关/未知说话人)
+  preset_male_calm:
+    type: preset
+    engine: edge
+    voice: zh-CN-YunjianNeural
+    note: "男声·沉稳(嘉宾默认,待用户试听台指认替换)"
   preset_male_01:
     type: preset
     engine: edge
@@ -30,8 +35,14 @@ library:
     voice: zh-CN-XiaoxiaoNeural
     note: "女声预设"
 
-episode_map:
-  # file: smoke_BV17UPszhE6o.mp4   # 冒烟用,人工指认后填 map
-  map:
-    SPK_00: { voice: preset_male_01, who: 待指认 }
-    SPK_01: { voice: preset_female_01, who: 待指认 }
+# 每期一条:file 为文件名匹配子串(首个命中生效);用户试听台指认后回填
+episode_maps:
+  - file: BV17UPszhE6o
+    map:
+      SPK_00: { voice: yuanlian_chinese, who: 波士顿圆脸(主持) }   # 用户确认: SPK_00=圆脸 13.1min
+      SPK_01: { voice: preset_male_calm, who: 小外(嘉宾,英文原声) }  # 25.2min,预设男声草稿,待指认
+  - file: DEFAULT
+    map:
+      SPK_00: { voice: yuanlian_chinese, who: 待指认 }
+      SPK_01: { voice: preset_male_calm, who: 待指认 }
+      SPK_02: { voice: preset_female_01, who: 待指认 }

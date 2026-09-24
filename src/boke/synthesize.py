@@ -166,7 +166,16 @@ def run(video, work_dir="work", srt=None, voices_yaml=None,
     cfg = yaml.safe_load(Path(voices_yaml).read_text(encoding="utf-8")) \
         if voices_yaml and Path(voices_yaml).exists() else {}
     lib = cfg.get("library", {})
-    ep_map = (cfg.get("episode_map", {}) or {}).get("map", {})
+    vid = Path(video).stem
+    ep_map = {}
+    for em in cfg.get("episode_maps", []):
+        if em.get("file") and em["file"] in vid:
+            ep_map = em.get("map", {})
+            break
+    else:
+        # 兼容旧单条格式
+        if "map" in cfg.get("episode_map", {}):
+            ep_map = cfg["episode_map"]["map"]
 
     subs = parse_srt(srt or wdir / "tagged.srt")
     units = merge_units(subs)   # v2: 碎字幕条合并成整句合成单元
