@@ -59,6 +59,23 @@ def main(stem: str) -> int:
     import whisper
     model = whisper.load_model("small")
 
+    # 候选语言强制转写比 avg_logprob(比 detect_language 可靠:
+    # 实测 detect 在日/中之间翻车,用户耳朵纠错过 SPK_01)
+    CANDS = ["zh", "ja", "en", "ko"]
+
+    def lang_scores(wav_path: str) -> dict:
+        aud = whisper.pad_or_trim(whisper.load_audio(wav_path))
+        mel = whisper.log_mel_spectrogram(
+            aud, n_mels=getattr(model.dims, "n_mels", 80)).to(model.device)
+        out = {}
+        for lg in CANDS:
+            opts = dict(language=lg, temperature=0.0, beam_size=1)
+            r = model.transcribe(wav_path, **opts)
+            segs = r.get("segments") or []
+            lp = [s["avg_logprob"] for s in segs if s.get("avg_logprob") is not None]
+            out[lg] = round(sum(lp) / max(1, len(lp)), 3)
+        return out
+
     per_speaker = {}
     for spk, spans in picks.items():
         votes = defaultdict(float)
@@ -72,18 +89,15 @@ def main(stem: str) -> int:
                 capture_output=True)
             if r.returncode != 0:
                 continue
-            aud = whisper.pad_or_trim(whisper.load_audio(tmp))
-            mel = whisper.log_mel_spectrogram(
-                aud, n_mels=getattr(model.dims, "n_mels", 80))
-            _, probs = model.detect_language(mel.to(model.device))
-            top = max(probs, key=probs.get)
-            votes[top] += probs[top] * (t1 - t0)   # 按时长加权
+            sc = lang_scores(tmp)
+            top = max(sc, key=sc.get)
+            votes[top] += (t1 - t0)   # 按时长投票
             Path(tmp).unlink(missing_ok=True)
         lang = max(votes, key=votes.get) if votes else "unknown"
         zh_ratio = votes.get("zh", 0) / max(1e-9, sum(votes.values()))
         per_speaker[spk] = {"lang": lang, "zh_ratio": round(zh_ratio, 3),
                             "votes": {k: round(v, 2) for k, v in votes.items()}}
-        print(f"[langid] {spk}: {lang} (zh占比 {zh_ratio:.0%})")
+        print(f"[langid] {spk}: {lang} (zh占比 {zh_ratio:.0%}) votes={dict(votes)}")
 
     all_zh = all(v["zh_ratio"] >= ZH_TH for v in per_speaker.values())
     verdict = "skip_全中文无需配音" if all_zh else "dub_需要配音"
