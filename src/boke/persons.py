@@ -8,6 +8,16 @@
   bvid, part, spk}(episode 时),manual 为手动上传/精选素材。
 - 主持人挂接校验 check_host_attach:必须存在"参考音+配套转写稿"齐备的 ref,
   且该 ref 来源分P ≠ 当前分P(防绕 D4);不满足返回逐条缺项,不静默降级。
+  仅作用于克隆用途条目:use="voiceid"(声纹归档样本,无转写稿)不参与校验。
+- 参考音用途 refs[].use(票03 契约扩展,向后兼容):clone(克隆素材,缺省)
+  | voiceid(自动归档声纹样本,path 指向样本切片);旧条目/未写字段读侧一律
+  缺省补齐 clone,写侧不回改旧文件除非显式保存。
+- 只读枚举 list_refs / iter_ref_paths 按用途过滤(克隆选音默认只列 clone,
+  自动归档样本不混入选音界面)。
+- 删除接口 remove_ref / remove_person:删库内条目并返回级联清单,本模块不直接
+  碰 persons_emb.json / 样本文件:cache_keys=全部被删条目的 {person, ref_path}
+  (向量缓存按 ref_path 关联,调用方逐条清);ref_paths_to_delete=仅 use=voiceid
+  条目的样本文件路径(clone 手动上传只清缓存,不删用户原文件)。
 - 初始化:库为空时幂等种子——圆脸(refs/yuanlian_chinese_01/02 + ref01_transcript.txt)
   + 小外(work/web/audio/guest_ref_english.wav,无转写稿,cross 用)。
   种子路径默认相对仓库根,构造参数 refs_dir / web_audio_dir 可覆盖(测试用 tmp_path)。
@@ -21,6 +31,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]          # 仓库根(种子相对路径基准)
 DEFAULT_PERSONS_PATH = ROOT / "work" / "persons.json"
+
+_VALID_USE = ("clone", "voiceid")
+
+
+def _norm_use(use, default="clone"):
+    """用途口径归一:None/空 → default;非法取值抛 ValueError。"""
+    if use is None or use == "":
+        return default
+    if use not in _VALID_USE:
+        raise ValueError(f"非法参考音用途:{use!r}(可选 {'|'.join(_VALID_USE)})")
+    return use
 
 
 def _norm_part(p):
@@ -42,8 +63,9 @@ def check_host_attach(person: dict, current_part_p):
     """主持人挂接校验(纯函数)。返回 (ok, problems);ok=False 时 problems
     逐条明示缺项:缺哪条参考音的转写稿 / 哪条参考音来自当前分P。
 
-    通过条件:存在一条 ref 满足 audio+transcript 齐备,且
+    通过条件:存在一条克隆用途(use 缺省/clone)ref 满足 audio+transcript 齐备,且
     非(source.kind=="episode" 且 source.part==当前分P)。
+    use="voiceid" 条目为声纹归档样本,无转写稿,不参与校验也不报缺项。
     """
     person = person or {}
     name = person.get("name", "?")
@@ -52,8 +74,12 @@ def check_host_attach(person: dict, current_part_p):
         return False, [f"人物[{name}]无任何参考音,无法挂接主持人"]
     cur = _norm_part(current_part_p)
     problems, seen = [], set()
+    saw_clone = False
     for i, ref in enumerate(refs):
         ref = ref or {}
+        if (ref.get("use") or "clone") == "voiceid":
+            continue  # 声纹归档样本不参与克隆挂接校验
+        saw_clone = True
         audio = (ref.get("audio") or "").strip()
         transcript = (ref.get("transcript") or "").strip()
         label = Path(audio).name if audio else f"refs[{i}]"
@@ -71,6 +97,9 @@ def check_host_attach(person: dict, current_part_p):
         if msg not in seen:
             seen.add(msg)
             problems.append(msg)
+    if not saw_clone and not problems:
+        return False, [f"人物[{name}]仅有声纹归档样本(use=voiceid),"
+                       f"无克隆用途参考音,无法挂接主持人"]
     return False, problems
 
 
@@ -98,6 +127,11 @@ class PersonLibrary:
             raise RuntimeError(f"人物库文件损坏:{self.path}({e})") from e
         if not isinstance(data, dict) or not isinstance(data.get("persons"), list):
             raise RuntimeError(f"人物库文件结构异常:{self.path}")
+        # 读侧缺省补齐:旧条目无 use 字段 → clone(仅内存;不落盘回改旧文件)
+        for person in data["persons"]:
+            for ref in (person or {}).get("refs") or []:
+                if isinstance(ref, dict):
+                    ref.setdefault("use", "clone")
         return data
 
     def _save(self):
@@ -127,16 +161,19 @@ class PersonLibrary:
                      "参考音精选自公开中文视频,出处见 refs/README.md。",
              "refs": [
                  {"audio": self._store_path(self.refs_dir / "yuanlian_chinese_01.wav"),
-                  "transcript": t1, "lang": "zh", "source": {"kind": "manual"}},
+                  "transcript": t1, "lang": "zh",
+                  "source": {"kind": "manual"}, "use": "clone"},
                  # _02 同:暂与 01 共用 ref01_transcript.txt(refs/ 下仅有此稿)
                  {"audio": self._store_path(self.refs_dir / "yuanlian_chinese_02.wav"),
-                  "transcript": t1, "lang": "zh", "source": {"kind": "manual"}},
+                  "transcript": t1, "lang": "zh",
+                  "source": {"kind": "manual"}, "use": "clone"},
              ]},
             {"name": "小外", "main_lang": "en", "avatar": None,
              "note": "常客嘉宾;英文参考音无转写稿,只作 cross 跨语言克隆。",
              "refs": [
                  {"audio": self._store_path(self.web_audio_dir / "guest_ref_english.wav"),
-                  "transcript": None, "lang": "en", "source": {"kind": "manual"}},
+                  "transcript": None, "lang": "en",
+                  "source": {"kind": "manual"}, "use": "clone"},
              ]},
         ]}
         self._save()
@@ -149,8 +186,14 @@ class PersonLibrary:
                 return p
         return None
 
+    def _require(self, name):
+        p = self._find(name)
+        if p is None:
+            raise KeyError(f"人物不存在:{name}")
+        return p
+
     def get(self, name):
-        """按备注名取人物(深拷贝;改动必须走 add_* 接口,保单写入者)。"""
+        """按备注名取人物(深拷贝;改动必须走 add_*/remove_* 接口,保单写入者)。"""
         with self._lock:
             p = self._find(name)
             return copy.deepcopy(p) if p else None
@@ -158,6 +201,24 @@ class PersonLibrary:
     def list_persons(self) -> list:
         with self._lock:
             return copy.deepcopy(self._data["persons"])
+
+    def list_refs(self, person_name, use="clone") -> list:
+        """按用途列参考音(深拷贝,只读)。use="clone"(缺省;克隆选音用,
+        自动归档样本不混入)|"voiceid"(声纹归档样本)|None(全量)。
+        人物不存在 → KeyError;非法用途 → ValueError。
+        """
+        with self._lock:
+            p = self._require(person_name)
+            refs = p.get("refs") or []
+            if use is not None:
+                use = _norm_use(use)
+                refs = [r for r in refs if (r.get("use") or "clone") == use]
+            return copy.deepcopy(refs)
+
+    def iter_ref_paths(self, person_name, use=None) -> list:
+        """按用途列参考音路径(str 列表,只读);use=None 全量。供向量缓存
+        键构造、克隆选音等按路径过滤的场景。"""
+        return [r["audio"] for r in self.list_refs(person_name, use=use)]
 
     # ---------- 写入 ----------
 
@@ -172,18 +233,67 @@ class PersonLibrary:
             return copy.deepcopy(p)
 
     def add_ref(self, person_name, audio, transcript=None, lang=None,
-                source=None) -> dict:
-        """给人物追加参考音;lang 缺省继承人物主要语言;source 缺省手动上传。"""
+                source=None, use="clone") -> dict:
+        """给人物追加参考音;lang 缺省继承人物主要语言;source 缺省手动上传;
+        use 缺省 "clone"(人工存入/手动上传,现有行为不变),自动归档钩子
+        (票06)显式传 use="voiceid" 并带 source={kind:"episode", bvid, part, spk}。
+        非法用途 → ValueError。
+        """
         with self._lock:
-            p = self._find(person_name)
-            if p is None:
-                raise KeyError(f"人物不存在:{person_name}")
+            p = self._require(person_name)
+            use = _norm_use(use)
             ref = {
                 "audio": str(audio),
                 "transcript": str(transcript) if transcript else None,
                 "lang": lang if lang else p.get("main_lang"),
                 "source": dict(source) if source else {"kind": "manual"},
+                "use": use,
             }
             p["refs"].append(ref)
             self._save()
             return dict(ref)
+
+    def remove_ref(self, person_name, audio) -> dict:
+        """删除一条参考音条目(按 audio 精确匹配,同路径多条删第一处),
+        返回级联清单(见 _cascade):真正只删 persons.json 条目,向量缓存记录
+        与自动样本文件由调用方按清单执行。人物/条目不存在 → KeyError。
+        """
+        with self._lock:
+            p = self._require(person_name)
+            audio = str(audio)
+            idx = next((i for i, r in enumerate(p.get("refs") or [])
+                        if r.get("audio") == audio), None)
+            if idx is None:
+                raise KeyError(f"参考音不存在:{person_name} <- {audio}")
+            removed = p["refs"].pop(idx)
+            self._save()
+            return self._cascade(person_name, [removed])
+
+    def remove_person(self, name) -> dict:
+        """删除人物及其全部参考音条目,返回覆盖全部条目的级联清单(同
+        remove_ref 口径)。人物不存在 → KeyError。"""
+        with self._lock:
+            idx = next((i for i, q in enumerate(self._data["persons"])
+                        if q["name"] == name), None)
+            if idx is None:
+                raise KeyError(f"人物不存在:{name}")
+            removed_person = self._data["persons"].pop(idx)
+            self._save()
+            return self._cascade(name, removed_person.get("refs") or [])
+
+    @staticmethod
+    def _cascade(person_name, removed_refs) -> dict:
+        """级联清单(调用方执行;本模块不碰 persons_emb.json / 样本文件):
+        - ref_entries_removed: 被删条目(深拷贝,含 use/source 等全字段);
+        - cache_keys: 全部被删条目的 {person, ref_path} —— persons_emb.json
+          以 ref_path 为关联键,调用方逐条清向量记录;
+        - ref_paths_to_delete: 仅 use=voiceid 条目的样本文件路径(自动切片,
+          调用方删文件);clone(手动上传/种子)条目只清缓存,不删用户原文件。
+        """
+        return {
+            "ref_entries_removed": copy.deepcopy(removed_refs),
+            "cache_keys": [{"person": person_name, "ref_path": r.get("audio")}
+                           for r in removed_refs],
+            "ref_paths_to_delete": [r["audio"] for r in removed_refs
+                                    if (r.get("use") or "clone") == "voiceid"],
+        }
