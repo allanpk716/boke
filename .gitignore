@@ -26,3 +26,4 @@ models/
 Thumbs.db
 Desktop.ini
 .venv-diar/
+.xcheck/

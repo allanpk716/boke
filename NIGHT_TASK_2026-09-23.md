@@ -35,7 +35,7 @@
 - 博主：**波士顿圆脸** `https://space.bilibili.com/346563107/`。日常视频说中文（参考音来源）；英文采访视频带中文硬字幕（目标视频）；部分为充电专属
 - 用户已在本机 **Edge 登录 B 站**（大会员账号）**且已完成对该博主的充电** → 充电专属视频对该账号可看可下
 - 本机：Win10、**RTX 3060 12GB**、Python 3.11.9（scoop）、ffmpeg、yt-dlp（scoop 已装）；仓库 `C:\WorkSpace\agent\boke`（git 已 init，含 .gitignore/README/CONTEXT/docs/research）
-- HF token 有效：`C:\Users\allan716\.cache\huggingface\token`（账号 allanpk716），环境变量未设——用时显式传
+- HF token 有效：`~/.cache/huggingface/token`，环境变量未设——用时显式传
 - 存储：大文件一律 `D:\boke_media`（已建，3TB 空闲）；仓库内只放代码/配置/文档
 - 系统已设"交流电源下永不睡眠/休眠"——**别再动电源设置**
 - 已知坑：① Edge 运行中→cookie 数据库锁死；② 无 cookie 列 space 会被 412 风控（对策见 T1）
