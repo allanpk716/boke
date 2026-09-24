@@ -15,8 +15,8 @@ library:
     type: clone
     engine: cosyvoice3
     ref_audio: refs/yuanlian_chinese_01.wav
-    ref_text: ""          # 参考段无逐字稿;需要时填 refs/ref01_transcript.txt 内容
-    note: "波士顿圆脸本人,斩杀线视频 728.7~753.7s,频谱核验纯人声"
+    ref_text_file: refs/ref01_transcript.txt   # 用户已判 zero(带转写稿)模式更好;synthesize 读此文件
+    note: "波士顿圆脸本人,斩杀线视频 728.7~753.7s,频谱核验纯人声;转写=whisper small(个别专名有误,用户验收过效果)"
 
   # 预设音色兜底(克隆不过关/未知说话人)
   preset_male_01:

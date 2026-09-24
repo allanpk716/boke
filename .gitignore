@@ -25,3 +25,4 @@ models/
 # 其他
 Thumbs.db
 Desktop.ini
+.venv-diar/

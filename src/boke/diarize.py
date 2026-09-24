@@ -7,7 +7,7 @@ HF token 从 ~/.cache/huggingface/token 读(环境变量未设,显式传)。
 import os
 from pathlib import Path
 
-from .common import parse_srt, SpkSeg, write_rttm
+from .common import parse_rttm, parse_srt, SpkSeg, write_rttm
 
 MODEL_ID = "pyannote/speaker-diarization-community-1"
 
@@ -40,6 +40,32 @@ def run(video, work_dir="work", audio=None, mock=False, min_speakers=1,
     if not token:
         raise RuntimeError("无 HF token(且未指定 --diarize-mock)")
 
+    # 优先走隔离 venv(.venv-diar: pyannote 4.x + torch 2.8,与 CosyVoice 主 venv 解耦;
+    # community-1 管线配置要求 pyannote>=4,主 venv 的 3.3.2 加载会报 'plda' 参数错)
+    diar_venv = Path(__file__).resolve().parents[2] / ".venv-diar" / "Scripts" / "python.exe"
+    runner = Path(__file__).resolve().parents[2] / "work" / "tools" / "diar_run.py"
+    if diar_venv.exists():
+        import subprocess
+        print(f"[diarize] via isolated venv: {diar_venv}")
+        r = subprocess.run(
+            [str(diar_venv), str(runner), str(audio), str(rttm),
+             str(max_speakers), str(min_speakers)],
+            capture_output=True, text=True, encoding="utf-8", errors="replace")
+        out = (r.stdout or "") + (r.stderr or "")
+        print(out[-1500:])
+        if r.returncode != 0 or not rttm.exists():
+            raise RuntimeError(f"隔离 venv diarization 失败: {out[-500:]}")
+    else:
+        _diarize_inproc(str(audio), rttm, token, min_speakers, max_speakers)
+
+    segs = parse_rttm(rttm)
+    speakers = sorted({s.spk for s in segs})
+    print(f"[diarize] {len(segs)} segments(合并后), speakers: {speakers}")
+    return {"rttm": str(rttm), "n_seg": len(segs), "speakers": speakers}
+
+
+def _diarize_inproc(audio, rttm, token, min_speakers, max_speakers):
+    """主 venv 内直接跑(pyannote 3.x 路线,兼容旧模型;community-1 不适用)"""
     import torch
     from pyannote.audio import Pipeline
 
@@ -53,13 +79,10 @@ def run(video, work_dir="work", audio=None, mock=False, min_speakers=1,
     else:
         print("[diarize] WARN: cuda 不可用,CPU 会很慢")
 
-    ann = pl(str(audio), min_speakers=min_speakers, max_speakers=max_speakers)
+    ann = pl(audio, min_speakers=min_speakers, max_speakers=max_speakers)
     segs = [SpkSeg(t0=turn.start, t1=turn.end, spk=spk)
             for turn, spk in ann.itertracks(yield_label=True)]
     write_rttm(rttm, segs)
-    speakers = sorted({s.spk for s in segs})
-    print(f"[diarize] {len(segs)} segments, speakers: {speakers}")
-    return {"rttm": str(rttm), "n_seg": len(segs), "speakers": speakers}
 
 
 def mock_from_srt(srt_path, n_speakers=2) -> list:
