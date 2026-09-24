@@ -376,6 +376,12 @@ class App:
             return 409, {"ok": False,
                          "error": f"{bvid} P{part} 当前是「{rec['status']}」,"
                                   "只有「待核对」能提交核对决策。"}
+        if rec.get("busy"):
+            # 后台在跑(如重跑分人):此时提交会让状态走掉而 spawn 因
+            # _bg 防重入返回 False,小样永不调度 → 分P 死锁,必须整拦。
+            return 409, {"ok": False,
+                         "error": f"{bvid} P{part} 上一轮后台任务还在跑"
+                                  "(如重跑分人),稍候几秒再提交。"}
         if decision.get("rediarize"):
             # 调 03 应用器 → 决策作废信号 → 账本 rediarize(回待核对,决策清空)
             core = review_apply.apply_decision(
@@ -540,11 +546,23 @@ class Handler(SimpleHTTPRequestHandler):
         p = urlsplit(path).path
         m = re.match(r"^/media/(.+)$", p)
         if m:
-            name = m.group(1)
+            # 围栏:resolve 后必须仍在某个 MEDIA_DIRS 内且扩展是视频白名单,
+            # 否则给不存在路径 → 404(path-as-is 的 /media/../ 穿越拿不到界外
+            # 文件,cookie 等凭据不外泄)。
+            name = unquote(m.group(1))
+            miss = None
             for d in MEDIA_DIRS:
-                target = (d / name).resolve()
+                base = Path(d)
+                target = (base / name).resolve()
+                if target == base or base not in target.parents:
+                    continue
+                if target.suffix.lower() not in _VIDEO_EXTS:
+                    continue
                 if target.exists():
                     return str(target)
+                if miss is None:
+                    miss = str(target)
+            return miss or str(Path(MEDIA_DIRS[0]) / ".forbidden")
         app = getattr(self.server, "app", None)
         m = re.match(r"^/work/(.+)$", p)
         if m:

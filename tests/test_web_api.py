@@ -661,6 +661,41 @@ def test_persons_ref_new_person_and_errors(env):
     assert st == 400                                 # 缺 audio
 
 
+def test_review_busy_rejects_all_paths_and_keeps_ledger(env, monkeypatch):
+    """重跑分人等后台在跑(busy=True)时提交核对决策必须 409,账本原样。
+
+    否则 dub 会把状态推进已核对待合成而 spawn("preview") 因防重入返回
+    False,小样永不调度,分P 卡死。
+    """
+    _, port, lib, _, _, tmp_path = env
+    _mk_reviewable(lib, tmp_path)
+    lib.set_busy(BV, 1, True)                       # 模拟后台任务在跑
+    calls = []
+    _stub_preview(monkeypatch, calls)
+    bodies = [
+        {"bvid": BV, "part": 1, "decision": _decision_dub()},      # dub
+        {"bvid": BV, "part": 1, "decision": {"verdict": "skip",
+                                             "speakers": []}},     # skip
+        {"bvid": BV, "part": 1,
+         "decision": {"verdict": "dub", "speakers": [],
+                      "rediarize": {"max_speakers": 3}}},          # rediarize
+    ]
+    for body in bodies:
+        st, d = _req(port, "POST", "/api/review", body)
+        assert st == 409 and d["ok"] is False, body
+        assert "还在跑" in d["error"]
+        rec = lib.get(BV, 1)
+        assert rec["status"] == ST_PENDING_REVIEW       # 状态没动
+        assert rec["busy"] is True
+        assert rec["review"] is None and rec["dec_hash"] is None
+    assert calls == []                                  # 小样没被误触发
+    # busy 清掉后同一决策照常受理(dub 桩同步跑完到小样待听)
+    lib.set_busy(BV, 1, False)
+    st, d = _req(port, "POST", "/api/review",
+                 {"bvid": BV, "part": 1, "decision": _decision_dub()})
+    assert st == 200 and d["ok"] is True and d["status"] == ST_PREVIEW
+
+
 def test_bg_exception_lands_in_ledger_fail(env, monkeypatch):
     """后台线程异常不许裸吞:可失败主态必须落账本失败态。"""
     _, port, lib, _, _, tmp_path = env
@@ -679,3 +714,30 @@ def test_bg_exception_lands_in_ledger_fail(env, monkeypatch):
     assert rec["status"] == ST_FAILED
     assert rec["failed_from"] == ST_REVIEWED and rec["busy"] is False
     assert "小样引擎爆炸" in rec["error"]
+
+
+# ---------- /media 静态路由围栏 ----------
+
+def test_media_route_fences_traversal_and_extension(env, monkeypatch):
+    """/media 只放行 MEDIA_DIRS 内的视频扩展;path-as-is 穿越拿不到界外文件。
+
+    回归位:cookie 文件放 media 外,穿越路径必须 404 不回传内容。
+    """
+    _, port, _, _, _, tmp_path = env
+    media_dir = tmp_path / "media"
+    media_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(web_server, "MEDIA_DIRS", [media_dir])
+    legit = media_dir / "BV1SGem6uEU9_P1.mp4"
+    legit.write_bytes(b"fake mp4 bytes")
+    secret = tmp_path / "work" / "cookies_full.txt"
+    secret.parent.mkdir(parents=True, exist_ok=True)
+    secret.write_text("SESSDATA=leak-me", encoding="utf-8")
+
+    st, body = _req(port, "GET", "/media/BV1SGem6uEU9_P1.mp4")
+    assert st == 200 and "fake mp4 bytes" in body      # 正常视频不回归
+    st, body = _req(port, "GET", "/media/../work/cookies_full.txt")
+    assert st == 404                                    # 目录穿越被围栏拦下
+    assert "SESSDATA" not in (body or "")
+    (media_dir / "notes.txt").write_bytes(b"plain text")
+    assert _req(port, "GET", "/media/notes.txt")[0] == 404   # 非视频扩展
+    assert _req(port, "GET", "/media/no_such_file.mp4")[0] == 404
