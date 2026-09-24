@@ -68,7 +68,7 @@ function render(){
   <td>${v.len}</td><td class="note">${v.date}</td>
   <td>${v.ex?'<span class="tag ex">专属</span>':""}${v.interview?'<span class="tag iv">采访</span>':""}</td>
   <td class="st-${v.st.split("(")[0]}">${v.st==="待核对"
-    ?`<a href="/review.html" style="color:#2b6cb0;font-weight:600;text-decoration:none">${v.st} · 去核对→</a>`:v.st}</td></tr>`).join("");
+    ?`<a href="/review.html?bv=${v.bv}" style="color:#2b6cb0;font-weight:600;text-decoration:none">${v.st} · 去核对→</a>`:v.st}</td></tr>`).join("");
  const c={};LIB.forEach(v=>c[v.st]=(c[v.st]||0)+1);c["未下载"]=(c["未下载"]||0);
  const pipe=[
   ["待下载",c["待下载"]||0,"robot","机器自动下载,无需操作"],
@@ -82,16 +82,20 @@ function render(){
    const icon=who==="human"?"👤":who==="done"?"✓":"🤖";
    const style=k&&who==="human"?"style='background:#2b6cb0;color:#fff;cursor:pointer'":
      k&&who==="done"?"style='background:#e8f6ee;color:#27764a'":"";
-   const act=who==="human"&&k?`onclick="location.href='${n==="待核对"?"/review.html":"/"}'"`:"";
+   const act=who==="human"&&k?`onclick="goPending('${n}')"`:"";
    return `<div class="pipeStep" ${style} ${act} title="${tip}">${icon} ${n}<b>${k}</b></div>`;}).join("")+
   `<span class="note">👤=需要你动手 · 🤖=机器自动</span>`;
  const pend=c["待核对"]||0;
+ const firstPend=LIB.find(x=>x.st==="待核对");
  const cta=document.getElementById("cta");
  if(pend>0){cta.style.display="flex";
+  cta.querySelector("button").onclick=()=>location.href=`/review.html?bv=${firstPend?firstPend.bv:""}`;
   document.getElementById("ctaTitle").textContent=`👉 有 ${pend} 期视频分析完成,等你核对`;
   document.getElementById("ctaSub").textContent="看视频 → 确认说话人 → 指认主持人 → 配声音(约 2 分钟/期),过了这关就自动出片";
  } else cta.style.display="none";
  document.getElementById("fText").oninput=document.getElementById("fKind").onchange=render;}
+function goPending(step){const f=LIB.find(x=>x.st===step)||LIB.find(x=>x.st==="待核对");
+ if(f)location.href=`/review.html?bv=${f.bv}`; else location.href="/review.html";}
 function toggleAll(m){document.querySelectorAll(".ck").forEach(c=>c.checked=m.checked);selCount();}
 function selCount(){const cks=[...document.querySelectorAll(".ck:checked")];const bar=document.getElementById("selbar");
  bar.classList.toggle("on",cks.length>0);

@@ -267,5 +267,10 @@ document.getElementById("submitBtn").onclick=async()=>{
  try{const r=await fetch("/save_review",{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   st.textContent=r.ok?"✅ 已保存(核对台 mock 数据落 work/review_decisions_mock.json)":"❌ "+r.status;}catch(x){st.textContent="❌ 网络错误";}};
 renderAll();
+// 从片库"去核对"进入时按 bv 参数定位到对应期(?bv=BVxxxx)
+(()=>{const bv=new URLSearchParams(location.search).get("bv");
+ if(bv){const i=DATA.findIndex(e=>e.bvid===bv);
+  if(i>=0&&i!==curEp){curEp=i;curPart=0;renderAll();}}
+ const ep=document.querySelector("#eps .ep.on");if(ep)ep.scrollIntoView({block:"center"});})();
 fetch('candidates.json').then(r=>r.json()).then(d=>{CANDS=d;renderSpeakers();}).catch(()=>{});
 </script></body></html>
