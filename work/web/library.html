@@ -37,6 +37,10 @@ tr:hover td{background:#f8fafd}
 <div id="cookie" class="ok">🍪 B 站登录:有效(上次校验 10:27) · 专属视频可下全片 · <span class="note">约 30 天过期,过期时此处变红并暂停导入</span></div>
 <main>
 <div id="pipe"></div>
+<div id="cta" style="display:none;background:#2b6cb0;color:#fff;border-radius:10px;padding:14px 18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.12);align-items:center;gap:14px">
+ <div style="flex:1"><b id="ctaTitle" style="font-size:15px"></b><div id="ctaSub" style="font-size:13px;opacity:.85;margin-top:2px"></div></div>
+ <button style="background:#ffd479;color:#333;font-weight:600" onclick="location.href='/review.html'">进入核对台 →</button>
+</div>
 <div id="bar">
   <b style="font-size:14px">播主:波士顿圆脸</b>
   <span class="note">共 2113 个视频 · 已拉取 300(风控限制,带 cookie 可全量)</span>
@@ -63,12 +67,30 @@ function render(){
   <td class="note">${v.bv}</td><td class="t" title="${esc(v.t)}">${esc(v.t)}</td>
   <td>${v.len}</td><td class="note">${v.date}</td>
   <td>${v.ex?'<span class="tag ex">专属</span>':""}${v.interview?'<span class="tag iv">采访</span>':""}</td>
-  <td class="st-${v.st.split("(")[0]}">${v.st}</td></tr>`).join("");
+  <td class="st-${v.st.split("(")[0]}">${v.st==="待核对"
+    ?`<a href="/review.html" style="color:#2b6cb0;font-weight:600;text-decoration:none">${v.st} · 去核对→</a>`:v.st}</td></tr>`).join("");
  const c={};LIB.forEach(v=>c[v.st]=(c[v.st]||0)+1);c["未下载"]=(c["未下载"]||0);
- const pipe=[["待下载",c["待下载"]||0],["待分析",c["待分析"]||0],["待核对",c["待核对"]||0],["小样待听",c["小样待听"]||0],["已交付",c["已交付"]||0],["已排除",c["已排除"]||0]];
+ const pipe=[
+  ["待下载",c["待下载"]||0,"robot","机器自动下载,无需操作"],
+  ["待分析",c["待分析"]||0,"robot","下载完自动跑OCR/分人/语言检测,无需操作"],
+  ["待核对",c["待核对"]||0,"human","分析完成,需要你:看视频确认说话人/指认主持人/配声音 → 点它进核对台"],
+  ["小样待听",c["小样待听"]||0,"human","合成完1-2分钟小样,需要你试听把关 → 点它去听"],
+  ["已交付",c["已交付"]||0,"done","成品在试听台,通勤直接听"],
+  ["已排除",c["已排除"]||0,"done","全中文场,已按你的确认跳过"]];
  document.getElementById("pipe").innerHTML="<b style='font-size:13px;margin-right:6px'>流水管道</b>"+
-  pipe.map(([n,k])=>`<div class="pipeStep ${k?"hot":""}">${n}<b>${k}</b></div>`).join("")+
-  `<span class="note">→ 点"核对台"处理"待核对"</span>`;
+  pipe.map(([n,k,who,tip])=>{
+   const icon=who==="human"?"👤":who==="done"?"✓":"🤖";
+   const style=k&&who==="human"?"style='background:#2b6cb0;color:#fff;cursor:pointer'":
+     k&&who==="done"?"style='background:#e8f6ee;color:#27764a'":"";
+   const act=who==="human"&&k?`onclick="location.href='${n==="待核对"?"/review.html":"/"}'"`:"";
+   return `<div class="pipeStep" ${style} ${act} title="${tip}">${icon} ${n}<b>${k}</b></div>`;}).join("")+
+  `<span class="note">👤=需要你动手 · 🤖=机器自动</span>`;
+ const pend=c["待核对"]||0;
+ const cta=document.getElementById("cta");
+ if(pend>0){cta.style.display="flex";
+  document.getElementById("ctaTitle").textContent=`👉 有 ${pend} 期视频分析完成,等你核对`;
+  document.getElementById("ctaSub").textContent="看视频 → 确认说话人 → 指认主持人 → 配声音(约 2 分钟/期),过了这关就自动出片";
+ } else cta.style.display="none";
  document.getElementById("fText").oninput=document.getElementById("fKind").onchange=render;}
 function toggleAll(m){document.querySelectorAll(".ck").forEach(c=>c.checked=m.checked);selCount();}
 function selCount(){const cks=[...document.querySelectorAll(".ck:checked")];const bar=document.getElementById("selbar");
