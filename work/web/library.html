@@ -1,23 +1,25 @@
 <!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>剥壳配音 · 片库(mock)</title><style>
+<title>剥壳配音 · 片库</title><style>
 body{font-family:system-ui,'Microsoft YaHei';margin:0;background:#f0f2f5;color:#222}
 header{background:#1c2b3a;color:#fff;padding:12px 22px;display:flex;gap:18px;align-items:center}
 header h1{margin:0;font-size:19px}
-header .mock{background:#e8a13a;color:#333;font-size:12px;padding:2px 10px;border-radius:10px}
-header a{color:#9fc3e8;font-size:13px;margin-left:auto;text-decoration:none;margin-left:8px}
-#cookie{padding:8px 22px;font-size:13px;display:flex;gap:10px;align-items:center}
-#cookie.ok{background:#e8f6ee;color:#27764a}#cookie.bad{background:#fdecec;color:#c0392b}
+header .live{background:#3f9a68;color:#fff;font-size:12px;padding:2px 10px;border-radius:10px}
+header a{color:#9fc3e8;font-size:13px;text-decoration:none;margin-left:auto;margin-left:8px}
+#cookie{padding:8px 22px;font-size:13px;display:flex;gap:10px;align-items:center;background:#eef1f5;color:#555}
+#cookie.ok{background:#e8f6ee;color:#27764a}#cookie.bad{background:#fdecec;color:#c0392b;font-weight:600}
 main{max-width:1280px;margin:12px auto;padding:0 14px}
 #pipe{display:flex;gap:6px;background:#fff;border-radius:10px;padding:10px 14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);flex-wrap:wrap;align-items:center}
 .pipeStep{padding:5px 13px;border-radius:16px;background:#eef1f5;font-size:13px}
 .pipeStep b{margin-left:5px}
 .pipeStep.hot{background:#2b6cb0;color:#fff}
 .pipeStep.done{background:#e8f6ee;color:#27764a}
+.pipeStep.err{background:#fdecec;color:#c0392b}
 #bar{display:flex;gap:10px;align-items:center;background:#fff;border-radius:10px;padding:10px 14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);flex-wrap:wrap}
 #bar select,#bar input{padding:6px 9px;border:1px solid #cfd6dd;border-radius:6px;font-size:13px}
 button{background:#2b6cb0;color:#fff;border:0;border-radius:6px;padding:7px 16px;font-size:14px;cursor:pointer}
 button.ghost{background:#fff;color:#2b6cb0;border:1px solid #2b6cb0}
+button.small{padding:3px 10px;font-size:12px}
 button:disabled{background:#aaa}
 table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 th{position:sticky;top:0;background:#f6f8fa;font-size:13px;color:#555;text-align:left;padding:8px 10px}
@@ -26,15 +28,19 @@ tr:hover td{background:#f8fafd}
 .t{max-width:520px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tag{border-radius:4px;font-size:11px;padding:1px 7px;white-space:nowrap}
 .tag.ex{background:#fdecec;color:#c0392b}.tag.iv{background:#e8ecfd;color:#4356a8}
-.st-未下载{color:#98a1ab}.st-待核对{color:#2b6cb0;font-weight:600}
-.st-已交付{color:#27764a;font-weight:600}.st-已归档(参考音源),.st-已归档(备选){color:#7a848e}
+.st{font-weight:600}
+.st-待下载,.st-待分析,.st-已核对待合成,.st-全片合成中{color:#7a848e}
+.st-待核对{color:#2b6cb0}.st-小样待听{color:#b06a00}
+.st-已交付{color:#27764a}.st-已排除{color:#98a1ab}.st-失败{color:#c0392b}
+.busy{font-size:11px;color:#b06a00;margin-left:4px}
 #selbar{position:fixed;bottom:0;left:0;right:0;background:#1c2b3a;color:#fff;padding:10px 24px;display:none;align-items:center;gap:16px;font-size:14px}
 #selbar.on{display:flex}
 .note{font-size:12px;color:#999}
+.err{font-size:12px;color:#c0392b;max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle}
 </style></head><body>
-<header><h1>剥壳配音 · 片库</h1><span class="mock">MOCK · 勾选/筛选可用,下载动作为占位</span>
+<header><h1>剥壳配音 · 片库</h1><span class="live">实时账本 · 2s 轮询</span>
 <a href="/review.html">核对台 →</a><a href="/">试听台</a></header>
-<div id="cookie" class="ok">🍪 B 站登录:有效(上次校验 10:27) · 专属视频可下全片 · <span class="note">约 30 天过期,过期时此处变红并暂停导入</span></div>
+<div id="cookie">🍪 B 站登录:导入时自动校验(约 30 天过期,失效时此处变红并暂停导入)</div>
 <main>
 <div id="pipe"></div>
 <div id="cta" style="display:none;background:#2b6cb0;color:#fff;border-radius:10px;padding:14px 18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.12);align-items:center;gap:14px">
@@ -43,33 +49,66 @@ tr:hover td{background:#f8fafd}
 </div>
 <div id="bar">
   <b style="font-size:14px">播主:波士顿圆脸</b>
-  <span class="note">共 2113 个视频 · 已拉取 300(风控限制,带 cookie 可全量)</span>
-  <select id="fKind"><option value="all">全部</option><option value="ex">仅充电专属</option><option value="iv">仅采访类</option><option value="dl">未下载</option></select>
+  <span class="note" id="catInfo">播主清单加载中…</span>
+  <select id="fKind"><option value="all">全部</option><option value="ex">仅充电专属</option><option value="dl">未导入</option><option value="lib">已导入</option></select>
   <input id="fText" placeholder="搜标题/BV" size="14">
-  <button class="ghost" onclick="alert('Mock:重新拉取播主清单(需 cookie)')">↻ 刷新清单</button>
-  <button class="ghost" onclick="alert('Mock:粘贴 BV 号/链接单个导入')">＋ BV 号导入</button>
+  <button class="ghost" onclick="alert('清单由 work/tools/bili_space_list.py 拉取(带 cookie),本页自动读取 work/space_videos.json')">↻ 刷新清单</button>
+  <button class="ghost" onclick="ingestBv()">＋ BV 号导入</button>
 </div>
 <table><thead><tr><th><input type="checkbox" onclick="toggleAll(this)"></th><th>BV</th><th>标题</th><th>时长</th><th>日期</th><th>标记</th><th>状态</th></tr></thead>
 <tbody id="rows"></tbody></table>
 </main>
-<div id="selbar"><span id="selInfo"></span><button onclick="fakeDl()">⬇ 下载所选(进入待分析)</button><span class="note">mock:正式版走 yt-dlp 队列,cookie 失效自动挂红条</span><button class="ghost" style="background:transparent;color:#fff;border-color:#fff" onclick="clearSel()">取消选择</button></div>
+<div id="selbar"><span id="selInfo"></span><button onclick="dlSelected()">⬇ 下载所选(自动下载→分析→待核对)</button><button class="ghost" style="background:transparent;color:#fff;border-color:#fff" onclick="clearSel()">取消选择</button></div>
 <script>
-const ST_ORDER=["未下载","待下载","待分析","待核对","小样待听","已交付","已排除","失败"];
-let LIB=[];
-fetch('lib_data.json').then(r=>r.json()).then(d=>{LIB=d;render();});
-function esc(s){return s.replace(/</g,"&lt;")}
+let STATE={records:[],counts:{},catalog:[],todo:[]};
+const SEL=new Set();          // 勾选的未导入清单 bvid(跨轮询保留)
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function fmtDur(sec){if(sec==null)return"—";sec=Math.round(sec);const m=Math.floor(sec/60),s=sec%60;return `${m}:${String(s).padStart(2,"0")}`}
+function fmtDate(d){return d?String(d).slice(2):"—"}
+
+async function refresh(){
+ try{const r=await fetch('/api/library');if(!r.ok)return;const d=await r.json();
+  if(!d.ok)return;STATE=d;render();}catch(e){/* 服务不在了,下轮再试 */}
+}
+setInterval(refresh,2000);
+
 function render(){
- const kind=document.getElementById("fKind").value,q=document.getElementById("fText").value.trim();
- const rows=LIB.filter(v=>(kind==="all"||(kind==="ex"&&v.ex)||(kind==="iv"&&v.interview)||(kind==="dl"&&v.st==="未下载"))
-   &&(!q||v.t.includes(q)||v.bv.includes(q.toUpperCase())));
- document.getElementById("rows").innerHTML=rows.map((v,i)=>`<tr>
-  <td>${v.st==="未下载"?`<input type="checkbox" class="ck" data-bv="${v.bv}" data-len="${v.len}" onchange="selCount()">`:""}</td>
-  <td class="note">${v.bv}</td><td class="t" title="${esc(v.t)}">${esc(v.t)}</td>
-  <td>${v.len}</td><td class="note">${v.date}</td>
-  <td>${v.ex?'<span class="tag ex">专属</span>':""}${v.interview?'<span class="tag iv">采访</span>':""}</td>
-  <td class="st-${v.st.split("(")[0]}">${v.st==="待核对"
-    ?`<a href="/review.html?bv=${v.bv}" style="color:#2b6cb0;font-weight:600;text-decoration:none">${v.st} · 去核对→</a>`:v.st}</td></tr>`).join("");
- const c={};LIB.forEach(v=>c[v.st]=(c[v.st]||0)+1);c["未下载"]=(c["未下载"]||0);
+ const kind=document.getElementById("fKind").value,q=document.getElementById("fText").value.trim().toLowerCase();
+ const inLib=new Set(STATE.records.map(r=>r.bvid));
+ // 行 = 账本记录(真状态) + 清单里未导入的(可勾选下载)
+ const rows=STATE.records.filter(v=>(!q||(v.title||"").toLowerCase().includes(q)||v.bvid.toLowerCase().includes(q))
+   &&(kind==="all"||(kind==="ex"&&v.is_charge)||(kind==="dl"&&false)||(kind==="lib")));
+ const cat=STATE.catalog.filter(c=>!inLib.has(c.bvid)
+   &&(!q||(c.title||"").toLowerCase().includes(q)||String(c.bvid||"").toLowerCase().includes(q))
+   &&(kind==="all"||(kind==="dl")||(kind==="ex"&&c.is_charging_arc)));
+ document.getElementById("rows").innerHTML=
+  rows.map(v=>`<tr>
+   <td></td>
+   <td class="note">${esc(v.bvid)}${STATE.records.filter(x=>x.bvid===v.bvid).length>1?` · P${v.part}`:""}</td>
+   <td class="t" title="${esc(v.title)}">${esc(v.title)||"—"}</td>
+   <td>${fmtDur(v.duration)}</td><td class="note">${fmtDate(v.date)}</td>
+   <td>${v.is_charge?'<span class="tag ex">专属</span>':""}</td>
+   <td class="st st-${v.status}">${statusCell(v)}${v.busy?'<span class="busy">·进行中</span>':""}</td></tr>`).join("")+
+  cat.map((c)=>{const i=STATE.catalog.indexOf(c);return `<tr>
+   <td><input type="checkbox" class="ck" data-i="${i}" ${SEL.has(i)?"checked":""} onchange="selCount()"></td>
+   <td class="note">${esc(c.bvid)}</td><td class="t" title="${esc(c.title)}">${esc(c.title)}</td>
+   <td>${esc(c.length||"—")}</td><td class="note">${c.created?new Date(c.created*1000).toISOString().slice(2,10):"—"}</td>
+   <td>${c.is_charging_arc?'<span class="tag ex">专属</span>':""}</td>
+   <td class="st st-待下载">未导入</td></tr>`}).join("");
+ document.getElementById("catInfo").textContent=
+  `清单 ${STATE.catalog.length} 个视频 · 已导入 ${new Set(STATE.records.map(r=>r.bvid)).size} 个`;
+ renderPipe();selCount();
+}
+function statusCell(v){
+ const bv=v.bvid;
+ if(v.status==="待核对")return `<a href="/review.html?bv=${esc(bv)}" style="color:#2b6cb0;text-decoration:none">${v.status} · 去核对→</a>`;
+ if(v.status==="小样待听")return `<a href="/review.html?bv=${esc(bv)}" style="color:#b06a00;text-decoration:none">${v.status} · 去听→</a>`;
+ if(v.status==="已交付")return `<a href="/" style="color:#27764a;text-decoration:none">${v.status} · 试听台→</a>`;
+ if(v.status==="失败")return `${v.status} <span class="err" title="${esc(v.error)}">${esc(v.failed_stage||"")}:${esc(v.error)}</span> <button class="small ghost" onclick="retry('${esc(bv)}',${v.part})">重试</button>`;
+ return v.status;
+}
+function renderPipe(){
+ const c=STATE.counts||{};
  const pipe=[
   ["待下载",c["待下载"]||0,"robot","机器自动下载,无需操作"],
   ["待分析",c["待分析"]||0,"robot","下载完自动跑OCR/分人/语言检测,无需操作"],
@@ -77,33 +116,65 @@ function render(){
   ["小样待听",c["小样待听"]||0,"human","合成完1-2分钟小样,需要你试听把关 → 点它去听"],
   ["已交付",c["已交付"]||0,"done","成品在试听台,通勤直接听"],
   ["已排除",c["已排除"]||0,"done","全中文场,已按你的确认跳过"]];
- document.getElementById("pipe").innerHTML="<b style='font-size:13px;margin-right:6px'>流水管道</b>"+
+ let html="<b style='font-size:13px;margin-right:6px'>流水管道</b>"+
   pipe.map(([n,k,who,tip])=>{
    const icon=who==="human"?"👤":who==="done"?"✓":"🤖";
    const style=k&&who==="human"?"style='background:#2b6cb0;color:#fff;cursor:pointer'":
      k&&who==="done"?"style='background:#e8f6ee;color:#27764a'":"";
    const act=who==="human"&&k?`onclick="goPending('${n}')"`:"";
-   return `<div class="pipeStep" ${style} ${act} title="${tip}">${icon} ${n}<b>${k}</b></div>`;}).join("")+
-  `<span class="note">👤=需要你动手 · 🤖=机器自动</span>`;
+   return `<div class="pipeStep" ${style} ${act} title="${tip}">${icon} ${n}<b>${k}</b></div>`;}).join("");
+ if(c["失败"])html+=` <div class="pipeStep err" title="有分P失败,点行内重试断点续跑">⚠ 失败<b>${c["失败"]}</b></div>`;
+ html+=`<span class="note">👤=需要你动手 · 🤖=机器自动</span>`;
+ document.getElementById("pipe").innerHTML=html;
  const pend=c["待核对"]||0;
- const firstPend=LIB.find(x=>x.st==="待核对");
  const cta=document.getElementById("cta");
  if(pend>0){cta.style.display="flex";
-  cta.querySelector("button").onclick=()=>location.href=`/review.html?bv=${firstPend?firstPend.bv:""}`;
-  document.getElementById("ctaTitle").textContent=`👉 有 ${pend} 期视频分析完成,等你核对`;
+  const first=(STATE.todo||[])[0];
+  cta.querySelector("button").onclick=()=>location.href=`/review.html?bv=${first?first.bvid:""}`;
+  document.getElementById("ctaTitle").textContent=`👉 有 ${pend} 个分P分析完成,等你核对`;
   document.getElementById("ctaSub").textContent="看视频 → 确认说话人 → 指认主持人 → 配声音(约 2 分钟/期),过了这关就自动出片";
  } else cta.style.display="none";
- document.getElementById("fText").oninput=document.getElementById("fKind").onchange=render;}
-function goPending(step){const f=LIB.find(x=>x.st===step)||LIB.find(x=>x.st==="待核对");
- if(f)location.href=`/review.html?bv=${f.bv}`; else location.href="/review.html";}
-function toggleAll(m){document.querySelectorAll(".ck").forEach(c=>c.checked=m.checked);selCount();}
+}
+function goPending(step){const f=STATE.records.find(x=>x.status===step)||STATE.records.find(x=>x.status==="待核对");
+ if(f)location.href=`/review.html?bv=${f.bvid}`; else location.href="/review.html";}
+function toggleAll(m){document.querySelectorAll(".ck").forEach(c=>{c.checked=m.checked;
+ const i=+c.dataset.i;m.checked?SEL.add(i):SEL.delete(i);});selCount();}
 function selCount(){const cks=[...document.querySelectorAll(".ck:checked")];const bar=document.getElementById("selbar");
  bar.classList.toggle("on",cks.length>0);
- const mins=cks.reduce((a,c)=>{const p=c.dataset.len.split(":").map(Number);return a+p.reduce((x,y)=>x*60+y,0)},0);
- document.getElementById("selInfo").textContent=`已选 ${cks.length} 个 · 约 ${Math.round(mins)} 分钟 · 预计 ${Math.round(mins*0.09)}GB`;}
-function clearSel(){document.querySelectorAll(".ck").forEach(c=>c.checked=false);selCount();}
-function fakeDl(){const cks=[...document.querySelectorAll(".ck:checked")];
- cks.forEach(c=>{const v=LIB.find(x=>x.bv===c.dataset.bv);if(v)v.st="待下载";});
- clearSel();render();alert(`Mock:${cks.length} 个已加入下载队列。\n正式版:yt-dlp 逐个下载→自动跑分析(OCR/分人/语言)→状态推进到"待核对",核对台里出现新卡片`);}
-render();
+ document.getElementById("selInfo").textContent=`已选 ${cks.length} 个视频(各按 P1 导入)`;}
+function clearSel(){SEL.clear();document.querySelectorAll(".ck").forEach(c=>c.checked=false);selCount();}
+function setCookie(cls,text){const el=document.getElementById("cookie");el.className=cls;el.textContent=text;}
+async function dlSelected(){
+ const items=[...SEL].map(i=>STATE.catalog[i]).filter(Boolean);
+ if(!items.length)return;
+ try{const r=await fetch("/api/ingest",{method:"POST",headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({items})});
+  const d=await r.json();
+  if(r.status===423){setCookie("bad","🍪 "+d.error);alert("cookie 失效,导入暂停:\n"+d.error);return;}
+  if(!r.ok||!d.ok){alert("导入失败:"+(d&&d.error||r.status));return;}
+  setCookie("ok",`🍪 B 站登录:有效(刚刚校验) · 本次新导入 ${d.added} 个,已在片库跳过 ${d.skipped} 个`);
+  clearSel();refresh();
+ }catch(e){alert("网络错误:"+e);}
+}
+async function ingestBv(){
+ const bv=prompt("粘贴 BV 号或视频链接:","");if(!bv)return;
+ const m=bv.match(/(BV[A-Za-z0-9]+)/);if(!m){alert("没认出 BV 号");return;}
+ try{const r=await fetch("/api/ingest",{method:"POST",headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({bv:m[1]})});
+  const d=await r.json();
+  if(r.status===423){setCookie("bad","🍪 "+d.error);alert("cookie 失效,导入暂停:\n"+d.error);return;}
+  if(!r.ok||!d.ok){alert("导入失败:"+(d&&d.error||r.status));return;}
+  setCookie("ok",`🍪 B 站登录:有效(刚刚校验) · 新导入 ${d.added} 个分P,已在片库跳过 ${d.skipped} 个`);
+  refresh();
+ }catch(e){alert("网络错误:"+e);}
+}
+async function retry(bv,part){
+ try{const r=await fetch(`/api/retry/${bv}/${part}`,{method:"POST"});
+  const d=await r.json();
+  if(!r.ok||!d.ok)alert("重试被拒:"+(d&&d.error||r.status));else refresh();
+ }catch(e){alert("网络错误:"+e);}
+}
+document.getElementById("fText").oninput=render;
+document.getElementById("fKind").onchange=render;
+refresh();
 </script></body></html>
