@@ -11,8 +11,9 @@
 
 API 路由(全部 JSON;页面轮询 /api/library 每 2s 刷新):
   GET  /api/library                     账本全量+管道计数+待办+播主清单
-  GET  /api/episode/<bvid>              期详情(parts/说话人样本/langid/小样/成品)
-  GET  /api/persons                     人物库(参考音附可试听 URL)
+  GET  /api/episode/<bvid>              期详情(parts/说话人样本/langid/小样/成品;
+                                        每说话人附声纹建议 suggest,票05)
+  GET  /api/persons                     人物库(参考音附可试听 URL;refs 全量带 use)
   POST /api/ingest                      {bv} 或 {items:[...]} 导入;cookie 失效 423
   POST /api/review                      每分P决策 JSON → 03 应用器 → 05 小样(后台)
   POST /api/preview/<bvid>/<part>       {"verdict":"pass|fail"} → 06 全片(后台)/回退
@@ -23,9 +24,16 @@ API 路由(全部 JSON;页面轮询 /api/library 每 2s 刷新):
 04/05/06;每分P同时至多一个后台任务(进程内 dict 防重入);线程异常必落
 账本失败态(待核对等无失败边的主态只清 busy 并打日志,不裸吞)。
 
+声纹建议(票05):分析/重跑分人完成后自动跑 voiceid.identify 落
+work/<stem>/voiceid.json(桩/mock 分 P 落 available:false);GET /api/episode
+读它,档案(persons_emb.json)/阈值(voiceid_thresholds.json)比它新则重算
+一次再返回(毫秒级)。分人有无 embeddings 一律查 spk_emb 两件产物文件
+存在性,不依赖 diarize.run() 返回键(票01 评审裁定:resume 早退分支无键)。
+
 绑定 0.0.0.0:8765;测试用 make_server("127.0.0.1", 0, app) 起随机端口实例。
 """
 import json
+import os
 import re
 import sys
 import threading
@@ -43,7 +51,7 @@ if str(_SRC) not in sys.path:
 
 from boke import attribute, diarize, fullmix           # noqa: E402
 from boke import orchestrator, preview as boke_preview   # noqa: E402
-from boke import review_apply                            # noqa: E402
+from boke import review_apply, voiceid                   # noqa: E402
 from boke.common import parse_srt                        # noqa: E402
 from boke.library import (                               # noqa: E402
     EV_CONFIRM_SKIP, EV_FAIL, EV_PREVIEW_REJECT, EV_REDIARIZE, EV_REVIEW_SUBMIT,
@@ -59,6 +67,8 @@ _EP_RE = re.compile(r"^/api/episode/([A-Za-z0-9]+)$")
 _PREVIEW_RE = re.compile(r"^/api/preview/([^/]+)/(\d+)$")
 _RETRY_RE = re.compile(r"^/api/retry/([^/]+)/(\d+)$")
 _SPK_RE = re.compile(r"^\[(SPK_\d+)\]")
+# 博主人物(人物库种子名;voiceid 主持人候选只对它,host_person 校验链见 review_apply)
+HOST_PERSON = "圆脸"
 # /work 与 /refs 只放行音频扩展(小样 mp3/成品 m4a/说话人样本与参考音 wav)
 _AUDIO_EXTS = {".mp3", ".m4a", ".wav", ".flac"}
 _VIDEO_EXTS = {".mp4", ".mkv", ".flv", ".webm"}
@@ -84,7 +94,8 @@ class App:
     """API 应用:持账本/人物库/编排器与后台任务调度,方法返回 (code, obj)。"""
 
     def __init__(self, lib=None, persons=None, orch=None, work_dir=None,
-                 web_audio_dir=None, catalog_path=None):
+                 web_audio_dir=None, catalog_path=None,
+                 persons_emb_path=None, thresholds_path=None):
         self.work_dir = Path(work_dir) if work_dir else WORK
         self.lib = lib if lib is not None else Library(self.work_dir / "library.json")
         self.persons = persons if persons is not None else PersonLibrary()
@@ -93,6 +104,11 @@ class App:
         self.web_audio_dir = Path(web_audio_dir) if web_audio_dir else WEB / "audio"
         self.catalog_path = Path(catalog_path) if catalog_path \
             else WORK / "space_videos.json"
+        # 声纹建议数据源(票05):档案向量缓存与阈值表,默认随 work_dir
+        self.persons_emb_path = Path(persons_emb_path) if persons_emb_path \
+            else self.work_dir / "persons_emb.json"
+        self.thresholds_path = Path(thresholds_path) if thresholds_path \
+            else self.work_dir / "voiceid_thresholds.json"
         self.sync_bg = False          # 测试注入:后台任务同步执行
         self._bg = {}                 # (bvid, part) -> stage,防重入
         self._bg_lock = threading.Lock()
@@ -149,7 +165,9 @@ class App:
     def _run_download_analyze(self, bvid, part):
         r = self.orch.download(bvid, part)
         if r.get("ok"):
-            self.orch.analyze(bvid, part)
+            r2 = self.orch.analyze(bvid, part)
+            if r2.get("ok"):
+                self._voiceid_after_diarize(bvid, part)   # 票05:分人完成钩子
 
     def _run_preview(self, bvid, part):
         boke_preview.generate_preview(bvid, part, library=self.lib,
@@ -190,7 +208,134 @@ class App:
                      "tagged": a.get("tagged") or str(self.work_dir / stem / "tagged.srt"),
                      "langid": out["langid"], "langid_suggest": out["suggest"]})
         self.lib.update(bvid, part, artifacts=arts)
+        self._voiceid_after_diarize(bvid, part)          # 票05:重跑分人后刷新建议
         self.lib.set_busy(bvid, part, False)
+
+    # ---------- 声纹建议(票05) ----------
+
+    def _voiceid_after_diarize(self, bvid, part):
+        """分人完成钩子:分析/重跑分人产物就绪后自动识别,落
+        work/<stem>/voiceid.json(桩分 P 落 available:false);失败只打日志
+        不阻断主链(建议是旁路增强,不拖累分析/重跑)。"""
+        rec = self.lib.get(bvid, part) or {}
+        stem = self._part_stem(rec)
+        try:
+            self._voiceid_write(stem, self._voiceid_compute(
+                stem, self._read_langid(rec.get("artifacts") or {})))
+        except OSError as e:
+            print(f"[voiceid] 落盘失败 {bvid} P{part}:{e}", flush=True)
+
+    def _voiceid_compute(self, stem, langs):
+        """spk_emb 两件产物 × 声纹档案 × 阈值 → identify 输出(票02 总入口)。
+
+        桩/mock 分 P 无两件产物 → {"available": false, "reason": "stub-diarization"}
+        (判有无 embeddings 只查文件存在性,不依赖 diarize.run() 返回键)。
+        langs 是 langid.json 的 speakers 原始映射({spk: {"lang": ...}});
+        各类损坏逐项降级不炸 GET(坏档案/坏标签 → available:false,坏阈值 → 只显示)。
+        """
+        wdir = self.work_dir / stem
+        npy, meta = wdir / "spk_emb.npy", wdir / "spk_emb.json"
+        if not (npy.exists() and meta.exists()):
+            return {"available": False, "reason": "stub-diarization"}
+        try:
+            import numpy as np
+            emb = np.load(str(npy))
+            labels = (json.loads(meta.read_text(encoding="utf-8"))
+                      or {}).get("labels")
+            if not isinstance(labels, list) or len(labels) != int(emb.shape[0]):
+                return {"available": False, "reason": "emb-labels-mismatch"}
+            speakers = [{"spk": lb,
+                         "vec": [float(x) for x in emb[i]],
+                         "lang": ((langs.get(lb) or {}).get("lang")
+                                  if isinstance(langs.get(lb), dict) else None)}
+                        for i, lb in enumerate(labels)]
+        except Exception as e:
+            return {"available": False, "reason": f"emb-load-error:{e}"}
+        try:
+            entries = voiceid.VoiceArchive(path=self.persons_emb_path).entries()
+        except RuntimeError as e:
+            return {"available": False, "reason": f"persons-emb-damaged:{e}"}
+        try:
+            thresholds = voiceid.load_thresholds(self.thresholds_path)
+        except RuntimeError:
+            thresholds = None     # 阈值文件损坏 → 只显示不预填(同语言档缺失口径)
+        out = voiceid.identify(speakers, entries, thresholds,
+                               host_person=HOST_PERSON)
+        return {"available": True, "results": out["results"],
+                "host_candidates": out["host_candidates"],
+                "lang_missing": [s["spk"] for s in speakers if not s["lang"]]}
+
+    def _voiceid_write(self, stem, data):
+        """voiceid.json 原子落盘(同库风格:临时文件写全后 os.replace)。"""
+        wdir = self.work_dir / stem
+        wdir.mkdir(parents=True, exist_ok=True)
+        tmp = wdir / "voiceid.json.tmp"
+        tmp.write_text(json.dumps(data, ensure_ascii=False, indent=1),
+                       encoding="utf-8")
+        os.replace(tmp, wdir / "voiceid.json")
+
+    def _voiceid_fresh(self, data, vpath, order):
+        """voiceid.json 可直接复用否:档案/阈值不比它新、说话人集合对得上、
+        桩标记与产物现状一致。"""
+        if not isinstance(data, dict) or not vpath.exists():
+            return False
+        npy, meta = vpath.parent / "spk_emb.npy", vpath.parent / "spk_emb.json"
+        if not (npy.exists() and meta.exists()):
+            return data.get("available") is False    # 桩分 P:标记仍成立
+        if not data.get("available"):
+            return False                              # 桩标记但产物已出现 → 重算
+        try:
+            vt = vpath.stat().st_mtime
+            if any(p.exists() and p.stat().st_mtime > vt
+                   for p in (self.persons_emb_path, self.thresholds_path)):
+                return False                          # 档案/阈值更新 → 重算
+        except OSError:
+            return False
+        have = {r.get("spk") for r in data.get("results") or []}
+        return set(order) <= have                     # 说话人集合变化 → 重算
+
+    def _voiceid_view(self, stem, langs, order):
+        """GET 路径:voiceid.json 新鲜即读;过期(档案/阈值更新、说话人集合
+        变化、文件缺)→ identify 重算一次(毫秒级)再返回;真识别结果顺手落盘,
+        桩标记不代写(桩标记由分人完成钩子落,GET 保持只读)。"""
+        vpath = self.work_dir / stem / "voiceid.json"
+        data = None
+        if vpath.exists():
+            try:
+                data = json.loads(vpath.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                data = None
+        if not self._voiceid_fresh(data, vpath, order):
+            data = self._voiceid_compute(stem, langs)
+            if data.get("available"):
+                try:
+                    self._voiceid_write(stem, data)
+                except OSError:
+                    pass               # 落盘失败不影响本次返回
+        return data
+
+    def _suggest_view(self, vdata, spk):
+        """voiceid 结果 → 单说话人 suggest 载荷(四态数据源,UI 只做渲染):
+        {available, reason?} | {verdict, person, score, margin, calibrated,
+        host_candidate, top_ref[, compete_with][, lang_missing]}。"""
+        if not (isinstance(vdata, dict) and vdata.get("available")):
+            reason = vdata.get("reason") if isinstance(vdata, dict) else None
+            return {"available": False, "reason": reason or "stub-diarization"}
+        row = next((r for r in vdata.get("results") or []
+                    if r.get("spk") == spk), None)
+        if row is None:
+            return {"available": False, "reason": "no-emb-for-speaker"}
+        sug = {"available": True, **row}
+        if sug.get("verdict") == "compete":
+            win = next((r for r in vdata.get("results") or []
+                        if r.get("person") == sug.get("person")
+                        and r.get("verdict") in ("suggest", "uncalibrated")), None)
+            if win:
+                sug["compete_with"] = {"spk": win.get("spk"),
+                                       "score": win.get("score")}
+        if spk in (vdata.get("lang_missing") or []):
+            sug["lang_missing"] = True
+        return sug
 
     # ---------- URL 映射 ----------
 
@@ -261,16 +406,33 @@ class App:
         return 200, {"ok": True, "bvid": bvid, "title": title,
                      "parts": [self._part_view(r) for r in recs]}
 
-    def _part_view(self, rec):
+    @staticmethod
+    def _part_stem(rec):
+        """记录 → 产物目录名(work/<stem>):tagged 父目录名,缺则媒体 stem,
+        再缺则 BV_Pn 兜底。"""
         arts = rec.get("artifacts") or {}
         tagged = arts.get("tagged")
-        stem = None
         if tagged:
-            stem = Path(tagged).parent.name
-        elif rec.get("media_path"):
-            stem = Path(rec["media_path"]).stem
-        else:
-            stem = f"{rec['bvid']}_P{rec['part']}"
+            return Path(tagged).parent.name
+        if rec.get("media_path"):
+            return Path(rec["media_path"]).stem
+        return f"{rec['bvid']}_P{rec['part']}"
+
+    @staticmethod
+    def _read_langid(arts):
+        """langid.json → speakers 映射({spk: {"lang": ...}});读不到给空。"""
+        if arts.get("langid") and Path(arts["langid"]).exists():
+            try:
+                return (json.loads(
+                    Path(arts["langid"]).read_text(encoding="utf-8"))
+                    .get("speakers")) or {}
+            except (OSError, json.JSONDecodeError):
+                return {}
+        return {}
+
+    def _part_view(self, rec):
+        arts = rec.get("artifacts") or {}
+        stem = self._part_stem(rec)
         langid = None
         if arts.get("langid") and Path(arts["langid"]).exists():
             try:
@@ -295,7 +457,8 @@ class App:
         }
 
     def _speakers_view(self, arts, stem):
-        """说话人卡数据真源:tagged.srt 归人结论 + langid 语言 + 切好的样本。"""
+        """说话人卡数据真源:tagged.srt 归人结论 + langid 语言 + 切好的样本
+        + 声纹建议 suggest(票05:读 voiceid.json,过期重算)。"""
         talk, order = {}, []
         tagged = arts.get("tagged")
         if tagged and Path(tagged).exists():
@@ -306,14 +469,8 @@ class App:
                     talk[spk] = 0.0
                     order.append(spk)
                 talk[spk] += s.t1 - s.t0
-        langs = {}
-        if arts.get("langid") and Path(arts["langid"]).exists():
-            try:
-                langs = (json.loads(
-                    Path(arts["langid"]).read_text(encoding="utf-8"))
-                    .get("speakers")) or {}
-            except (OSError, json.JSONDecodeError):
-                langs = {}
+        langs = self._read_langid(arts)
+        vdata = self._voiceid_view(stem, langs, order)
         out = []
         for spk in sorted(order):
             sample = f"speaker_{stem}_{spk}_sample.wav"
@@ -326,6 +483,7 @@ class App:
                 if (self.web_audio_dir / sample).exists() else None,
                 "cands": ["/audio/" + c for c in cands
                           if (self.web_audio_dir / c).exists()],
+                "suggest": self._suggest_view(vdata, spk),
             })
         return out
 

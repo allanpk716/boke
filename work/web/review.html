@@ -117,6 +117,21 @@ const SIGS={};             // part号 -> 说话人 id 签名(rediarize 后自动
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function langTag(l){const m={zh:["zh","中文"],en:["en","英语"],ja:["ja","日语"],ko:["ko","韩语"]}[l]||[l?"unk":"",l||""];return l?`<span class="tag ${m[0]}">${esc(m[1])}</span>`:""}
 function talkMin(sec){return sec==null?"":`${(sec/60).toFixed(1)}分钟`}
+function fmtS(x){return x==null||isNaN(x)?"":Number(x).toFixed(2)}
+// 声纹建议徽章(票05四态):suggest/uncalibrated/compete/桩不可用;unknown 只显分数不预填
+function voiceBadge(sg){
+ if(!sg)return"";
+ if(!sg.available){const r=sg.reason||"stub-diarization";
+  const t=r==="stub-diarization"?"声纹建议不可用(分人为桩数据)":"声纹建议不可用("+esc(r)+")";
+  return `<div class="row"><span class="tag warn">${t}</span></div>`;}
+ if(sg.person==null||sg.score==null)return"";
+ const who=esc(sg.person)+" "+fmtS(sg.score);
+ const lm=sg.lang_missing?'<span class="note">(说话人语言未知,跨语言参考分)</span>':"";
+ if(sg.verdict==="suggest")return `<div class="row"><span class="tag zh">声纹建议: ${who}</span>${lm}</div>`;
+ if(sg.verdict==="uncalibrated")return `<div class="row"><span class="tag warn">声纹分数: ${who}(未校准,仅参考)</span>${lm}</div>`;
+ if(sg.verdict==="compete"){const c=sg.compete_with;
+  return `<div class="row"><span class="tag warn">与 ${esc(c?c.spk:"?")} 竞争${esc(sg.person)}(${fmtS(sg.score)} vs ${fmtS(c&&c.score)}),未建议</span></div>`;}
+ return `<div class="row"><span class="tag warn">声纹分数: ${who}(未达建议门)</span>${lm}</div>`;}
 function url2path(u){if(!u)return null;
  if(u.startsWith("/audio/"))return "work/web/audio/"+u.slice(7);
  if(u.startsWith("/refs/"))return "refs/"+u.slice(6);
@@ -176,9 +191,14 @@ function part(){return EP&&EP.parts[curPart]||null}
 function edits(p){
  if(!EDITS[p.part])EDITS[p.part]={
   verdict:p.suggest==="skip"?"skip":"dub",
-  speakers:(p.speakers||[]).map(s=>({id:s.id,lang:s.lang,talk_sec:s.talk_sec,
-   sample:s.sample,cands:s.cands||[],note:"",host:false,host_person:null,
-   merge:"",voice:"clone",preset_voice:"zh-CN-YunjianNeural",cand_idx:0}))};
+  speakers:(p.speakers||[]).map(s=>{
+   const sg=(s.suggest&&s.suggest.available)?s.suggest:null;
+   const pre=(sg&&sg.verdict==="suggest"&&sg.person)||null; // 声纹预填:仅 suggest(uncalibrated/compete/unknown 不预填)
+   const host=!!(pre&&sg.host_candidate&&sg.calibrated);     // 主持人须 host_candidate+calibrated 双真
+   return {id:s.id,lang:s.lang,talk_sec:s.talk_sec,
+    sample:s.sample,cands:s.cands||[],note:"",host,
+    host_person:pre,merge:"",voice:"clone",
+    preset_voice:"zh-CN-YunjianNeural",cand_idx:0}})};
  return EDITS[p.part];
 }
 function renderPart(){const p=part();const tabs=document.getElementById("ptabs");tabs.innerHTML="";
@@ -269,6 +289,8 @@ function renderSpeakers(){const p=part();const box=document.getElementById("spea
  if(!(p.speakers||[]).length){box.innerHTML='<div class="empty">该分P还没有说话人分析结论(等分析完成,或状态未到待核对)</div>';return;}
  box.innerHTML="";
  e.speakers.forEach((s,si)=>{
+  const api=(p.speakers||[]).find(x=>x.id===s.id);
+  const vb=voiceBadge(api&&api.suggest);   // 声纹徽章:显示层每次照 API 最新建议渲染
   const others=e.speakers.filter(o=>o.id!==s.id).map(o=>`<option value="${esc(o.id)}" ${s.merge===o.id?"selected":""}>${esc(o.id)}</option>`).join("");
   const presets=PRESETS.map(([v,n])=>`<option value="${v}" ${s.preset_voice===v?"selected":""}>${n}</option>`).join("");
   const cl=(s.cands.length?s.cands:(s.sample?[s.sample]:[]));
@@ -285,6 +307,7 @@ function renderSpeakers(){const p=part();const box=document.getElementById("spea
     <div class="who"><b>${esc(s.id)}</b> ${langTag(s.lang)} <span class="note">${talkMin(s.talk_sec)}</span></div>
     <button class="small ${s.host?"hostBtnOn":"ghost"}" onclick="toggleHost(${si})">${s.host?"✓ 主持人":"设为主持人"}</button>
    </div>
+   ${vb}
    ${s.sample?`<audio controls preload="none" src="${esc(s.sample)}"></audio>`:`<div class="note">该说话人暂无切好的样本(speaker_sample.wav),可先看视频听声</div>`}
    ${s.merge?"":`<div class="row"><button class="small ghost" onclick="openLibModal(${si})">➕ 存入人物库…</button>
     <span class="note">(参考音 → 人物,全局复用/声纹底料)</span></div>`}
@@ -317,7 +340,7 @@ function setVoice(si,v){const p=part();edits(p).speakers[si].voice=v;dirty=true;
  if(pr)pr.style.display=v==="preset"?"block":"none";}
 function toggleHost(si){const p=part();const e=edits(p);const s=e.speakers[si];
  if(!s.host){e.speakers.forEach(o=>o.host=false);s.host=true;
-  s.host_person=(PERSONS[0]&&PERSONS[0].name)||"圆脸";}
+  s.host_person=s.host_person||(PERSONS[0]&&PERSONS[0].name)||"圆脸";} // 已有声纹预填/用户改过则不覆盖
  else s.host=false;
  dirty=true;renderSpeakers();}
 
@@ -327,12 +350,17 @@ const TINTS=[["#eef4fb","#4a7ec0"],["#f4f0fa","#8a6fc0"],["#eefaf1","#3f9a68"],
 function renderPersons(){const box=document.getElementById("persons");
  if(!PERSONS.length){box.innerHTML='<div class="empty">人物库为空</div>';return;}
  box.innerHTML=PERSONS.map((p,i)=>{const [bg,edge]=TINTS[i%TINTS.length];
-  const refs=(p.refs||[]).map(r=>`<div class="cand">
+  // F9:人物卡展示默认只列克隆用途参考音;自动归档声纹样本(use=voiceid)不混入选音/试听列表
+  const all=p.refs||[];
+  const cloneRefs=all.filter(r=>(r.use||"clone")==="clone");
+  const vidN=all.length-cloneRefs.length;
+  const refs=cloneRefs.map(r=>`<div class="cand">
     ${r.audio_url?`<audio controls preload="none" src="${esc(r.audio_url)}"></audio>`:`<span class="note">(参考音文件不在服务目录:${esc(r.audio)})</span>`}
     <span class="note">${esc(r.lang||"")}${r.transcript?" · 有转写稿(可当主持人)":" · 无转写稿(只可 cross 克隆)"}${r.source&&r.source.kind==="episode"?` · 收录自 ${esc(r.source.bvid)} P${r.source.part} ${esc(r.source.spk)}`:" · 手动收录"}</span></div>`).join("");
+  const extra=vidN?`<div class="note">另有 ${vidN} 条自动归档声纹样本(use=voiceid,只用于声纹建议,不参与克隆选音/主持人挂接)</div>`:"";
   return `<div class="person" style="background:${bg};border-left:4px solid ${edge};border-radius:8px;padding:8px 10px;margin:6px 0">
    <div class="avatar" style="background:${edge}33;border:2px solid ${edge}">👤</div>
-   <div style="flex:1"><b style="color:${edge}">${esc(p.name)}</b> ${langTag(p.main_lang)} <span class="note">${esc(p.note||"")}</span>${refs}</div></div>`;}).join("");
+   <div style="flex:1"><b style="color:${edge}">${esc(p.name)}</b> ${langTag(p.main_lang)} <span class="note">${esc(p.note||"")}</span>${refs}${extra}</div></div>`;}).join("");
 }
 
 // ---------- 存入人物库弹窗 ----------
@@ -346,6 +374,9 @@ function openLibModal(si){const p=part();const e=edits(p);const s=e.speakers[si]
   <input type="radio" name="mref" value="${i}" ${i===0?"checked":""}>
   <audio controls preload="none" src="${esc(c)}"></audio><span class="note">${i===0?"候选①":"候选②"}</span></div>`).join("");
  document.getElementById("mExist").innerHTML=PERSONS.map(x=>`<option>${esc(x.name)}</option>`).join("");
+ const sg=(s.suggest&&s.suggest.available&&s.suggest.verdict==="suggest")?s.suggest:null;
+ if(sg&&sg.person){const sel=document.getElementById("mExist");   // 声纹建议可信 → 存入目标预选(可改)
+  if([...sel.options].some(o=>o.value===sg.person))sel.value=sg.person;}
  document.getElementById("mLang").value=s.lang||"zh";
  document.getElementById("mNote").value="";document.getElementById("mNew").value="";
  mtog(1);document.getElementById("modalWrap").classList.add("on");}
