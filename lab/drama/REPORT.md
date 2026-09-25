@@ -63,7 +63,7 @@
   - 参数：seed=20260925；每试次 3 段（A/B/X）× 20 s，44.1 kHz 立体声；18 试次成片 integrated LUFS 已对齐（A/B 最大差 0.1 dB，仅 T05，舍入级；响度不露馅）；播放副本（中性命名）在 `media/abx/play/`；制备自检（json↔音频一一对应 verify）全过（票07）。
   - 试次分层：en_dlg_clean 6 / zh_dlg_clean 5 / zh_dlg_clean_backfill 1 / en_sfx 3 / zh_sfx 3（合计 18）。
   - 选段调整：`bili_liangjian_ep02_g0087_g0088` 因分离人声近无声被剔除（viability ratio=0.016 < 0.10 闸），zh 对白干净层由 `bili_liangjian_ep02_g0000_g0001`（音效压对白）回填 1 席（`media/abx/stimuli_index.json` selection_audit/viability_note）。
-  - **near_transparent 三题单列解读提示**：**T03 / T10 / T15**（A/B 中段差异 rms 比 0.00081 / 0.001276 / 0.00969，均 <0.02）背景床几乎无声（对白主导），+2dB 再平衡被母带响度对齐数学抵消，重建≈原混——听不出差异是"该段链路透明"的正确感知，晨间分析对这三题的 50% 命中应按"不可判"解读，**不计入链路缺陷**（trials json `near_transparent_note`，README_listener 同）。
+  - **near_transparent 三题单列解读提示**：**T03 / T10 / T15**（A/B 中段差异 rms 比 0.00081 / 0.001276 / 0.00969，均 <0.02）背景床几乎无声（对白主导），+2dB 再平衡被母带响度对齐数学抵消，重建≈原混——听不出差异是"该段链路透明"的正确感知，晨间分析对这三题的 50% 命中应按"不可判"解读，**不计入链路缺陷**（trials json 逐试次 `expected_audibility: near_transparent` 字段，README_listener 同）。
   - 判定依据（F9 口径）：总体 18 题正确率分档（50%=瞎猜 / 65%=可辨），优先于显著性检验；分层只报告。
   - 结论：**未判定**——待用户 R1 盲听（怎么听一句话见 §4 R1）；归因回合执行待 F1 确认（§1）。所有制备侧陈述（如"A/B 差异与真实换声链分离/回混部分同构"）均为设计判断，未经盲听验证。
 
