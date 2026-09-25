@@ -1,0 +1,42 @@
+[
+ {
+  "pair_id": "P01",
+  "lang": "zh",
+  "clip": "yuanlian_chinese_01",
+  "ref": "lab\\drama\\clone_arm\\yuanlian_chinese_01.wav",
+  "ref_text": "服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发",
+  "ref_sec": null
+ },
+ {
+  "pair_id": "P02",
+  "lang": "en",
+  "clip": "blender_sintel_g0004",
+  "ref": "lab\\drama\\clone_arm\\ref_blender_sintel_g0004_134.wav",
+  "ref_text": "I'm searching for someone  someone",
+  "ref_sec": 3.3
+ },
+ {
+  "pair_id": "P03",
+  "lang": "en",
+  "clip": "blender_sintel_g0014",
+  "ref": "lab\\drama\\clone_arm\\ref_blender_sintel_g0014_445.wav",
+  "ref_text": "I have failed.",
+  "ref_sec": 3.4
+ },
+ {
+  "pair_id": "P04",
+  "lang": "en",
+  "clip": "blender_sintel_g0015",
+  "ref": "lab\\drama\\clone_arm\\ref_blender_sintel_g0015_460.wav",
+  "ref_text": "You are closer than you know.",
+  "ref_sec": 3.3
+ },
+ {
+  "pair_id": "P05",
+  "lang": "zh",
+  "clip": "yuanlian_chinese_02",
+  "ref": "lab\\drama\\clone_arm\\yuanlian_chinese_02.wav",
+  "ref_text": "是不太可能做的这是第一第二台湾问题CFA以及其他的Pollinville的专家都说中方多次表态希望美国能够在涉台问题上面更进一步表示对台独的明确反对现在有的是也是中美联合声明包括什么基辛格那个时候就开始说美国不支持台独不支持不代表一个反对",
+  "ref_sec": null
+ }
+]
