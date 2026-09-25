@@ -1,0 +1,18 @@
+{
+ "ref_words": 117,
+ "model": "small",
+ "device": "cpu-int8(cublas12缺dll,GPU路径留待补装nvidia-cublas-cu12)",
+ "tracks": {
+  "center": {
+   "wer": 0.3419,
+   "hyp_words": 77,
+   "sec": 12.1
+  },
+  "stereo_downmix": {
+   "wer": 0.453,
+   "hyp_words": 66,
+   "sec": 9.0
+  }
+ },
+ "conclusion": "center WER < stereo WER ⇒ 对白进中置成立"
+}
