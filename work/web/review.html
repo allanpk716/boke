@@ -32,6 +32,8 @@ button:disabled{background:#aaa;cursor:not-allowed}
 #statusCard .pvbtns{display:flex;gap:10px;margin-top:8px}
 #statusCard audio{width:100%;margin-top:8px}
 #statusCard .stale{background:#fdf0e7;color:#b06a00;border-radius:6px;padding:4px 10px;font-size:12px;display:inline-block;margin-top:6px}
+#archCard{display:none;background:#fdf0e7;border:1px solid #e8a13a;border-radius:10px;padding:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06);font-size:14px}
+#archCard .cand{margin:6px 0}
 #speakers{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
 .card{background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:2px solid transparent}
 .card.host{border-color:#e8a13a;background:#fffdf7}
@@ -77,6 +79,7 @@ input[type=text]{width:130px}
   </div>
   <div id="verdict" class="dub"></div>
   <div id="statusCard"></div>
+  <div id="archCard"></div>
   <div id="speakers"></div>
   <div id="libCard"><b>人物库</b> <span class="note">(主持人/常客:参考音全局复用;主持人须参考音+转写稿齐备且非本期分P来源)</span><div id="persons"><div class="empty">加载中…</div></div></div>
   <div id="footbar">
@@ -113,10 +116,27 @@ let LIB=null, EP=null, PERSONS=[], curBv=null, curPart=0;
 const EDITS={};            // part号 -> {verdict, speakers:[…用户决策]}
 let dirty=false;           // 当前 part 用户改过:轮询不重渲染说话人卡(防丢输入)
 const SIGS={};             // part号 -> 说话人 id 签名(rediarize 后自动重建)
+let ARCH_NOTE=null;        // 最近一次提交的归档回执(拦截提示块数据源,票06)
 
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function langTag(l){const m={zh:["zh","中文"],en:["en","英语"],ja:["ja","日语"],ko:["ko","韩语"]}[l]||[l?"unk":"",l||""];return l?`<span class="tag ${m[0]}">${esc(m[1])}</span>`:""}
 function talkMin(sec){return sec==null?"":`${(sec/60).toFixed(1)}分钟`}
+function fmtS(x){return x==null||isNaN(x)?"":Number(x).toFixed(2)}
+function langGroup(l){const n={zh:"中文",en:"英语",ja:"日语",ko:"韩语"}[l];return (n||l||"语言未识别")+"组"}
+// 声纹建议徽章(票05四态):suggest/uncalibrated/compete/桩不可用;unknown 只显分数不预填
+function voiceBadge(sg){
+ if(!sg)return"";
+ if(!sg.available){const r=sg.reason||"stub-diarization";
+  const t=r==="stub-diarization"?"声纹建议不可用(分人为桩数据)":"声纹建议不可用("+esc(r)+")";
+  return `<div class="row"><span class="tag warn">${t}</span></div>`;}
+ if(sg.person==null||sg.score==null)return"";
+ const who=esc(sg.person)+" "+fmtS(sg.score);
+ const lm=sg.lang_missing?'<span class="note">(说话人语言未知,跨语言参考分)</span>':"";
+ if(sg.verdict==="suggest")return `<div class="row"><span class="tag zh">声纹建议: ${who}</span>${lm}</div>`;
+ if(sg.verdict==="uncalibrated")return `<div class="row"><span class="tag warn">声纹分数: ${who}(未校准,仅参考)</span>${lm}</div>`;
+ if(sg.verdict==="compete"){const c=sg.compete_with;
+  return `<div class="row"><span class="tag warn">与 ${esc(c?c.spk:"?")} 竞争${esc(sg.person)}(${fmtS(sg.score)} vs ${fmtS(c&&c.score)}),未建议</span></div>`;}
+ return `<div class="row"><span class="tag warn">声纹分数: ${who}(未达建议门)</span>${lm}</div>`;}
 function url2path(u){if(!u)return null;
  if(u.startsWith("/audio/"))return "work/web/audio/"+u.slice(7);
  if(u.startsWith("/refs/"))return "refs/"+u.slice(6);
@@ -167,7 +187,7 @@ function renderEps(){const box=document.getElementById("eps");box.innerHTML="";
   d.innerHTML=`<div class="epTitle">${esc(g.title)}</div>
    <small>${esc(g.date||"")} · ${esc(g.bvid)} · ${g.parts.map(p=>p.status.replace("待","")).join("/")}</small>
    ${need?`<small class="need">👉 ${need} 个分P待核对</small>`:""}`;
-  d.onclick=async()=>{curBv=g.bvid;curPart=0;dirty=false;await loadEpisode(g.bvid);};
+  d.onclick=async()=>{curBv=g.bvid;curPart=0;dirty=false;ARCH_NOTE=null;renderArchNote(null);await loadEpisode(g.bvid);};
   box.appendChild(d);});
 }
 
@@ -176,16 +196,21 @@ function part(){return EP&&EP.parts[curPart]||null}
 function edits(p){
  if(!EDITS[p.part])EDITS[p.part]={
   verdict:p.suggest==="skip"?"skip":"dub",
-  speakers:(p.speakers||[]).map(s=>({id:s.id,lang:s.lang,talk_sec:s.talk_sec,
-   sample:s.sample,cands:s.cands||[],note:"",host:false,host_person:null,
-   merge:"",voice:"clone",preset_voice:"zh-CN-YunjianNeural",cand_idx:0}))};
+  speakers:(p.speakers||[]).map(s=>{
+   const sg=(s.suggest&&s.suggest.available)?s.suggest:null;
+   const pre=(sg&&sg.verdict==="suggest"&&sg.person)||null; // 声纹预填:仅 suggest(uncalibrated/compete/unknown 不预填)
+   const host=!!(pre&&sg.host_candidate&&sg.calibrated);     // 主持人须 host_candidate+calibrated 双真
+   return {id:s.id,lang:s.lang,talk_sec:s.talk_sec,
+    sample:s.sample,cands:s.cands||[],note:"",host,
+    host_person:pre,merge:"",voice:"clone",
+    preset_voice:"zh-CN-YunjianNeural",cand_idx:0}})};
  return EDITS[p.part];
 }
 function renderPart(){const p=part();const tabs=document.getElementById("ptabs");tabs.innerHTML="";
  if(!EP){document.getElementById("video").src="";document.getElementById("verdict").innerHTML="";return;}
  EP.parts.forEach((pt,i)=>{const t=document.createElement("div");t.className="ptab"+(i===curPart?" on":"");
   t.innerHTML=`P${pt.part}`+(pt.suggest==="skip"?'<span class="skipflag">建议跳过</span>':"");
-  t.onclick=()=>{curPart=i;dirty=false;renderPart();renderSpeakers();renderStatus();};
+  t.onclick=()=>{curPart=i;dirty=false;ARCH_NOTE=null;renderArchNote(null);renderPart();renderSpeakers();renderStatus();};
   tabs.appendChild(t);});
  const v=document.getElementById("video");
  const want=p&&p.media_url?p.media_url:"";
@@ -249,6 +274,30 @@ async function retryP(){const p=part();
   if(!r.ok||!d.ok){setStatus("❌ "+(d&&d.error||r.status),true);return;}
   setStatus("重试已提交…");await loadEpisode(EP.bvid);
  }catch(e){setStatus("❌ 网络错误",true);}}
+
+// ---------- 归档拦截提示块(票06 D6:默认拦下,试听后可「仍入库」人工裁决) ----------
+function renderArchNote(a){
+ const box=document.getElementById("archCard");
+ if(!a||!(a.blocked||[]).length){box.style.display="none";box.innerHTML="";return;}
+ box.style.display="";
+ box.innerHTML=`<b>⚠ ${a.blocked.length} 条新样本与人物现有声纹档案明显不符,默认未入库</b>
+  <div class="note">新样本均分低于同人分布 p5(认错人/坏样本的常见信号);可试听核对,确认无误再「仍入库」</div>`+
+  a.blocked.map(b=>`<div class="cand">
+   ${b.sample_url?`<audio controls preload="none" src="${esc(b.sample_url)}"></audio>`:`<span class="note">(样本不在服务目录:${esc(b.sample_path||"")})</span>`}
+   <span class="note"><b>${esc(b.spk)}</b> → ${esc(b.person||"?")} ${langTag(b.lang)} 均分 ${fmtS(b.score)} &lt; p5 ${fmtS(b.p5)}</span>
+   <button class="small" onclick="forceArchive('${esc(b.spk)}')">仍入库</button></div>`).join("")+
+  `<div class="row"><button class="small ghost" onclick="ARCH_NOTE=null;renderArchNote(null)">忽略,保持不入库</button></div>`;
+}
+async function forceArchive(spk){
+ try{const r=await fetch("/api/review/archive_force",{method:"POST",
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({bvid:EP.bvid,part:part().part,spk})});
+  const d=await r.json();
+  if(!r.ok||!d.ok){setStatus("❌ 仍入库失败:"+(d&&d.error||r.status),true);return;}
+  setStatus(`✅ 已仍入库:${spk} → ${d.person}(${langGroup(d.lang)}现有 ${d.total_after} 条)`);
+  if(ARCH_NOTE){ARCH_NOTE.blocked=(ARCH_NOTE.blocked||[]).filter(b=>b.spk!==spk);
+   renderArchNote(ARCH_NOTE);}
+ }catch(e){setStatus("❌ 网络错误",true);}}
 async function rediarize(){const p=part();
  const n=parseInt(prompt("重跑分人:最多几个人?(既有决策将清空重来)","4"),10);
  if(!n||n<1)return;
@@ -269,6 +318,8 @@ function renderSpeakers(){const p=part();const box=document.getElementById("spea
  if(!(p.speakers||[]).length){box.innerHTML='<div class="empty">该分P还没有说话人分析结论(等分析完成,或状态未到待核对)</div>';return;}
  box.innerHTML="";
  e.speakers.forEach((s,si)=>{
+  const api=(p.speakers||[]).find(x=>x.id===s.id);
+  const vb=voiceBadge(api&&api.suggest);   // 声纹徽章:显示层每次照 API 最新建议渲染
   const others=e.speakers.filter(o=>o.id!==s.id).map(o=>`<option value="${esc(o.id)}" ${s.merge===o.id?"selected":""}>${esc(o.id)}</option>`).join("");
   const presets=PRESETS.map(([v,n])=>`<option value="${v}" ${s.preset_voice===v?"selected":""}>${n}</option>`).join("");
   const cl=(s.cands.length?s.cands:(s.sample?[s.sample]:[]));
@@ -285,6 +336,7 @@ function renderSpeakers(){const p=part();const box=document.getElementById("spea
     <div class="who"><b>${esc(s.id)}</b> ${langTag(s.lang)} <span class="note">${talkMin(s.talk_sec)}</span></div>
     <button class="small ${s.host?"hostBtnOn":"ghost"}" onclick="toggleHost(${si})">${s.host?"✓ 主持人":"设为主持人"}</button>
    </div>
+   ${vb}
    ${s.sample?`<audio controls preload="none" src="${esc(s.sample)}"></audio>`:`<div class="note">该说话人暂无切好的样本(speaker_sample.wav),可先看视频听声</div>`}
    ${s.merge?"":`<div class="row"><button class="small ghost" onclick="openLibModal(${si})">➕ 存入人物库…</button>
     <span class="note">(参考音 → 人物,全局复用/声纹底料)</span></div>`}
@@ -317,7 +369,7 @@ function setVoice(si,v){const p=part();edits(p).speakers[si].voice=v;dirty=true;
  if(pr)pr.style.display=v==="preset"?"block":"none";}
 function toggleHost(si){const p=part();const e=edits(p);const s=e.speakers[si];
  if(!s.host){e.speakers.forEach(o=>o.host=false);s.host=true;
-  s.host_person=(PERSONS[0]&&PERSONS[0].name)||"圆脸";}
+  s.host_person=s.host_person||(PERSONS[0]&&PERSONS[0].name)||"圆脸";} // 已有声纹预填/用户改过则不覆盖
  else s.host=false;
  dirty=true;renderSpeakers();}
 
@@ -327,13 +379,54 @@ const TINTS=[["#eef4fb","#4a7ec0"],["#f4f0fa","#8a6fc0"],["#eefaf1","#3f9a68"],
 function renderPersons(){const box=document.getElementById("persons");
  if(!PERSONS.length){box.innerHTML='<div class="empty">人物库为空</div>';return;}
  box.innerHTML=PERSONS.map((p,i)=>{const [bg,edge]=TINTS[i%TINTS.length];
-  const refs=(p.refs||[]).map(r=>`<div class="cand">
+  // F9:人物卡展示默认只列克隆用途参考音;自动归档声纹样本(use=voiceid)不混入选音/试听列表
+  const all=p.refs||[];
+  const cloneRefs=all.filter(r=>(r.use||"clone")==="clone");
+  const vidN=all.length-cloneRefs.length;
+  const refs=cloneRefs.map(r=>`<div class="cand">
     ${r.audio_url?`<audio controls preload="none" src="${esc(r.audio_url)}"></audio>`:`<span class="note">(参考音文件不在服务目录:${esc(r.audio)})</span>`}
     <span class="note">${esc(r.lang||"")}${r.transcript?" · 有转写稿(可当主持人)":" · 无转写稿(只可 cross 克隆)"}${r.source&&r.source.kind==="episode"?` · 收录自 ${esc(r.source.bvid)} P${r.source.part} ${esc(r.source.spk)}`:" · 手动收录"}</span></div>`).join("");
+  const extra=vidN?`<div class="note">另有 ${vidN} 条自动归档声纹样本(use=voiceid,只用于声纹建议,不参与克隆选音/主持人挂接)</div>`:"";
+  const open=!!ARCH_OPEN[p.name];   // 票07:声纹档案管理区(展开按需拉取)
   return `<div class="person" style="background:${bg};border-left:4px solid ${edge};border-radius:8px;padding:8px 10px;margin:6px 0">
    <div class="avatar" style="background:${edge}33;border:2px solid ${edge}">👤</div>
-   <div style="flex:1"><b style="color:${edge}">${esc(p.name)}</b> ${langTag(p.main_lang)} <span class="note">${esc(p.note||"")}</span>${refs}</div></div>`;}).join("");
+   <div style="flex:1"><b style="color:${edge}">${esc(p.name)}</b> ${langTag(p.main_lang)} <span class="note">${esc(p.note||"")}</span>${refs}${extra}
+    <div class="row"><button class="small ghost" onclick="toggleArchive(${i})">${open?"▾":"▸"} 声纹档案(${vidN})</button>
+     <span class="note">(自动归档样本管理:试听/删除;失效条不参与识别与计数)</span></div>
+    ${open?renderArchive(i):""}</div></div>`;}).join("");
 }
+
+// ---------- 声纹档案管理区(票07:人物×语言分组列表/试听/删除;F11 失效标记) ----------
+const ARCH={}, ARCH_OPEN={};   // 人物名 → /archive 响应缓存;展开状态
+function toggleArchive(i){const p=PERSONS[i];if(!p)return;
+ if(ARCH_OPEN[p.name]){ARCH_OPEN[p.name]=false;renderPersons();return;}
+ ARCH_OPEN[p.name]=true;renderPersons();
+ if(!ARCH[p.name])loadArchive(i);}
+async function loadArchive(i){const p=PERSONS[i];if(!p)return;
+ try{const r=await fetch("/api/persons/"+encodeURIComponent(p.name)+"/archive");
+  const d=await r.json();
+  if(d.ok){ARCH[p.name]=d;if(ARCH_OPEN[p.name])renderPersons();}}catch(e){}}
+function renderArchive(i){const p=PERSONS[i];const d=ARCH[p.name];
+ if(!d)return '<div class="note">档案加载中…</div>';
+ if(!(d.groups||[]).length)return '<div class="note">暂无声纹档案(提交核对并分配人物后自动归档到这里)</div>';
+ return d.groups.map((g,gi)=>`<div style="margin:6px 0 2px">
+  <b>${esc(langGroup(g.lang))} ${g.count} 条</b>${g.invalid?` <span class="tag warn">另有 ${g.invalid} 条失效</span>`:""}
+  ${g.entries.map((e,ei)=>`<div class="cand" ${e.valid?"":'style="opacity:.45"'}>
+   ${e.valid?(e.audio_url?`<audio controls preload="none" src="${esc(e.audio_url)}"></audio>`:`<span class="note">(样本不在服务目录:${esc(e.ref_path)})</span>`):`<span class="tag warn">文件缺失(失效)</span>`}
+   <span class="note">${e.bvid?`${esc(e.bvid)} P${esc(e.part)} ${esc(e.spk||"")}`:"来源未知"}${e.model?` · ${esc(e.model)}`:""}${e.ts?` · ${esc(e.ts)}`:""}</span>
+   <button class="small ghost" onclick="delArchive(${i},${gi},${ei})">删除</button></div>`).join("")}
+  </div>`).join("");}
+async function delArchive(i,gi,ei){const p=PERSONS[i];if(!p)return;
+ const g=((ARCH[p.name]||{}).groups||[])[gi];const e=g&&g.entries[ei];
+ if(!e)return;
+ if(!confirm("删除该归档条目?将级联清理参考音条目、声纹向量与样本文件,不可恢复"))return;
+ try{const r=await fetch("/api/persons/"+encodeURIComponent(p.name)+"/archive",
+  {method:'DELETE',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({ref_path:e.ref_path})});
+  const d=await r.json();
+  if(!r.ok||!d.ok){setStatus("❌ 删除失败:"+(d&&d.error||r.status),true);return;}
+  setStatus(`✅ 已删除「${p.name}」的归档条目(向量记录 ${d.cache_removed} 条、样本文件 ${d.sample_files_deleted.length} 个)`);
+  loadArchive(i);}catch(e){setStatus("❌ 网络错误",true);}}
 
 // ---------- 存入人物库弹窗 ----------
 let libCtx=null;
@@ -346,6 +439,9 @@ function openLibModal(si){const p=part();const e=edits(p);const s=e.speakers[si]
   <input type="radio" name="mref" value="${i}" ${i===0?"checked":""}>
   <audio controls preload="none" src="${esc(c)}"></audio><span class="note">${i===0?"候选①":"候选②"}</span></div>`).join("");
  document.getElementById("mExist").innerHTML=PERSONS.map(x=>`<option>${esc(x.name)}</option>`).join("");
+ const sg=(s.suggest&&s.suggest.available&&s.suggest.verdict==="suggest")?s.suggest:null;
+ if(sg&&sg.person){const sel=document.getElementById("mExist");   // 声纹建议可信 → 存入目标预选(可改)
+  if([...sel.options].some(o=>o.value===sg.person))sel.value=sg.person;}
  document.getElementById("mLang").value=s.lang||"zh";
  document.getElementById("mNote").value="";document.getElementById("mNew").value="";
  mtog(1);document.getElementById("modalWrap").classList.add("on");}
@@ -379,6 +475,7 @@ document.getElementById("submitBtn").onclick=async()=>{
   speakers:e.speakers.map(s=>({
    id:s.id,note:s.note||"",host:!!s.host,
    host_person:s.host?(s.host_person||PERSONS[0]&&PERSONS[0].name):null,
+   person:s.host?null:(s.host_person||null), // 声纹归档目标(建议预填/人工指认,提交=确认;票06)
    merge_into:s.merge||null,
    voice:s.host?"clone":s.voice,
    preset_voice:s.voice==="preset"?s.preset_voice:null,
@@ -390,7 +487,13 @@ document.getElementById("submitBtn").onclick=async()=>{
   if(!r.ok||!d.ok){setStatus("❌ "+(d&&d.error||r.status),true);return;}
   if(d.voided){setStatus("已提交重跑分人,决策已清空");delete EDITS[p.part];}
   else if(d.excluded)setStatus(`✅ P${p.part} 已按你的确认排除(全中文跳过)`);
-  else setStatus(`✅ 已提交(决策 ${d.dec_hash}),小样生成中…`);
+  else{let m=`✅ 已提交(决策 ${d.dec_hash}),小样生成中…`; // 归档回显(D4:已为圆脸归档 2 条(中文组现有 8 条))
+   const sums=(d.archive&&d.archive.summaries)||[];
+   if(sums.length)m+=" | "+sums.map(s=>`已为${s.person}归档 ${s.archived} 条(${langGroup(s.lang)}现有 ${s.total} 条)`).join(";");
+   if(d.archive&&d.archive.archive_error)m+=` | ⚠ 声纹归档未完成:${d.archive.archive_error}`;
+   setStatus(m);}
+  ARCH_NOTE=d.archive||null; // 拦截提示块(D6:试听+仍入库),切走自动收起
+  renderArchNote(ARCH_NOTE);
   dirty=false;await loadEpisode(EP.bvid);
  }catch(e){setStatus("❌ 网络错误",true);}};
 

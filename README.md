@@ -15,8 +15,10 @@
 | D7 | TTS 选型 | Fun-CosyVoice3-0.5B-2512（+RL 权重），交接包 02 篇选型不动 |
 | D8 | 项目位置 | `C:\WorkSpace\agent\boke`，git 管理；交接包拷贝至 docs/research/（SynologyDrive 原件不动） |
 | D9 | 媒体存储 | 视频等大文件存 `D:\boke_media`（D 盘 3TB 空闲），仓库内只放代码/配置/文档 |
+| D16/D17 | 声纹自动认人 | 复用分人自带 embedding 薄层自研认人（cosine+双门+互斥）；档案向量=样本直抽、一套参考音+use 标记（clone/voiceid）、校准双条件解锁预填、只预填不代提交；出处：docs/research/04_声纹识别自动认人.md + docs/superpowers/specs/20260925-声纹自动认人-spec.md |
 
 > 范围变更说明：交接包 01 §1.3 原写"不做视频下载"，2026-09-23 经讨论扩入范围（充电专属视频批量下载成为前置环节）。
+> 声纹自动认人（D16/D17）：2026-09-25 与用户确认。
 
 ## 目录约定
 

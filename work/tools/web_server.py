@@ -11,10 +11,32 @@
 
 API 路由(全部 JSON;页面轮询 /api/library 每 2s 刷新):
   GET  /api/library                     账本全量+管道计数+待办+播主清单
-  GET  /api/episode/<bvid>              期详情(parts/说话人样本/langid/小样/成品)
-  GET  /api/persons                     人物库(参考音附可试听 URL)
+  GET  /api/episode/<bvid>              期详情(parts/说话人样本/langid/小样/成品;
+                                        每说话人附声纹建议 suggest,票05)
+  GET  /api/persons                     人物库(参考音附可试听 URL;refs 全量带 use)
+  GET  /api/persons/<name>/archive      声纹档案列表(票07):按语言分组返回
+                                        persons_emb 条目(person/lang/ref_path/
+                                        bvid/part/spk/ts/model/valid/audio_url,
+                                        不外露 vec);组计数只算有效条目,失效单列;
+                                        valid = F11 ref_path 文件存在性
+  DELETE /api/persons/<name>/archive    删一条归档条目 {ref_path}(票07):走票03
+                                        级联清单——删 refs 条目(use=voiceid)+
+                                        persons_emb 向量记录+自动样本文件(仅动
+                                        web 音频目录内的文件);幂等可重试
   POST /api/ingest                      {bv} 或 {items:[...]} 导入;cookie 失效 423
   POST /api/review                      每分P决策 JSON → 03 应用器 → 05 小样(后台)
+                                        + 票06 归档闭环(同步):按最终说话人集合
+                                        (应用 merge_into)逐 SPK 切 ≤30s 样本 → 样本
+                                        直抽向量(F2)→ 一致性检查(票02,可拦)→
+                                        persons refs[](use=voiceid)+ persons_emb
+                                        (FIFO 封顶 10)→ 阈值重算(票02 校准);
+                                        回执附 archive{archived,blocked,skipped,
+                                        summaries,recalibrated[,archive_error]}。
+                                        归档失败不回滚提交(提交已成功),降级记
+                                        archive_error / skipped。
+  POST /api/review/archive_force        一致性拦截的「仍入库」人工裁决(D6):
+                                        {bvid, part, spk} 对本期已提交决策里的
+                                        说话人重走归档(跳一致性检查,样本复用)
   POST /api/preview/<bvid>/<part>       {"verdict":"pass|fail"} → 06 全片(后台)/回退
   POST /api/retry/<bvid>/<part>         失败断点重试(按失败前主态路由 04/05/06)
   POST /api/persons/ref                 收录说话人候选到人物(episode 来源必须带 part)
@@ -23,10 +45,21 @@ API 路由(全部 JSON;页面轮询 /api/library 每 2s 刷新):
 04/05/06;每分P同时至多一个后台任务(进程内 dict 防重入);线程异常必落
 账本失败态(待核对等无失败边的主态只清 busy 并打日志,不裸吞)。
 
+声纹建议(票05):分析/重跑分人完成后自动跑 voiceid.identify 落
+work/<stem>/voiceid.json(桩/mock 分 P 落 available:false);GET /api/episode
+读它,档案(persons_emb.json)/阈值(voiceid_thresholds.json)比它新则重算
+一次再返回(毫秒级)。识别读档处按 ref_path 存在性过滤(F11,票07):样本
+文件已缺失的条目视为失效,不参与打分与计数——票02 VoiceArchive 读侧无注入
+点,过滤落在 _voiceid_compute 装载处(_ref_valid)。分人有无 embeddings
+一律查 spk_emb 两件产物文件存在性,不依赖 diarize.run() 返回键(票01 评审
+裁定:resume 早退分支无键)。
+
 绑定 0.0.0.0:8765;测试用 make_server("127.0.0.1", 0, app) 起随机端口实例。
 """
 import json
+import os
 import re
+import subprocess
 import sys
 import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -43,7 +76,7 @@ if str(_SRC) not in sys.path:
 
 from boke import attribute, diarize, fullmix           # noqa: E402
 from boke import orchestrator, preview as boke_preview   # noqa: E402
-from boke import review_apply                            # noqa: E402
+from boke import review_apply, voiceid                   # noqa: E402
 from boke.common import parse_srt                        # noqa: E402
 from boke.library import (                               # noqa: E402
     EV_CONFIRM_SKIP, EV_FAIL, EV_PREVIEW_REJECT, EV_REDIARIZE, EV_REVIEW_SUBMIT,
@@ -56,12 +89,17 @@ from boke.persons import PersonLibrary                   # noqa: E402
 from boke.review_apply import DecisionError              # noqa: E402
 
 _EP_RE = re.compile(r"^/api/episode/([A-Za-z0-9]+)$")
+_PERSONS_ARCHIVE_RE = re.compile(r"^/api/persons/([^/]+)/archive$")
 _PREVIEW_RE = re.compile(r"^/api/preview/([^/]+)/(\d+)$")
 _RETRY_RE = re.compile(r"^/api/retry/([^/]+)/(\d+)$")
 _SPK_RE = re.compile(r"^\[(SPK_\d+)\]")
+# 博主人物(人物库种子名;voiceid 主持人候选只对它,host_person 校验链见 review_apply)
+HOST_PERSON = "圆脸"
 # /work 与 /refs 只放行音频扩展(小样 mp3/成品 m4a/说话人样本与参考音 wav)
 _AUDIO_EXTS = {".mp3", ".m4a", ".wav", ".flac"}
 _VIDEO_EXTS = {".mp4", ".mkv", ".flv", ".webm"}
+# 归档样本上限(spec:≤30s;选段法复用 cut_speaker_samples,3.5-8s 整段×至多3段)
+ARCHIVE_SAMPLE_MAX_S = 30.0
 
 
 def _norm_part(p):
@@ -77,6 +115,24 @@ def _norm_part(p):
         return None
 
 
+def _pick_sample_segments(segs, n_each=3, min_dur=3.5, max_dur=8.0,
+                          min_gap=60.0, total_max=ARCHIVE_SAMPLE_MAX_S):
+    """归档样本选段(复用 work/tools/cut_speaker_samples.py 的切法,纯函数):
+    挑 3.5-8s 整段、彼此起点间距>60s、累计≤30s、至多 n_each 段;空 → 调用方
+    视为样本切不出。"""
+    picked, total = [], 0.0
+    for t0, t1 in sorted(segs or []):
+        dur = t1 - t0
+        if (min_dur <= dur <= max_dur
+                and all(abs(t0 - p0) > min_gap for p0, _ in picked)
+                and total + dur <= total_max):
+            picked.append((t0, t1))
+            total += dur
+        if len(picked) >= n_each:
+            break
+    return picked
+
+
 # ---------------- 应用层(路由处理器,可整体注入测试替身) ----------------
 
 
@@ -84,7 +140,8 @@ class App:
     """API 应用:持账本/人物库/编排器与后台任务调度,方法返回 (code, obj)。"""
 
     def __init__(self, lib=None, persons=None, orch=None, work_dir=None,
-                 web_audio_dir=None, catalog_path=None):
+                 web_audio_dir=None, catalog_path=None,
+                 persons_emb_path=None, thresholds_path=None, extract_fn=None):
         self.work_dir = Path(work_dir) if work_dir else WORK
         self.lib = lib if lib is not None else Library(self.work_dir / "library.json")
         self.persons = persons if persons is not None else PersonLibrary()
@@ -93,6 +150,14 @@ class App:
         self.web_audio_dir = Path(web_audio_dir) if web_audio_dir else WEB / "audio"
         self.catalog_path = Path(catalog_path) if catalog_path \
             else WORK / "space_videos.json"
+        # 声纹建议数据源(票05):档案向量缓存与阈值表,默认随 work_dir
+        self.persons_emb_path = Path(persons_emb_path) if persons_emb_path \
+            else self.work_dir / "persons_emb.json"
+        self.thresholds_path = Path(thresholds_path) if thresholds_path \
+            else self.work_dir / "voiceid_thresholds.json"
+        # 样本直抽向量抽取器(票06 归档):默认懒解析 boke.voiceid_extract
+        # (.venv-diar 子进程),测试注入 stub 验证 F2「档案向量=样本直抽」
+        self.extract_fn = extract_fn
         self.sync_bg = False          # 测试注入:后台任务同步执行
         self._bg = {}                 # (bvid, part) -> stage,防重入
         self._bg_lock = threading.Lock()
@@ -149,7 +214,9 @@ class App:
     def _run_download_analyze(self, bvid, part):
         r = self.orch.download(bvid, part)
         if r.get("ok"):
-            self.orch.analyze(bvid, part)
+            r2 = self.orch.analyze(bvid, part)
+            if r2.get("ok"):
+                self._voiceid_after_diarize(bvid, part)   # 票05:分人完成钩子
 
     def _run_preview(self, bvid, part):
         boke_preview.generate_preview(bvid, part, library=self.lib,
@@ -190,7 +257,349 @@ class App:
                      "tagged": a.get("tagged") or str(self.work_dir / stem / "tagged.srt"),
                      "langid": out["langid"], "langid_suggest": out["suggest"]})
         self.lib.update(bvid, part, artifacts=arts)
+        self._voiceid_after_diarize(bvid, part)          # 票05:重跑分人后刷新建议
         self.lib.set_busy(bvid, part, False)
+
+    # ---------- 声纹建议(票05) ----------
+
+    def _voiceid_after_diarize(self, bvid, part):
+        """分人完成钩子:分析/重跑分人产物就绪后自动识别,落
+        work/<stem>/voiceid.json(桩分 P 落 available:false);失败只打日志
+        不阻断主链(建议是旁路增强,不拖累分析/重跑)。"""
+        rec = self.lib.get(bvid, part) or {}
+        stem = self._part_stem(rec)
+        try:
+            self._voiceid_write(stem, self._voiceid_compute(
+                stem, self._read_langid(rec.get("artifacts") or {})))
+        except OSError as e:
+            print(f"[voiceid] 落盘失败 {bvid} P{part}:{e}", flush=True)
+
+    def _voiceid_compute(self, stem, langs):
+        """spk_emb 两件产物 × 声纹档案 × 阈值 → identify 输出(票02 总入口)。
+
+        桩/mock 分 P 无两件产物 → {"available": false, "reason": "stub-diarization"}
+        (判有无 embeddings 只查文件存在性,不依赖 diarize.run() 返回键)。
+        langs 是 langid.json 的 speakers 原始映射({spk: {"lang": ...}});
+        各类损坏逐项降级不炸 GET(坏档案/坏标签 → available:false,坏阈值 → 只显示)。
+        """
+        wdir = self.work_dir / stem
+        npy, meta = wdir / "spk_emb.npy", wdir / "spk_emb.json"
+        if not (npy.exists() and meta.exists()):
+            return {"available": False, "reason": "stub-diarization"}
+        try:
+            import numpy as np
+            emb = np.load(str(npy))
+            labels = (json.loads(meta.read_text(encoding="utf-8"))
+                      or {}).get("labels")
+            if not isinstance(labels, list) or len(labels) != int(emb.shape[0]):
+                return {"available": False, "reason": "emb-labels-mismatch"}
+            speakers = [{"spk": lb,
+                         "vec": [float(x) for x in emb[i]],
+                         "lang": ((langs.get(lb) or {}).get("lang")
+                                  if isinstance(langs.get(lb), dict) else None)}
+                        for i, lb in enumerate(labels)]
+        except Exception as e:
+            return {"available": False, "reason": f"emb-load-error:{e}"}
+        try:
+            entries = voiceid.VoiceArchive(path=self.persons_emb_path).entries()
+        except RuntimeError as e:
+            return {"available": False, "reason": f"persons-emb-damaged:{e}"}
+        # F11(票07):样本文件已缺失的条目视为失效,不参与识别打分
+        entries = [e for e in entries if self._ref_valid(e.get("ref_path"))]
+        try:
+            thresholds = voiceid.load_thresholds(self.thresholds_path)
+        except RuntimeError:
+            thresholds = None     # 阈值文件损坏 → 只显示不预填(同语言档缺失口径)
+        out = voiceid.identify(speakers, entries, thresholds,
+                               host_person=HOST_PERSON)
+        return {"available": True, "results": out["results"],
+                "host_candidates": out["host_candidates"],
+                "lang_missing": [s["spk"] for s in speakers if not s["lang"]]}
+
+    def _voiceid_write(self, stem, data):
+        """voiceid.json 原子落盘(同库风格:临时文件写全后 os.replace)。"""
+        wdir = self.work_dir / stem
+        wdir.mkdir(parents=True, exist_ok=True)
+        tmp = wdir / "voiceid.json.tmp"
+        tmp.write_text(json.dumps(data, ensure_ascii=False, indent=1),
+                       encoding="utf-8")
+        os.replace(tmp, wdir / "voiceid.json")
+
+    def _voiceid_fresh(self, data, vpath, order):
+        """voiceid.json 可直接复用否:档案/阈值不比它新、说话人集合对得上、
+        桩标记与产物现状一致。"""
+        if not isinstance(data, dict) or not vpath.exists():
+            return False
+        npy, meta = vpath.parent / "spk_emb.npy", vpath.parent / "spk_emb.json"
+        if not (npy.exists() and meta.exists()):
+            return data.get("available") is False    # 桩分 P:标记仍成立
+        if not data.get("available"):
+            return False                              # 桩标记但产物已出现 → 重算
+        try:
+            vt = vpath.stat().st_mtime
+            if any(p.exists() and p.stat().st_mtime > vt
+                   for p in (self.persons_emb_path, self.thresholds_path)):
+                return False                          # 档案/阈值更新 → 重算
+        except OSError:
+            return False
+        have = {r.get("spk") for r in data.get("results") or []}
+        return set(order) <= have                     # 说话人集合变化 → 重算
+
+    def _voiceid_view(self, stem, langs, order):
+        """GET 路径:voiceid.json 新鲜即读;过期(档案/阈值更新、说话人集合
+        变化、文件缺)→ identify 重算一次(毫秒级)再返回;真识别结果顺手落盘,
+        桩标记不代写(桩标记由分人完成钩子落,GET 保持只读)。"""
+        vpath = self.work_dir / stem / "voiceid.json"
+        data = None
+        if vpath.exists():
+            try:
+                data = json.loads(vpath.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                data = None
+        if not self._voiceid_fresh(data, vpath, order):
+            data = self._voiceid_compute(stem, langs)
+            if data.get("available"):
+                try:
+                    self._voiceid_write(stem, data)
+                except OSError:
+                    pass               # 落盘失败不影响本次返回
+        return data
+
+    def _suggest_view(self, vdata, spk):
+        """voiceid 结果 → 单说话人 suggest 载荷(四态数据源,UI 只做渲染):
+        {available, reason?} | {verdict, person, score, margin, calibrated,
+        host_candidate, top_ref[, compete_with][, lang_missing]}。"""
+        if not (isinstance(vdata, dict) and vdata.get("available")):
+            reason = vdata.get("reason") if isinstance(vdata, dict) else None
+            return {"available": False, "reason": reason or "stub-diarization"}
+        row = next((r for r in vdata.get("results") or []
+                    if r.get("spk") == spk), None)
+        if row is None:
+            return {"available": False, "reason": "no-emb-for-speaker"}
+        sug = {"available": True, **row}
+        if sug.get("verdict") == "compete":
+            win = next((r for r in vdata.get("results") or []
+                        if r.get("person") == sug.get("person")
+                        and r.get("verdict") in ("suggest", "uncalibrated")), None)
+            if win:
+                sug["compete_with"] = {"spk": win.get("spk"),
+                                       "score": win.get("score")}
+        if spk in (vdata.get("lang_missing") or []):
+            sug["lang_missing"] = True
+        return sug
+
+    # ---------- 归档闭环(票06:D4 提交即归档 / D5 逐 SPK / D6 拦截+仍入库 / D7 校准) ----------
+
+    def _archive_after_review(self, bvid, part, decision):
+        """api_review 提交成功分支钩子(同步;回执要带归档结果)。
+
+        按最终说话人集合(应用 merge_into)逐 SPK 归档——被合并分身与最终目标
+        同人物,各成独立条(D5/F2:每 SPK 一条样本直抽条目,不平均质心);
+        说话人未分配人物(voice=skip / 无 host_person、person)不归档。
+        归档绝不回滚提交:钩子级异常降级 archive_error,单 SPK 失败记 skipped。
+        """
+        out = {"archived": [], "blocked": [], "skipped": [], "summaries": [],
+               "recalibrated": False}
+        try:
+            rec = self.lib.get(bvid, part) or {}
+            arts = rec.get("artifacts") or {}
+            stem = self._part_stem(rec)
+            audio = arts.get("audio") or self.work_dir / stem / "audio.wav"
+            langs = self._read_langid(arts)
+            try:
+                thresholds = voiceid.load_thresholds(self.thresholds_path)
+            except RuntimeError:
+                thresholds = None              # 阈值文件损坏 → 一致性判定放行口径
+            arch = voiceid.VoiceArchive(path=self.persons_emb_path)
+            speakers = {s.get("id"): s for s in decision.get("speakers") or []
+                        if isinstance(s, dict) and s.get("id")}
+            resolved = self._resolve_merges(speakers)
+            for sid in speakers:
+                try:
+                    r = self._archive_speaker(sid, speakers, resolved, langs,
+                                              thresholds, arch, bvid, part,
+                                              arts.get("tagged"), audio)
+                except Exception as e:         # 单 SPK 失败不拖垮其他
+                    r = {"status": "skipped", "reason": f"{e}"}
+                if r["status"] == "archived":
+                    out["archived"].append(r["payload"])
+                elif r["status"] == "blocked":
+                    out["blocked"].append(r["payload"])
+                else:
+                    out["skipped"].append({"spk": sid, "reason": r["reason"]})
+        except Exception as e:
+            out["archive_error"] = f"{e}"
+            print(f"[archive] 归档失败 {bvid} P{part}:{e}", flush=True)
+            return out
+        # 回显文案数据(D4):按人物+语言聚合 → "已为圆脸归档 2 条(中文组现有 8 条)"
+        agg = {}
+        for a in out["archived"]:
+            k = (a["person"], str(a["lang"]))
+            if k not in agg:
+                agg[k] = {"person": a["person"], "lang": a["lang"],
+                          "archived": 0, "total": 0}
+            agg[k]["archived"] += 1
+            agg[k]["total"] = a["total_after"]
+        out["summaries"] = list(agg.values())
+        if out["archived"]:                    # 有入库才重算(D7),拦/跳不动阈值
+            try:
+                self._recalibrate_thresholds()
+                out["recalibrated"] = True
+            except Exception as e:
+                out["archive_error"] = f"阈值重算失败:{e}"
+        return out
+
+    def _archive_speaker(self, sid, speakers, resolved, langs, thresholds, arch,
+                         bvid, part, tagged, audio, force=False):
+        """单 SPK 归档一步到位:person 解析(merge 后最终目标)→ 切/复用样本 →
+        样本直抽向量(F2)→(force 跳过)一致性检查(票02)→ refs[](use=voiceid)
+        + persons_emb 该语言组入库。返回 {status: archived|blocked|skipped, ...}。"""
+        tgt = speakers.get(resolved.get(sid, sid)) or {}
+        person = self._archive_person_of(tgt)
+        if tgt.get("voice") == "skip" or not person:
+            return {"status": "skipped",
+                    "reason": "说话人未分配人物(voice=skip / 无 host_person、"
+                              "person 字段),不归档"}
+        if self.persons.get(person) is None:
+            return {"status": "skipped", "reason": f"人物库无人物:{person}"}
+        spk_lang = (langs.get(sid) or {}).get("lang") \
+            if isinstance(langs.get(sid), dict) else None
+        lang = spk_lang or (self.persons.get(person) or {}).get("main_lang")
+        cached = self.web_audio_dir / f"voiceid_{bvid}_P{part}_{sid}.wav"
+        sample = cached.resolve() if cached.exists() else \
+            self._archive_cut_sample(bvid, part, sid, tagged, audio)
+        if not sample:
+            return {"status": "skipped",
+                    "reason": "样本切不出(无 3.5-8s 说话人整段,试听台同款选段)"}
+        sample = Path(sample).resolve()
+        # 幂等:该样本已在人物参考音清单(重复提交/重复 force)不重复归档
+        if any(r.get("audio") == str(sample)
+               for r in self.persons.list_refs(person, use="voiceid")):
+            return {"status": "skipped",
+                    "reason": f"样本已在该人物参考音清单({sample.name}),不重复归档"}
+        vec = self._extract_vec(sample)
+        if not force:
+            ok, sc, why = voiceid.check_consistency(
+                vec, lang, arch.entries(person=person, lang=lang), thresholds)
+            if not ok:
+                tier = ((thresholds or {}).get("langs") or {}).get(lang) or {}
+                return {"status": "blocked", "payload": {
+                    "spk": sid, "person": person, "lang": lang, "score": sc,
+                    "p5": tier.get("genuine_p5"), "sample_path": str(sample),
+                    "sample_url": self._audio_url(sample), "reason": why}}
+        from boke import voiceid_extract
+        self.persons.add_ref(person, str(sample), None, lang,
+                             {"kind": "episode", "bvid": bvid, "part": part,
+                              "spk": sid}, use="voiceid")
+        arch.add_entry(person, lang, vec, str(sample), bvid=bvid, part=part,
+                       spk=sid, model=voiceid_extract.MODEL_ID)
+        return {"status": "archived", "payload": {
+            "spk": sid, "person": person, "lang": lang, "ref_path": str(sample),
+            "total_after": len(arch.entries(person=person, lang=lang))}}
+
+    @staticmethod
+    def _archive_person_of(spk_decision):
+        """决策条目 → 归档目标人物:主持人取 host_person;其余取 person 字段
+        (声纹建议预填/人工指认,提交=确认,D8);都没有 → None 不归档。"""
+        d = spk_decision or {}
+        if d.get("host"):
+            return str(d.get("host_person") or "").strip() or None
+        return str(d.get("person") or "").strip() or None
+
+    @staticmethod
+    def _resolve_merges(speakers):
+        """merge_into 传递解析 → {被合并id: 最终并入id}(口径同 review_apply,
+        环已被前置校验拦,这里保守停在环点仅防御)。"""
+        merge = {}
+        for s in speakers.values():
+            tgt = str((s or {}).get("merge_into") or "").strip()
+            if tgt:
+                merge[s.get("id")] = tgt
+        resolved = {}
+        for sid in merge:
+            chain, cur = [sid], merge[sid]
+            while cur in merge:
+                if cur in chain:
+                    break
+                chain.append(cur)
+                cur = merge[cur]
+            resolved[sid] = cur
+        return resolved
+
+    def _extract_vec(self, sample):
+        """样本直抽向量(F2 裁定:档案向量=存储样本片段直接抽取的 embedding,
+        不是整期分人质心);抽取器可注入(构造参数 extract_fn,测试 stub 用)。"""
+        fn = self.extract_fn
+        if fn is None:
+            from boke import voiceid_extract
+            fn = voiceid_extract.extract
+        return list(fn(sample))
+
+    def _archive_cut_sample(self, bvid, part, spk, tagged, audio):
+        """切 ≤30s/16k 单声道说话人样本:选段复用 cut_speaker_samples 的切法
+        (3.5-8s 整段、间距>60s、≤30s),ffmpeg 两步拼接(逐段切 → concat)同款;
+        产物 work/web/audio/voiceid_<bvid>_P<part>_<spk>.wav(命名带 bvid/spk
+        可追溯,票04 裁定档案记绝对路径)。无可用段/缺产物 → None;
+        ffmpeg 失败上抛(调用方按 SPK 降级)。"""
+        if not (tagged and Path(tagged).exists()
+                and audio and Path(audio).exists()):
+            return None
+        segs = []
+        for s in parse_srt(tagged):
+            m = _SPK_RE.match(s.text.strip())
+            if m and m.group(1) == spk:
+                segs.append((s.t0, s.t1))
+        picked = _pick_sample_segments(segs)
+        if not picked:
+            return None
+        tmp_dir = self.work_dir / "tmp"
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+        self.web_audio_dir.mkdir(parents=True, exist_ok=True)
+        tmps = []
+        for i, (t0, t1) in enumerate(picked):
+            t = tmp_dir / f"varch_{bvid}_P{part}_{spk}_{i}.wav"
+            subprocess.run(
+                ["ffmpeg", "-y", "-v", "error", "-ss", f"{t0:.2f}", "-t",
+                 f"{t1 - t0:.2f}", "-i", str(audio),
+                 "-c:a", "pcm_s16le", "-ar", "16000", "-ac", "1", str(t)],
+                check=True, capture_output=True)
+            tmps.append(str(t))
+        lst = tmp_dir / f"varch_{bvid}_P{part}_{spk}.txt"
+        lst.write_text("\n".join(f"file '{t}'" for t in tmps), encoding="utf-8")
+        out = self.web_audio_dir / f"voiceid_{bvid}_P{part}_{spk}.wav"
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0",
+             "-i", str(lst), "-c:a", "pcm_s16le", "-ar", "16000", "-ac", "1",
+             str(out)], check=True, capture_output=True)
+        return out.resolve()
+
+    def _recalibrate_thresholds(self):
+        """归档后自动重算阈值并落盘(D7):全量档案条目 → 票02 calibrate →
+        voiceid_thresholds.json;测试以 monkeypatch 本方法 mock 校准器。"""
+        entries = voiceid.VoiceArchive(path=self.persons_emb_path).entries()
+        voiceid.save_thresholds(voiceid.calibrate(entries), self.thresholds_path)
+
+    def _audio_url(self, path):
+        """样本文件 → 试听 URL(在 web 音频目录内给 /audio/<名>,否则 None)。"""
+        try:
+            rel = Path(path).resolve().relative_to(
+                Path(self.web_audio_dir).resolve())
+            return "/audio/" + rel.as_posix()
+        except (ValueError, OSError):
+            return None
+
+    @staticmethod
+    def _ref_valid(ref_path):
+        """F11 条目有效性:ref_path 指向的样本文件存在才有效。
+
+        绝对路径按字面校验(票04 裁定:归档条目 ref_path 一律绝对路径,即
+        本服务唯一会写进 persons_emb.json 的形态);相对路径无法定位(历史/
+        手写形态,管道从不产生)不误杀、按有效计;空/缺失 → 无效。
+        """
+        if not ref_path:
+            return False
+        p = Path(str(ref_path))
+        return p.exists() if p.is_absolute() else True
 
     # ---------- URL 映射 ----------
 
@@ -261,16 +670,33 @@ class App:
         return 200, {"ok": True, "bvid": bvid, "title": title,
                      "parts": [self._part_view(r) for r in recs]}
 
-    def _part_view(self, rec):
+    @staticmethod
+    def _part_stem(rec):
+        """记录 → 产物目录名(work/<stem>):tagged 父目录名,缺则媒体 stem,
+        再缺则 BV_Pn 兜底。"""
         arts = rec.get("artifacts") or {}
         tagged = arts.get("tagged")
-        stem = None
         if tagged:
-            stem = Path(tagged).parent.name
-        elif rec.get("media_path"):
-            stem = Path(rec["media_path"]).stem
-        else:
-            stem = f"{rec['bvid']}_P{rec['part']}"
+            return Path(tagged).parent.name
+        if rec.get("media_path"):
+            return Path(rec["media_path"]).stem
+        return f"{rec['bvid']}_P{rec['part']}"
+
+    @staticmethod
+    def _read_langid(arts):
+        """langid.json → speakers 映射({spk: {"lang": ...}});读不到给空。"""
+        if arts.get("langid") and Path(arts["langid"]).exists():
+            try:
+                return (json.loads(
+                    Path(arts["langid"]).read_text(encoding="utf-8"))
+                    .get("speakers")) or {}
+            except (OSError, json.JSONDecodeError):
+                return {}
+        return {}
+
+    def _part_view(self, rec):
+        arts = rec.get("artifacts") or {}
+        stem = self._part_stem(rec)
         langid = None
         if arts.get("langid") and Path(arts["langid"]).exists():
             try:
@@ -295,7 +721,8 @@ class App:
         }
 
     def _speakers_view(self, arts, stem):
-        """说话人卡数据真源:tagged.srt 归人结论 + langid 语言 + 切好的样本。"""
+        """说话人卡数据真源:tagged.srt 归人结论 + langid 语言 + 切好的样本
+        + 声纹建议 suggest(票05:读 voiceid.json,过期重算)。"""
         talk, order = {}, []
         tagged = arts.get("tagged")
         if tagged and Path(tagged).exists():
@@ -306,14 +733,8 @@ class App:
                     talk[spk] = 0.0
                     order.append(spk)
                 talk[spk] += s.t1 - s.t0
-        langs = {}
-        if arts.get("langid") and Path(arts["langid"]).exists():
-            try:
-                langs = (json.loads(
-                    Path(arts["langid"]).read_text(encoding="utf-8"))
-                    .get("speakers")) or {}
-            except (OSError, json.JSONDecodeError):
-                langs = {}
+        langs = self._read_langid(arts)
+        vdata = self._voiceid_view(stem, langs, order)
         out = []
         for spk in sorted(order):
             sample = f"speaker_{stem}_{spk}_sample.wav"
@@ -326,6 +747,7 @@ class App:
                 if (self.web_audio_dir / sample).exists() else None,
                 "cands": ["/audio/" + c for c in cands
                           if (self.web_audio_dir / c).exists()],
+                "suggest": self._suggest_view(vdata, spk),
             })
         return out
 
@@ -412,12 +834,58 @@ class App:
             return 400, {"ok": False, "error": str(e)}
         self.lib.transition(bvid, part, EV_REVIEW_SUBMIT, review=decision)
         self.lib.update(bvid, part, dec_hash=r["dec_hash"])
+        # 票06:提交已成功 → 归档闭环(同步跑,回执带回显数据);归档失败
+        # 不回滚不炸提交,降级记 archive{archive_error}/skipped。
+        archive = self._archive_after_review(bvid, part, decision)
         self.spawn(bvid, part, "preview",
                    lambda: self._run_preview(bvid, part))
         return 200, {"ok": True,
                      "status": (self.lib.get(bvid, part) or {}).get("status"),
                      "dec_hash": r["dec_hash"], "dec_dir": r.get("dec_dir"),
-                     "apply": r.get("status")}
+                     "apply": r.get("status"), "archive": archive}
+
+    # ---------- POST /api/review/archive_force(仍入库,D6) ----------
+
+    def api_archive_force(self, body):
+        """一致性拦截条的「仍入库」人工裁决:对本期已提交决策里的说话人重走
+        归档(force=True 跳一致性检查),样本复用提交时已切好的文件。"""
+        body = body or {}
+        bvid = str(body.get("bvid") or "").strip()
+        part = _norm_part(body.get("part"))
+        spk = str(body.get("spk") or "").strip()
+        if not bvid or part is None or not spk:
+            return 400, {"ok": False, "error": "缺 bvid / part / spk"}
+        rec = self.lib.get(bvid, part)
+        if rec is None:
+            return 404, {"ok": False, "error": f"片库无 {bvid} P{part}"}
+        decision = rec.get("review") or {}
+        speakers = {s.get("id"): s for s in decision.get("speakers") or []
+                    if isinstance(s, dict) and s.get("id")}
+        if spk not in speakers:
+            return 400, {"ok": False,
+                         "error": f"本期提交的决策里没有说话人 {spk}"}
+        arts = rec.get("artifacts") or {}
+        stem = self._part_stem(rec)
+        try:
+            r = self._archive_speaker(
+                spk, speakers, self._resolve_merges(speakers),
+                self._read_langid(arts), None,   # force 不做一致性检查,无需阈值
+                voiceid.VoiceArchive(path=self.persons_emb_path),
+                bvid, part, arts.get("tagged"),
+                arts.get("audio") or self.work_dir / stem / "audio.wav",
+                force=True)
+        except Exception as e:
+            return 500, {"ok": False, "error": f"仍入库失败:{e}"}
+        if r["status"] != "archived":
+            return 409, {"ok": False, "error": f"仍入库未成:{r.get('reason')}"}
+        payload = dict(r["payload"])
+        try:
+            self._recalibrate_thresholds()
+            payload["recalibrated"] = True
+        except Exception as e:
+            payload["recalibrated"] = False
+            payload["recalibrate_error"] = f"{e}"
+        return 200, {"ok": True, **payload}
 
     # ---------- POST /api/preview/<bvid>/<part> ----------
 
@@ -524,6 +992,105 @@ class App:
             return 400, {"ok": False, "error": str(e)}
         return 200, {"ok": True, "ref": ref, "person": self.persons.get(person)}
 
+    # ---------- /api/persons/<name>/archive(票07:档案列表 + 删除) ----------
+
+    def api_persons_archive(self, name):
+        """声纹档案列表(persons_emb.json,票07 US10 管理入口):按语言分组,
+        条目 = person/lang/ref_path/bvid/part/spk/ts/model + valid(F11 存在性)
+        + audio_url(试听);vec 不外露给页面。组计数只算有效条目,失效单列。"""
+        if self.persons.get(name) is None:
+            return 404, {"ok": False, "error": f"人物不存在:{name}"}
+        try:
+            entries = voiceid.VoiceArchive(
+                path=self.persons_emb_path).entries(person=name)
+        except RuntimeError as e:
+            return 500, {"ok": False, "error": f"{e}"}
+        groups, order = {}, []
+        for e in entries:
+            lang = e.get("lang")
+            if lang not in groups:
+                groups[lang] = []
+                order.append(lang)
+            row = {k: v for k, v in e.items() if k != "vec"}
+            row["valid"] = self._ref_valid(row.get("ref_path"))
+            row["audio_url"] = (self._audio_url(row["ref_path"])
+                                if row["valid"] else None)
+            groups[lang].append(row)
+        out = []
+        for lang in sorted(order, key=lambda l: (l is None, str(l))):
+            rows = groups[lang]
+            out.append({
+                "lang": lang,
+                "count": sum(1 for r in rows if r["valid"]),
+                "invalid": sum(1 for r in rows if not r["valid"]),
+                "entries": rows,
+            })
+        return 200, {"ok": True, "person": name, "groups": out,
+                     "total": sum(g["count"] for g in out),
+                     "invalid_total": sum(g["invalid"] for g in out)}
+
+    def api_persons_archive_delete(self, name, body):
+        """删一条归档条目 {ref_path}(票07):票03 remove_ref 给级联清单,这里
+        执行另外两步——VoiceArchive.remove_by_ref_path 清向量记录、删自动样本
+        文件(仅动 web 音频目录内,防误删任意外部文件;clone 手动上传的原文件
+        本就只清缓存不删,票03 口径)。refs 条目已不在且向量/样本文件有残留
+        (上次删除半途失败)→ 继续清干净;条目处处都不在 → 404 不虚报。
+        删除改变档案 → 阈值重算(D7 口径,失败降级不拦删除)。"""
+        ref_path = str((body or {}).get("ref_path") or "").strip()
+        if not ref_path:
+            return 400, {"ok": False, "error": "缺 ref_path"}
+        if self.persons.get(name) is None:
+            return 404, {"ok": False, "error": f"人物不存在:{name}"}
+        try:
+            arch = voiceid.VoiceArchive(path=self.persons_emb_path)
+        except RuntimeError as e:
+            return 500, {"ok": False, "error": f"向量缓存文件损坏:{e}"}
+        try:
+            cas = self.persons.remove_ref(name, ref_path)
+            ref_entries_removed = len(cas["ref_entries_removed"])
+            to_delete = list(cas["ref_paths_to_delete"])
+        except KeyError as e:
+            leftover = any(x.get("ref_path") == ref_path
+                           for x in arch.entries(person=name)) or \
+                (self._sample_in_webdir(ref_path) and Path(ref_path).exists())
+            if not leftover:
+                return 404, {"ok": False, "error": str(e)}
+            ref_entries_removed, to_delete = 0, [ref_path]
+        cache_removed = arch.remove_by_ref_path(ref_path)
+        deleted_files = [p for p in to_delete if self._safe_unlink_sample(p)]
+        payload = {"ok": True, "person": name, "ref_path": ref_path,
+                   "ref_entries_removed": ref_entries_removed,
+                   "cache_removed": cache_removed,
+                   "sample_files_deleted": deleted_files}
+        try:
+            self._recalibrate_thresholds()
+            payload["recalibrated"] = True
+        except Exception as e:
+            payload["recalibrated"] = False
+            payload["recalibrate_error"] = f"{e}"
+        return 200, payload
+
+    def _sample_in_webdir(self, p):
+        """路径 resolved 后是否落在 web 音频目录内(本服务写样本的唯一位置)。"""
+        try:
+            base = Path(self.web_audio_dir).resolve()
+            pp = Path(str(p)).resolve()
+            return pp != base and base in pp.parents
+        except OSError:
+            return False
+
+    def _safe_unlink_sample(self, p):
+        """删自动样本文件;只对 web 音频目录内的路径动手(DELETE 的 ref_path
+        不可信为任意文件路径)。文件已不在按已清理计(返回 True,如实计数由
+        调用方对半途重试传残留清单保证)。"""
+        if not self._sample_in_webdir(p):
+            return False
+        try:
+            Path(str(p)).resolve().unlink(missing_ok=True)
+            return True
+        except OSError:
+            return False
+
 
 # ---------------- HTTP 层 ----------------
 
@@ -613,6 +1180,9 @@ class Handler(SimpleHTTPRequestHandler):
             return app.api_episode(m.group(1))
         if path == "/api/persons":
             return app.api_persons()
+        m = _PERSONS_ARCHIVE_RE.match(path)
+        if m:
+            return app.api_persons_archive(unquote(m.group(1)))
         return 404, {"ok": False, "error": f"无此接口:{path}"}
 
     def _save(self, fname):
@@ -657,6 +1227,31 @@ class Handler(SimpleHTTPRequestHandler):
             code, obj = 500, {"ok": False, "error": f"服务器内部错误:{e}"}
         return self._json(obj, code)
 
+    def do_DELETE(self):
+        """API DELETE(票07:删归档条目);body 解析同 do_POST。"""
+        path = urlsplit(self.path).path
+        if not path.startswith("/api/"):
+            return self.send_error(404)
+        app = getattr(self.server, "app", None)
+        if app is None:
+            return self._json({"ok": False, "error": "API 未初始化"}, 500)
+        try:
+            body = self._body()
+        except ValueError as e:
+            return self._json({"ok": False,
+                               "error": f"body 不是合法 JSON:{e}"}, 400)
+        try:
+            code, obj = self._api_delete(app, path, body)
+        except Exception as e:
+            code, obj = 500, {"ok": False, "error": f"服务器内部错误:{e}"}
+        return self._json(obj, code)
+
+    def _api_delete(self, app, path, body):
+        m = _PERSONS_ARCHIVE_RE.match(path)
+        if m:
+            return app.api_persons_archive_delete(unquote(m.group(1)), body)
+        return 404, {"ok": False, "error": f"无此接口:{path}"}
+
     def _api_post(self, app, path, body):
         if path == "/api/ingest":
             return app.api_ingest(body)
@@ -664,6 +1259,8 @@ class Handler(SimpleHTTPRequestHandler):
             return app.api_review(body)
         if path == "/api/persons/ref":
             return app.api_persons_ref(body)
+        if path == "/api/review/archive_force":
+            return app.api_archive_force(body)
         m = _PREVIEW_RE.match(path)
         if m:
             return app.api_preview(m.group(1), int(m.group(2)), body)

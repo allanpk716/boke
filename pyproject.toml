@@ -10,7 +10,7 @@ dependencies = [
 [project.optional-dependencies]
 ocr = ["rapidocr-onnxruntime>=1.3", "opencv-python>=4.8"]
 tts = ["edge-tts>=7.0"]
-diar = ["pyannote.audio>=3.3", "torch>=2.1"]
+diar = ["pyannote.audio>=4.0", "torch>=2.1"]
 test = ["pytest>=8.0"]
 
 [build-system]

@@ -1,6 +1,6 @@
 # 媒体大文件不入库（存 D:\boke_media）
 in/
-work/
+work/*
 out/
 refs/
 *.mp4
@@ -27,3 +27,6 @@ Thumbs.db
 Desktop.ini
 .venv-diar/
 .xcheck/
+
+# 票04:work/tools/ 放行(声纹脚本入库;上面 work/* 忽略其余,不放开其他子目录)
+!work/tools/
