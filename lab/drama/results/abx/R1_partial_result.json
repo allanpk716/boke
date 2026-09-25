@@ -1,0 +1,16 @@
+{
+ "arm": "F1-corrected-separation-arm",
+ "date": "2026-09-25",
+ "listener": "user(N=1)",
+ "n_answered": 7,
+ "n_designed": 18,
+ "correct": 2,
+ "rate": 0.2857,
+ "chance": 0.5,
+ "two_tailed_binomial_p": 0.453,
+ "conditions": "手机外放首听 + 耳机复听(答案未改动,主观报告两种条件下均分不出)",
+ "self_report": "分不出来,用户选择中止余下11题",
+ "conclusion": "provisional PASS: 分离/回混对听者透明(样本小仅初判;客观差异normal档题目亦不可闻)",
+ "integrity": "18题哈希核验X≡1/2恰其一,0异常;答案与play_order解码用分支公式",
+ "note": "29%低于50%为小样本噪声(p=0.45),非映射反转;3题near_transparent含于18题设计中"
+}
