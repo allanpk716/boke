@@ -140,6 +140,8 @@ init();
 
 
 class H(BaseHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"   # 手机媒体栈要求 keep-alive;配合 Range/206
+
     def log_message(self, fmt, *args):
         print("[abx]", self.address_string(), fmt % args)
 
@@ -177,19 +179,52 @@ class H(BaseHTTPRequestHandler):
             if not f.is_file():
                 return self._json({"error": "missing"}, 404)
             size = f.stat().st_size
-            self.send_response(200)
+            # Range/206:iOS/Android 媒体栈会发 Range 请求,不支持就报错
+            start, end = 0, size - 1
+            rng = self.headers.get("Range")
+            partial = False
+            if rng:
+                mm = re.match(r"bytes=(\d*)-(\d*)$", rng.strip())
+                if mm:
+                    s0, s1 = mm.groups()
+                    if s0:
+                        start = int(s0)
+                        end = int(s1) if s1 else size - 1
+                    elif s1:            # suffix: bytes=-N (末尾 N 字节)
+                        start = max(0, size - int(s1))
+                    end = min(end, size - 1)
+                    partial = True
+            if start > end or start >= size:
+                self.send_response(416)
+                self.send_header("Content-Range", f"bytes */{size}")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
+            length = end - start + 1
+            self.send_response(206 if partial else 200)
             self.send_header("Content-Type", "audio/wav")
-            self.send_header("Content-Length", str(size))
-            self.send_header("Accept-Ranges", "none")
+            self.send_header("Content-Length", str(length))
+            self.send_header("Accept-Ranges", "bytes")
+            if partial:
+                self.send_header("Content-Range",
+                                 f"bytes {start}-{end}/{size}")
             self.end_headers()
+            if self.command == "HEAD":
+                return
             with open(f, "rb") as fh:
-                while True:
-                    chunk = fh.read(65536)
+                fh.seek(start)
+                left = length
+                while left > 0:
+                    chunk = fh.read(min(65536, left))
                     if not chunk:
                         break
                     self.wfile.write(chunk)
+                    left -= len(chunk)
         else:
             self._json({"error": "not found"}, 404)
+
+    def do_HEAD(self):
+        self.do_GET()
 
     def do_POST(self):
         if self.path != "/api/answer":
