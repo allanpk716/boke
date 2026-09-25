@@ -1,0 +1,135 @@
+{
+  "schema": "voice_gate_realexample/1",
+  "generated_at": "2026-09-25T09:58:28+08:00",
+  "model": "speechbrain/spkrec-ecapa-voxceleb (ECAPA-TDNN, 192 维, HF 缓存离线加载)",
+  "window_s": 10.0,
+  "threshold_note": "0.30 为占位值（调研04 自校准法定标前），判定只作管线冒烟，不进结论",
+  "inputs": [
+    {
+      "clip_id": "bili_liangjian_ep01_g0036_g0037",
+      "path_16k": "media/clips/bili_liangjian_ep01_g0036_g0037_16k.wav",
+      "duration_s": 60.0,
+      "windows_s": [
+        0.0,
+        25.0
+      ]
+    },
+    {
+      "clip_id": "bili_liangjian_ep01_g0047_g0048",
+      "path_16k": "media/clips/bili_liangjian_ep01_g0047_g0048_16k.wav",
+      "duration_s": 60.0,
+      "windows_s": [
+        0.0,
+        25.0
+      ]
+    },
+    {
+      "clip_id": "bili_liangjian_ep02_g0064",
+      "path_16k": "media/clips/bili_liangjian_ep02_g0064_16k.wav",
+      "duration_s": 30.0,
+      "windows_s": [
+        0.0,
+        10.0
+      ]
+    },
+    {
+      "clip_id": "bili_liangjian_ep02_g0087_g0088",
+      "path_16k": "media/clips/bili_liangjian_ep02_g0087_g0088_16k.wav",
+      "duration_s": 60.0,
+      "windows_s": [
+        0.0,
+        25.0
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "pair": "bili_liangjian_ep01_g0036_g0037@0s vs bili_liangjian_ep01_g0036_g0037@25s",
+      "kind": "same",
+      "cosine": 0.80905,
+      "decision": "pass"
+    },
+    {
+      "pair": "bili_liangjian_ep01_g0047_g0048@0s vs bili_liangjian_ep01_g0047_g0048@25s",
+      "kind": "same",
+      "cosine": 0.198063,
+      "decision": "block"
+    },
+    {
+      "pair": "bili_liangjian_ep02_g0064@0s vs bili_liangjian_ep02_g0064@10s",
+      "kind": "same",
+      "cosine": 0.596865,
+      "decision": "pass"
+    },
+    {
+      "pair": "bili_liangjian_ep02_g0087_g0088@0s vs bili_liangjian_ep02_g0087_g0088@25s",
+      "kind": "same",
+      "cosine": 0.86874,
+      "decision": "pass"
+    },
+    {
+      "pair": "bili_liangjian_ep01_g0036_g0037@0s vs bili_liangjian_ep01_g0047_g0048@0s",
+      "kind": "cross",
+      "cosine": 0.311031,
+      "decision": "pass"
+    },
+    {
+      "pair": "bili_liangjian_ep01_g0036_g0037@0s vs bili_liangjian_ep02_g0064@0s",
+      "kind": "cross",
+      "cosine": 0.476454,
+      "decision": "pass"
+    },
+    {
+      "pair": "bili_liangjian_ep01_g0036_g0037@0s vs bili_liangjian_ep02_g0087_g0088@0s",
+      "kind": "cross",
+      "cosine": 0.715567,
+      "decision": "pass"
+    },
+    {
+      "pair": "bili_liangjian_ep01_g0047_g0048@0s vs bili_liangjian_ep02_g0064@0s",
+      "kind": "cross",
+      "cosine": 0.056639,
+      "decision": "block"
+    },
+    {
+      "pair": "bili_liangjian_ep01_g0047_g0048@0s vs bili_liangjian_ep02_g0087_g0088@0s",
+      "kind": "cross",
+      "cosine": 0.20399,
+      "decision": "block"
+    },
+    {
+      "pair": "bili_liangjian_ep02_g0064@0s vs bili_liangjian_ep02_g0087_g0088@0s",
+      "kind": "cross",
+      "cosine": 0.598278,
+      "decision": "pass"
+    }
+  ],
+  "summary": {
+    "n_same": 4,
+    "n_cross": 6,
+    "same_min": 0.198063,
+    "same_median": 0.7029575,
+    "cross_max": 0.715567,
+    "cross_median": 0.3937425,
+    "threshold": 0.3,
+    "decisions": {
+      "same_pass": 3,
+      "same_block": 1,
+      "cross_pass": 4,
+      "cross_block": 2,
+      "pass_total": 7,
+      "block_total": 3
+    },
+    "miss_count": 1,
+    "false_pass_count": 4,
+    "false_pass_pairs": [
+      "bili_liangjian_ep01_g0036_g0037@0s vs bili_liangjian_ep01_g0047_g0048@0s",
+      "bili_liangjian_ep01_g0036_g0037@0s vs bili_liangjian_ep02_g0064@0s",
+      "bili_liangjian_ep01_g0036_g0037@0s vs bili_liangjian_ep02_g0087_g0088@0s",
+      "bili_liangjian_ep02_g0064@0s vs bili_liangjian_ep02_g0087_g0088@0s"
+    ],
+    "miss_rate": 0.25,
+    "false_pass_rate": 0.6666666666666666
+  },
+  "note": "F10：miss 分母=n_same，false_pass 分母=n_cross；同源=同段不同时间窗，异源=不同段两两"
+}

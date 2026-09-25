@@ -8,8 +8,8 @@
 #   layer        分层标签：对白干净|音乐重|音效压对白|双人重叠|有5.1|待听审标注
 #   provisional  true=粗标待复核（配额进度单列，不计入 confirmed）
 #   start/end    计划起止点（秒）；duration 实测输出时长（秒）
-#   path         44.1kHz 主档 wav；path_16k 16kHz 副档 wav（相对本文件所在目录）
-#   status       cut=已切片且时长校验通过；pending=已登记待切片
+#   path         44.1kHz 主档 wav；path_16k 16kHz 副档 wav（相对本文件所在目录）；constructed 条目主产物为 mix/gt_a/gt_b 三轨（见 note），path 留空
+#   status       cut=已切片且时长校验通过；pending=已登记待切片；constructed=已构造（伪重叠混音条目，主产物为三轨，见 path 说明）
 #   note         备注
 # quota_progress 每来源每语言分层计数（confirmed/provisional 与 F6 配额目标），由脚本从 clips 自动重算。
 schema_version: 1
@@ -641,7 +641,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep01_g47_g48_snr0_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep01_g0047_g0048 SNR=+0dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep01_g0047_g0048
@@ -663,7 +663,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep01_g47_g48_snr+3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep01_g0047_g0048 SNR=+3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep01_g0047_g0048
@@ -685,7 +685,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep01_g47_g48_snr-3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep01_g0047_g0048 SNR=-3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep01_g0047_g0048
@@ -707,7 +707,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep02_g64_snr0_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep02_g0064 SNR=+0dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=26.214s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep02_g0064
@@ -729,7 +729,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep02_g64_snr+3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep02_g0064 SNR=+3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=24.663s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep02_g0064
@@ -751,7 +751,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep02_g64_snr-3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep02_g0064 SNR=-3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=23.278s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep02_g0064
@@ -773,7 +773,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep02_g87_g88_snr0_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep02_g0087_g0088 SNR=+0dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep02_g0087_g0088
@@ -795,7 +795,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep02_g87_g88_snr+3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep02_g0087_g0088 SNR=+3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep02_g0087_g0088
@@ -817,7 +817,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g36_g37__ep02_g87_g88_snr-3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0036_g0037 源B=bili_liangjian_ep02_g0087_g0088 SNR=-3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0036_g0037
     source_b: bili_liangjian_ep02_g0087_g0088
@@ -839,7 +839,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g47_g48__ep02_g64_snr0_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0047_g0048 源B=bili_liangjian_ep02_g0064 SNR=+0dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=21.953s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0047_g0048
     source_b: bili_liangjian_ep02_g0064
@@ -861,7 +861,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g47_g48__ep02_g64_snr+3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0047_g0048 源B=bili_liangjian_ep02_g0064 SNR=+3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=5.240s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0047_g0048
     source_b: bili_liangjian_ep02_g0064
@@ -883,7 +883,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g47_g48__ep02_g64_snr-3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0047_g0048 源B=bili_liangjian_ep02_g0064 SNR=-3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=14.911s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0047_g0048
     source_b: bili_liangjian_ep02_g0064
@@ -905,7 +905,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g47_g48__ep02_g87_g88_snr0_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0047_g0048 源B=bili_liangjian_ep02_g0087_g0088 SNR=+0dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0047_g0048
     source_b: bili_liangjian_ep02_g0087_g0088
@@ -927,7 +927,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g47_g48__ep02_g87_g88_snr+3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0047_g0048 源B=bili_liangjian_ep02_g0087_g0088 SNR=+3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0047_g0048
     source_b: bili_liangjian_ep02_g0087_g0088
@@ -949,7 +949,7 @@ clips:
     duration: 60.0
     path: ""
     path_16k: media/constructed/constructed_ep01_g47_g48__ep02_g87_g88_snr-3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep01_g0047_g0048 源B=bili_liangjian_ep02_g0087_g0088 SNR=-3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=0.000s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep01_g0047_g0048
     source_b: bili_liangjian_ep02_g0087_g0088
@@ -971,7 +971,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep02_g64__ep02_g87_g88_snr0_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep02_g0064 源B=bili_liangjian_ep02_g0087_g0088 SNR=+0dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=4.736s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep02_g0064
     source_b: bili_liangjian_ep02_g0087_g0088
@@ -993,7 +993,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep02_g64__ep02_g87_g88_snr+3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep02_g0064 源B=bili_liangjian_ep02_g0087_g0088 SNR=+3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=13.669s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep02_g0064
     source_b: bili_liangjian_ep02_g0087_g0088
@@ -1015,7 +1015,7 @@ clips:
     duration: 30.0
     path: ""
     path_16k: media/constructed/constructed_ep02_g64__ep02_g87_g88_snr-3_16k.wav
-    status: cut
+    status: constructed
     note: "票06 伪重叠构造：源A=bili_liangjian_ep02_g0064 源B=bili_liangjian_ep02_g0087_g0088 SNR=-3dB(目标,A/B) gender=unknown/unknown(待听审后补分层) 真值轨见 gt_a/gt_b 字段 窗偏移A=0.000s B=20.800s seed=20260925 mix=gtA+gtB逐样本 R=1.0 归一 峰值≤0.98"
     source_a: bili_liangjian_ep02_g0064
     source_b: bili_liangjian_ep02_g0087_g0088
