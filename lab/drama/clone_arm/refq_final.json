@@ -1,0 +1,65 @@
+[
+ {
+  "rid": "R1",
+  "lang": "zh",
+  "desc": "25s净(基线)",
+  "held_text": "说实话,我一开始也没想到事情会变成这个样子,但既然做了,就要把它做完。",
+  "syn": "R1_syn.wav",
+  "anchor": "refq_anchor_zh.wav",
+  "syn_s": 4.72
+ },
+ {
+  "rid": "R2",
+  "lang": "zh",
+  "desc": "6s净",
+  "held_text": "说实话,我一开始也没想到事情会变成这个样子,但既然做了,就要把它做完。",
+  "syn": "R2_syn.wav",
+  "anchor": "refq_anchor_zh.wav",
+  "syn_s": 5.28
+ },
+ {
+  "rid": "R3",
+  "lang": "zh",
+  "desc": "25s脏(混音乐SNR6dB)",
+  "held_text": "说实话,我一开始也没想到事情会变成这个样子,但既然做了,就要把它做完。",
+  "syn": "R3_syn.wav",
+  "anchor": "refq_anchor_zh.wav",
+  "syn_s": 5.24
+ },
+ {
+  "rid": "R4",
+  "lang": "zh",
+  "desc": "另一条25s净(换源)",
+  "held_text": "说实话,我一开始也没想到事情会变成这个样子,但既然做了,就要把它做完。",
+  "syn": "R4_syn.wav",
+  "anchor": "refq_anchor_zh.wav",
+  "syn_s": 5.68
+ },
+ {
+  "rid": "R5",
+  "lang": "en",
+  "desc": "3s脏(基线)",
+  "held_text": "A dangerous quest for a lone hunter.",
+  "syn": "R5_syn.wav",
+  "anchor": "refq_anchor_en.wav",
+  "syn_s": 3.16
+ },
+ {
+  "rid": "R6",
+  "lang": "en",
+  "desc": "6.5s脏",
+  "held_text": "A dangerous quest for a lone hunter.",
+  "syn": "R6_syn.wav",
+  "anchor": "refq_anchor_en.wav",
+  "syn_s": 5.24
+ },
+ {
+  "rid": "R7",
+  "lang": "en",
+  "desc": "~12s脏拼接",
+  "held_text": "A dangerous quest for a lone hunter.",
+  "syn": "R7_syn.wav",
+  "anchor": "refq_anchor_en.wav",
+  "syn_s": 6.32
+ }
+]

@@ -1,0 +1,65 @@
+[
+ {
+  "rid": "R1",
+  "lang": "zh",
+  "desc": "25s净(基线)",
+  "ref": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_R1_ref01full.wav",
+  "ref_text": "服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发",
+  "held_text": "说实话,我一开始也没想到事情会变成这个样子,但既然做了,就要把它做完。",
+  "anchor": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_anchor_zh.wav"
+ },
+ {
+  "rid": "R2",
+  "lang": "zh",
+  "desc": "6s净",
+  "ref": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_R2_ref01_6s.wav",
+  "ref_text": "5的扶贫呢 根本扶不到你 因为你有工作 但是实际上根本就是联合",
+  "held_text": "说实话,我一开始也没想到事情会变成这个样子,但既然做了,就要把它做完。",
+  "anchor": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_anchor_zh.wav"
+ },
+ {
+  "rid": "R3",
+  "lang": "zh",
+  "desc": "25s脏(混音乐SNR6dB)",
+  "ref": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_R3_ref01_dirty.wav",
+  "ref_text": "服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发",
+  "held_text": "说实话,我一开始也没想到事情会变成这个样子,但既然做了,就要把它做完。",
+  "anchor": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_anchor_zh.wav"
+ },
+ {
+  "rid": "R4",
+  "lang": "zh",
+  "desc": "另一条25s净(换源)",
+  "ref": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_R4_ref02.wav",
+  "ref_text": "是不太可能做的这是第一第二台湾问题CFA以及其他的Pollinero的专家都说中方多次表态希望美国能够在设台问题上面更进一步表示对台独的明确反对现在有的是也是中美联合声明包括什么基辛格那个时候就开始说美国不支持台独不支持不代表一个反对",
+  "held_text": "说实话,我一开始也没想到事情会变成这个样子,但既然做了,就要把它做完。",
+  "anchor": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_anchor_zh.wav"
+ },
+ {
+  "rid": "R5",
+  "lang": "en",
+  "desc": "3s脏(基线)",
+  "ref": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_R5_en3s.wav",
+  "ref_text": "I have failed.",
+  "held_text": "A dangerous quest for a lone hunter.",
+  "anchor": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_anchor_en.wav"
+ },
+ {
+  "rid": "R6",
+  "lang": "en",
+  "desc": "6.5s脏",
+  "ref": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_R6_en6s.wav",
+  "ref_text": "You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing.",
+  "held_text": "A dangerous quest for a lone hunter.",
+  "anchor": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_anchor_en.wav"
+ },
+ {
+  "rid": "R7",
+  "lang": "en",
+  "desc": "~12s脏拼接",
+  "ref": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_R7_en_concat.wav",
+  "ref_text": "I have failed. You've only failed to see. These are dragon lands, Sintel. You are closer than you know.",
+  "held_text": "A dangerous quest for a lone hunter.",
+  "anchor": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\clone_arm\\refq_anchor_en.wav"
+ }
+]
