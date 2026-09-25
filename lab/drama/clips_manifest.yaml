@@ -1,0 +1,428 @@
+# clips_manifest.yaml — 实验片段统一清单（schema_version 1）
+# 维护方：tools/cut_clips.py（cut 子命令会整体重写本文件；手工改请只改 clips 条目的 layer/note/provisional 字段值）
+# 字段说明：
+#   clip_id      唯一 ID（前缀=来源标签）
+#   source       来源：bili|blender|dnr|constructed
+#   source_file  源媒体路径（相对本文件所在目录；gitignored）
+#   language     语言：en|zh|...
+#   layer        分层标签：对白干净|音乐重|音效压对白|双人重叠|有5.1|待听审标注
+#   provisional  true=粗标待复核（配额进度单列，不计入 confirmed）
+#   start/end    计划起止点（秒）；duration 实测输出时长（秒）
+#   path         44.1kHz 主档 wav；path_16k 16kHz 副档 wav（相对本文件所在目录）
+#   status       cut=已切片且时长校验通过；pending=已登记待切片
+#   note         备注
+# quota_progress 每来源每语言分层计数（confirmed/provisional 与 F6 配额目标），由脚本从 clips 自动重算。
+schema_version: 1
+notes: Sintel 网格切片源=media/blender/sintel_stereo.wav（协调者下混 48k，切片时重采样 44.1k/16k）；provisional 标签按剧情结构粗标、未逐段听审；Sintel 对白重叠段稀缺，双人重叠配额主要由 B 站剧承担；无免费英文剧，en 真实轨由 Sintel 英文对白充当（替代记录）；真值对白参照=media/blender/sintel_center.wav（FC 中置），M&E（sintel_me.wav）仅作音乐/音效活动与频谱参照（mastering 失配，逐样本相减不可行），详见 tools/media_sources.md
+clips:
+  - clip_id: blender_sintel_g0000
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音乐重
+    provisional: true
+    start: 0.0
+    end: 30.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0000_44k1.wav
+    path_16k: media/clips/blender_sintel_g0000_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0001
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音乐重
+    provisional: true
+    start: 30.0
+    end: 60.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0001_44k1.wav
+    path_16k: media/clips/blender_sintel_g0001_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0002
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 对白干净
+    provisional: true
+    start: 60.0
+    end: 90.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0002_44k1.wav
+    path_16k: media/clips/blender_sintel_g0002_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0003
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 对白干净
+    provisional: true
+    start: 90.0
+    end: 120.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0003_44k1.wav
+    path_16k: media/clips/blender_sintel_g0003_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0004
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 对白干净
+    provisional: true
+    start: 120.0
+    end: 150.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0004_44k1.wav
+    path_16k: media/clips/blender_sintel_g0004_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0005
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 对白干净
+    provisional: true
+    start: 150.0
+    end: 180.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0005_44k1.wav
+    path_16k: media/clips/blender_sintel_g0005_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0006
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 对白干净
+    provisional: true
+    start: 180.0
+    end: 210.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0006_44k1.wav
+    path_16k: media/clips/blender_sintel_g0006_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0007
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 对白干净
+    provisional: true
+    start: 210.0
+    end: 240.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0007_44k1.wav
+    path_16k: media/clips/blender_sintel_g0007_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0008
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 对白干净
+    provisional: true
+    start: 240.0
+    end: 270.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0008_44k1.wav
+    path_16k: media/clips/blender_sintel_g0008_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0009
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 对白干净
+    provisional: true
+    start: 270.0
+    end: 300.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0009_44k1.wav
+    path_16k: media/clips/blender_sintel_g0009_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0010
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 300.0
+    end: 330.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0010_44k1.wav
+    path_16k: media/clips/blender_sintel_g0010_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0011
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 330.0
+    end: 360.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0011_44k1.wav
+    path_16k: media/clips/blender_sintel_g0011_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0012
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 360.0
+    end: 390.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0012_44k1.wav
+    path_16k: media/clips/blender_sintel_g0012_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0013
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 390.0
+    end: 420.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0013_44k1.wav
+    path_16k: media/clips/blender_sintel_g0013_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0014
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 420.0
+    end: 450.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0014_44k1.wav
+    path_16k: media/clips/blender_sintel_g0014_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0015
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 450.0
+    end: 480.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0015_44k1.wav
+    path_16k: media/clips/blender_sintel_g0015_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0016
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 480.0
+    end: 510.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0016_44k1.wav
+    path_16k: media/clips/blender_sintel_g0016_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0017
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 510.0
+    end: 540.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0017_44k1.wav
+    path_16k: media/clips/blender_sintel_g0017_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0018
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 540.0
+    end: 570.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0018_44k1.wav
+    path_16k: media/clips/blender_sintel_g0018_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0019
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 570.0
+    end: 600.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0019_44k1.wav
+    path_16k: media/clips/blender_sintel_g0019_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0020
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音效压对白
+    provisional: true
+    start: 600.0
+    end: 630.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0020_44k1.wav
+    path_16k: media/clips/blender_sintel_g0020_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0021
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音效压对白
+    provisional: true
+    start: 630.0
+    end: 660.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0021_44k1.wav
+    path_16k: media/clips/blender_sintel_g0021_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0022
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音效压对白
+    provisional: true
+    start: 660.0
+    end: 690.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0022_44k1.wav
+    path_16k: media/clips/blender_sintel_g0022_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0023
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音效压对白
+    provisional: true
+    start: 690.0
+    end: 720.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0023_44k1.wav
+    path_16k: media/clips/blender_sintel_g0023_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0024
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音效压对白
+    provisional: true
+    start: 720.0
+    end: 750.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0024_44k1.wav
+    path_16k: media/clips/blender_sintel_g0024_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0025
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音效压对白
+    provisional: true
+    start: 750.0
+    end: 780.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0025_44k1.wav
+    path_16k: media/clips/blender_sintel_g0025_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0026
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音效压对白
+    provisional: true
+    start: 780.0
+    end: 810.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0026_44k1.wav
+    path_16k: media/clips/blender_sintel_g0026_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0027
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 音效压对白
+    provisional: true
+    start: 810.0
+    end: 840.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0027_44k1.wav
+    path_16k: media/clips/blender_sintel_g0027_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0028
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 840.0
+    end: 870.0
+    duration: 30.0
+    path: media/clips/blender_sintel_g0028_44k1.wav
+    path_16k: media/clips/blender_sintel_g0028_16k.wav
+    status: cut
+    note: ""
+  - clip_id: blender_sintel_g0029
+    source: blender
+    source_file: media/blender/sintel_stereo.wav
+    language: en
+    layer: 待听审标注
+    provisional: true
+    start: 870.0
+    end: 888.032
+    duration: 18.032
+    path: media/clips/blender_sintel_g0029_44k1.wav
+    path_16k: media/clips/blender_sintel_g0029_16k.wav
+    status: cut
+    note: ""
+quota_progress:
+  generated_at: "2026-09-25T09:06:39+08:00"
+  note: confirmed=已定标签片段数 provisional=粗标待复核片段数(单列不计配额); target 按 spec F6(每来源每语言)
+  per_source:
+    blender:
+      en:
+        音乐重:
+          confirmed: 0
+          provisional: 2
+          target: 3
+        对白干净:
+          confirmed: 0
+          provisional: 8
+          target: 3
+        待听审标注:
+          confirmed: 0
+          provisional: 12
+        音效压对白:
+          confirmed: 0
+          provisional: 8
+          target: 3
