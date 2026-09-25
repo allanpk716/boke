@@ -1,0 +1,2174 @@
+{
+ "generated_at": "2026-09-25 09:44:49",
+ "round": "separation_round1",
+ "separation": {
+  "model": "melband_roformer_instvox_duality_v2.ckpt",
+  "model_file_dir": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\models",
+  "normalization_threshold": 1.0,
+  "note": "normalization_threshold=1.0 保三轨同幅度尺度（默认 0.9 会压低输入且不回补，污染相减背景）"
+ },
+ "reference": {
+  "file": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\blender\\sintel_center.wav",
+  "protocol": "FC 中置 48k mono，按切片 start/end 用与切片相同的 ffmpeg 方法（-ss 前置）取段重采样 44.1k mono；人声轨取 L+R 均值；SI-SDR/Pearson 自实现（未用 museval），对整体增益不敏感",
+  "lag_search_samples": 60
+ },
+ "asr": {
+  "model": "small",
+  "device": "cpu",
+  "compute_type": "int8",
+  "language": "en",
+  "vad_filter": true,
+  "protocol": "三轨统一 ffmpeg 转 16k mono 后转写；词数=规范化文本分词数；bleed=背景词数/原混词数"
+ },
+ "per_clip": [
+  {
+   "clip_id": "blender_sintel_g0000",
+   "layer": "音乐重",
+   "provisional": true,
+   "start": 0.0,
+   "end": 30.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0000_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0000_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0000_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0000_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0004,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -40.6178,
+     "corr": 0.0093
+    },
+    "best": {
+     "lag": -3,
+     "si_sdr": -40.3136,
+     "corr": 0.0096
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -54.24,
+    "diff_vs_bgB_db": -54.23,
+    "bgA_rms_dbfs": -31.35,
+    "bgB_rms_dbfs": -31.35
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0001",
+   "layer": "音乐重",
+   "provisional": true,
+   "start": 30.0,
+   "end": 60.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0001_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0001_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0001_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0001_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.2564,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -2.467,
+     "corr": 0.6014
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -2.467,
+     "corr": 0.6014
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -30.6,
+    "diff_vs_bgB_db": -30.58,
+    "bgA_rms_dbfs": -26.48,
+    "bgB_rms_dbfs": -26.5
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0002",
+   "layer": "对白干净",
+   "provisional": true,
+   "start": 60.0,
+   "end": 90.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0002_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0002_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0002_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0002_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.2293,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -2.014,
+     "corr": 0.6214
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -2.014,
+     "corr": 0.6214
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -28.82,
+    "diff_vs_bgB_db": -28.77,
+    "bgA_rms_dbfs": -31.79,
+    "bgB_rms_dbfs": -31.84
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0003",
+   "layer": "对白干净",
+   "provisional": true,
+   "start": 90.0,
+   "end": 120.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0003_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0003_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0003_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0003_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.1019,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -3.0424,
+     "corr": 0.5759
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -3.0424,
+     "corr": 0.5759
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -34.23,
+    "diff_vs_bgB_db": -34.22,
+    "bgA_rms_dbfs": -39.34,
+    "bgB_rms_dbfs": -39.35
+   },
+   "bleed": {
+    "orig": {
+     "words": 10,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0004",
+   "layer": "对白干净",
+   "provisional": true,
+   "start": 120.0,
+   "end": 150.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0004_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0004_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0004_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0004_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0862,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 12.2268,
+     "corr": 0.9714
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 12.2268,
+     "corr": 0.9714
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -17.24,
+    "diff_vs_bgB_db": -17.14,
+    "bgA_rms_dbfs": -54.25,
+    "bgB_rms_dbfs": -54.35
+   },
+   "bleed": {
+    "orig": {
+     "words": 33,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0005",
+   "layer": "对白干净",
+   "provisional": true,
+   "start": 150.0,
+   "end": 180.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0005_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0005_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0005_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0005_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0421,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -7.1143,
+     "corr": 0.4034
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -7.1143,
+     "corr": 0.4034
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -33.2,
+    "diff_vs_bgB_db": -33.19,
+    "bgA_rms_dbfs": -45.4,
+    "bgB_rms_dbfs": -45.41
+   },
+   "bleed": {
+    "orig": {
+     "words": 15,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0006",
+   "layer": "对白干净",
+   "provisional": true,
+   "start": 180.0,
+   "end": 210.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0006_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0006_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0006_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0006_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.1041,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 8.5204,
+     "corr": 0.9364
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 8.5204,
+     "corr": 0.9364
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -18.85,
+    "diff_vs_bgB_db": -18.68,
+    "bgA_rms_dbfs": -50.75,
+    "bgB_rms_dbfs": -50.93
+   },
+   "bleed": {
+    "orig": {
+     "words": 2,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0007",
+   "layer": "对白干净",
+   "provisional": true,
+   "start": 210.0,
+   "end": 240.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0007_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0007_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0007_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0007_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0661,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 4.297,
+     "corr": 0.8538
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 4.297,
+     "corr": 0.8538
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -32.24,
+    "diff_vs_bgB_db": -32.21,
+    "bgA_rms_dbfs": -48.5,
+    "bgB_rms_dbfs": -48.53
+   },
+   "bleed": {
+    "orig": {
+     "words": 6,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0008",
+   "layer": "对白干净",
+   "provisional": true,
+   "start": 240.0,
+   "end": 270.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0008_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0008_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0008_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0008_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.1484,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 1.3042,
+     "corr": 0.758
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 1.3042,
+     "corr": 0.758
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -29.69,
+    "diff_vs_bgB_db": -29.68,
+    "bgA_rms_dbfs": -35.38,
+    "bgB_rms_dbfs": -35.39
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0009",
+   "layer": "对白干净",
+   "provisional": true,
+   "start": 270.0,
+   "end": 300.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0009_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0009_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0009_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0009_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.1025,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -11.6321,
+     "corr": 0.2535
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -11.6321,
+     "corr": 0.2535
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -39.37,
+    "diff_vs_bgB_db": -39.37,
+    "bgA_rms_dbfs": -28.76,
+    "bgB_rms_dbfs": -28.76
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0010",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 300.0,
+   "end": 330.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0010_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0010_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0010_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0010_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.3315,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -2.2578,
+     "corr": 0.6106
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -2.2578,
+     "corr": 0.6106
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -28.56,
+    "diff_vs_bgB_db": -28.56,
+    "bgA_rms_dbfs": -24.15,
+    "bgB_rms_dbfs": -24.15
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0011",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 330.0,
+   "end": 360.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0011_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0011_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0011_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0011_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.2623,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -8.3341,
+     "corr": 0.3577
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -8.3341,
+     "corr": 0.3577
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -31.81,
+    "diff_vs_bgB_db": -31.81,
+    "bgA_rms_dbfs": -26.76,
+    "bgB_rms_dbfs": -26.76
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0012",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 360.0,
+   "end": 390.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0012_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0012_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0012_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0012_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.3122,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -0.8019,
+     "corr": 0.6738
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -0.8019,
+     "corr": 0.6738
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -28.2,
+    "diff_vs_bgB_db": -28.2,
+    "bgA_rms_dbfs": -28.71,
+    "bgB_rms_dbfs": -28.72
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0013",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 390.0,
+   "end": 420.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0013_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0013_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0013_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0013_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.2952,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -3.915,
+     "corr": 0.5374
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -3.915,
+     "corr": 0.5374
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -32.05,
+    "diff_vs_bgB_db": -32.04,
+    "bgA_rms_dbfs": -29.17,
+    "bgB_rms_dbfs": -29.18
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0014",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 420.0,
+   "end": 450.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0014_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0014_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0014_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0014_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.1453,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -6.1413,
+     "corr": 0.4423
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -6.1413,
+     "corr": 0.4423
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -27.72,
+    "diff_vs_bgB_db": -27.65,
+    "bgA_rms_dbfs": -35.64,
+    "bgB_rms_dbfs": -35.71
+   },
+   "bleed": {
+    "orig": {
+     "words": 2,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0015",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 450.0,
+   "end": 480.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0015_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0015_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0015_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0015_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0787,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 5.4339,
+     "corr": 0.8818
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 5.4339,
+     "corr": 0.8818
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -28.05,
+    "diff_vs_bgB_db": -28.03,
+    "bgA_rms_dbfs": -48.84,
+    "bgB_rms_dbfs": -48.85
+   },
+   "bleed": {
+    "orig": {
+     "words": 17,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0016",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 480.0,
+   "end": 510.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0016_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0016_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0016_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0016_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0114,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -28.8189,
+     "corr": 0.0362
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -28.8189,
+     "corr": 0.0362
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -31.68,
+    "diff_vs_bgB_db": -31.64,
+    "bgA_rms_dbfs": -45.83,
+    "bgB_rms_dbfs": -45.86
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0017",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 510.0,
+   "end": 540.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0017_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0017_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0017_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0017_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.138,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 0.6552,
+     "corr": 0.7332
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 0.6552,
+     "corr": 0.7332
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -21.89,
+    "diff_vs_bgB_db": -21.77,
+    "bgA_rms_dbfs": -45.8,
+    "bgB_rms_dbfs": -45.92
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0018",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 540.0,
+   "end": 570.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0018_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0018_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0018_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0018_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.3117,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -6.1937,
+     "corr": 0.4401
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -6.1937,
+     "corr": 0.4401
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -27.02,
+    "diff_vs_bgB_db": -26.93,
+    "bgA_rms_dbfs": -21.26,
+    "bgB_rms_dbfs": -21.34
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0019",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 570.0,
+   "end": 600.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0019_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0019_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0019_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0019_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.3895,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -7.9607,
+     "corr": 0.3713
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -7.9607,
+     "corr": 0.3713
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -27.58,
+    "diff_vs_bgB_db": -27.53,
+    "bgA_rms_dbfs": -22.84,
+    "bgB_rms_dbfs": -22.9
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0020",
+   "layer": "音效压对白",
+   "provisional": true,
+   "start": 600.0,
+   "end": 630.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0020_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0020_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0020_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0020_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.35,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -1.0413,
+     "corr": 0.6636
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -1.0413,
+     "corr": 0.6636
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -25.91,
+    "diff_vs_bgB_db": -25.86,
+    "bgA_rms_dbfs": -27.39,
+    "bgB_rms_dbfs": -27.45
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0021",
+   "layer": "音效压对白",
+   "provisional": true,
+   "start": 630.0,
+   "end": 660.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0021_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0021_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0021_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0021_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0503,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -30.3234,
+     "corr": 0.0305
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -30.3234,
+     "corr": 0.0305
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -28.72,
+    "diff_vs_bgB_db": -28.71,
+    "bgA_rms_dbfs": -31.33,
+    "bgB_rms_dbfs": -31.34
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0022",
+   "layer": "音效压对白",
+   "provisional": true,
+   "start": 660.0,
+   "end": 690.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0022_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0022_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0022_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0022_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0245,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -37.5755,
+     "corr": 0.0132
+    },
+    "best": {
+     "lag": -1,
+     "si_sdr": -37.5535,
+     "corr": 0.0133
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -38.58,
+    "diff_vs_bgB_db": -38.58,
+    "bgA_rms_dbfs": -27.69,
+    "bgB_rms_dbfs": -27.69
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0023",
+   "layer": "音效压对白",
+   "provisional": true,
+   "start": 690.0,
+   "end": 720.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0023_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0023_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0023_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0023_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0317,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -2.5079,
+     "corr": 0.5996
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -2.5079,
+     "corr": 0.5996
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -36.39,
+    "diff_vs_bgB_db": -36.36,
+    "bgA_rms_dbfs": -53.52,
+    "bgB_rms_dbfs": -53.56
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0024",
+   "layer": "音效压对白",
+   "provisional": true,
+   "start": 720.0,
+   "end": 750.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0024_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0024_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0024_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0024_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0334,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": -4.2186,
+     "corr": 0.524
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": -4.2186,
+     "corr": 0.524
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -22.1,
+    "diff_vs_bgB_db": -22.1,
+    "bgA_rms_dbfs": -46.54,
+    "bgB_rms_dbfs": -46.55
+   },
+   "bleed": {
+    "orig": {
+     "words": 1,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 1,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 1,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 1.0,
+    "bleed_bgB_ratio": 1.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0025",
+   "layer": "音效压对白",
+   "provisional": true,
+   "start": 750.0,
+   "end": 780.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0025_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0025_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0025_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0025_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0382,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 3.6662,
+     "corr": 0.8363
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 3.6662,
+     "corr": 0.8363
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -24.53,
+    "diff_vs_bgB_db": -24.49,
+    "bgA_rms_dbfs": -44.56,
+    "bgB_rms_dbfs": -44.6
+   },
+   "bleed": {
+    "orig": {
+     "words": 6,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0026",
+   "layer": "音效压对白",
+   "provisional": true,
+   "start": 780.0,
+   "end": 810.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0026_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0026_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0026_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0026_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0378,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 4.7579,
+     "corr": 0.8657
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 4.7579,
+     "corr": 0.8657
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -26.79,
+    "diff_vs_bgB_db": -26.77,
+    "bgA_rms_dbfs": -39.73,
+    "bgB_rms_dbfs": -39.75
+   },
+   "bleed": {
+    "orig": {
+     "words": 5,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": 0.0,
+    "bleed_bgB_ratio": 0.0
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0027",
+   "layer": "音效压对白",
+   "provisional": true,
+   "start": 810.0,
+   "end": 840.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0027_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0027_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0027_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0027_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0583,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 1.0304,
+     "corr": 0.7477
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 1.0304,
+     "corr": 0.7477
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -26.67,
+    "diff_vs_bgB_db": -26.65,
+    "bgA_rms_dbfs": -32.04,
+    "bgB_rms_dbfs": -32.06
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0028",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 840.0,
+   "end": 870.0,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0028_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0028_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0028_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0028_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.0852,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 1.9391,
+     "corr": 0.7809
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 1.9391,
+     "corr": 0.7809
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 1323000
+   },
+   "ab_diff": {
+    "samples": 1323000,
+    "diff_vs_bgA_db": -28.16,
+    "diff_vs_bgB_db": -28.16,
+    "bgA_rms_dbfs": -28.54,
+    "bgB_rms_dbfs": -28.54
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 30.0
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  },
+  {
+   "clip_id": "blender_sintel_g0029",
+   "layer": "待听审标注",
+   "provisional": true,
+   "start": 870.0,
+   "end": 888.032,
+   "files": {
+    "orig": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\clips\\blender_sintel_g0029_44k1.wav",
+    "vocals": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0029_44k1_(Vocals)_melband_roformer_instvox_duality_v2.wav",
+    "bgA": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\blender_sintel_g0029_bgA_subtract.wav",
+    "bgB": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\lab\\drama\\media\\separated\\stems\\blender_sintel_g0029_44k1_(Instrumental)_melband_roformer_instvox_duality_v2.wav"
+   },
+   "vocals_peak": 0.078,
+   "center": {
+    "zero_lag": {
+     "lag": 0,
+     "si_sdr": 3.7694,
+     "corr": 0.8392
+    },
+    "best": {
+     "lag": 0,
+     "si_sdr": 3.7694,
+     "corr": 0.8392
+    }
+   },
+   "identity": {
+    "max_abs_diff": 0.0,
+    "identical": true,
+    "samples_compared": 795211
+   },
+   "ab_diff": {
+    "samples": 795211,
+    "diff_vs_bgA_db": -30.36,
+    "diff_vs_bgB_db": -30.35,
+    "bgA_rms_dbfs": -32.65,
+    "bgB_rms_dbfs": -32.67
+   },
+   "bleed": {
+    "orig": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 18.03
+    },
+    "bgA": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 18.03
+    },
+    "bgB": {
+     "words": 0,
+     "vad": true,
+     "audio_sec": 18.03
+    },
+    "bleed_bgA_ratio": null,
+    "bleed_bgB_ratio": null
+   }
+  }
+ ],
+ "stratified": {
+  "对白干净": {
+   "n_clips": 8,
+   "si_sdr_vs_center_best": {
+    "n": 8,
+    "mean": 0.3182,
+    "median": -0.3549,
+    "min": -11.6321,
+    "max": 12.2268
+   },
+   "si_sdr_vs_center_zero_lag": {
+    "n": 8,
+    "mean": 0.3182,
+    "median": -0.3549,
+    "min": -11.6321,
+    "max": 12.2268
+   },
+   "corr_vs_center_best": {
+    "n": 8,
+    "mean": 0.6717,
+    "median": 0.6897,
+    "min": 0.2535,
+    "max": 0.9714
+   },
+   "bleed_bgA": {
+    "n": 5,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "bleed_bgB": {
+    "n": 5,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "bgA_words": {
+    "n": 8,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "bgB_words": {
+    "n": 8,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "orig_words": {
+    "n": 8,
+    "mean": 8.25,
+    "median": 4.0,
+    "min": 0.0,
+    "max": 33.0
+   },
+   "ab_diff_vs_bgA_db": {
+    "n": 8,
+    "mean": -29.205,
+    "median": -30.965,
+    "min": -39.37,
+    "max": -17.24
+   },
+   "identity_pass": 8
+  },
+  "音效压对白": {
+   "n_clips": 8,
+   "si_sdr_vs_center_best": {
+    "n": 8,
+    "mean": -8.2738,
+    "median": -1.7746,
+    "min": -37.5535,
+    "max": 4.7579
+   },
+   "si_sdr_vs_center_zero_lag": {
+    "n": 8,
+    "mean": -8.2765,
+    "median": -1.7746,
+    "min": -37.5755,
+    "max": 4.7579
+   },
+   "corr_vs_center_best": {
+    "n": 8,
+    "mean": 0.5351,
+    "median": 0.6316,
+    "min": 0.0133,
+    "max": 0.8657
+   },
+   "bleed_bgA": {
+    "n": 3,
+    "mean": 0.3333,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "bleed_bgB": {
+    "n": 3,
+    "mean": 0.3333,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "bgA_words": {
+    "n": 8,
+    "mean": 0.125,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "bgB_words": {
+    "n": 8,
+    "mean": 0.125,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "orig_words": {
+    "n": 8,
+    "mean": 1.5,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 6.0
+   },
+   "ab_diff_vs_bgA_db": {
+    "n": 8,
+    "mean": -28.7112,
+    "median": -26.73,
+    "min": -38.58,
+    "max": -22.1
+   },
+   "identity_pass": 8
+  },
+  "音乐重": {
+   "n_clips": 2,
+   "si_sdr_vs_center_best": {
+    "n": 2,
+    "mean": -21.3903,
+    "median": -21.3903,
+    "min": -40.3136,
+    "max": -2.467
+   },
+   "si_sdr_vs_center_zero_lag": {
+    "n": 2,
+    "mean": -21.5424,
+    "median": -21.5424,
+    "min": -40.6178,
+    "max": -2.467
+   },
+   "corr_vs_center_best": {
+    "n": 2,
+    "mean": 0.3055,
+    "median": 0.3055,
+    "min": 0.0096,
+    "max": 0.6014
+   },
+   "bleed_bgA": {
+    "n": 0
+   },
+   "bleed_bgB": {
+    "n": 0
+   },
+   "bgA_words": {
+    "n": 2,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "bgB_words": {
+    "n": 2,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "orig_words": {
+    "n": 2,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "ab_diff_vs_bgA_db": {
+    "n": 2,
+    "mean": -42.42,
+    "median": -42.42,
+    "min": -54.24,
+    "max": -30.6
+   },
+   "identity_pass": 2
+  },
+  "待听审标注": {
+   "n_clips": 12,
+   "si_sdr_vs_center_best": {
+    "n": 12,
+    "mean": -4.3855,
+    "median": -3.0864,
+    "min": -28.8189,
+    "max": 5.4339
+   },
+   "si_sdr_vs_center_zero_lag": {
+    "n": 12,
+    "mean": -4.3855,
+    "median": -3.0864,
+    "min": -28.8189,
+    "max": 5.4339
+   },
+   "corr_vs_center_best": {
+    "n": 12,
+    "mean": 0.5587,
+    "median": 0.574,
+    "min": 0.0362,
+    "max": 0.8818
+   },
+   "bleed_bgA": {
+    "n": 2,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "bleed_bgB": {
+    "n": 2,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "bgA_words": {
+    "n": 12,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "bgB_words": {
+    "n": 12,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 0.0
+   },
+   "orig_words": {
+    "n": 12,
+    "mean": 1.5833,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 17.0
+   },
+   "ab_diff_vs_bgA_db": {
+    "n": 12,
+    "mean": -28.59,
+    "median": -28.18,
+    "min": -32.05,
+    "max": -21.89
+   },
+   "identity_pass": 12
+  },
+  "总体": {
+   "n_clips": 30,
+   "si_sdr_vs_center_best": {
+    "n": 30,
+    "mean": -5.3017,
+    "median": -2.3624,
+    "min": -40.3136,
+    "max": 12.2268
+   },
+   "si_sdr_vs_center_zero_lag": {
+    "n": 30,
+    "mean": -5.3126,
+    "median": -2.3624,
+    "min": -40.6178,
+    "max": 12.2268
+   },
+   "corr_vs_center_best": {
+    "n": 30,
+    "mean": 0.5657,
+    "median": 0.606,
+    "min": 0.0096,
+    "max": 0.9714
+   },
+   "bleed_bgA": {
+    "n": 10,
+    "mean": 0.1,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "bleed_bgB": {
+    "n": 10,
+    "mean": 0.1,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "bgA_words": {
+    "n": 30,
+    "mean": 0.0333,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "bgB_words": {
+    "n": 30,
+    "mean": 0.0333,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "orig_words": {
+    "n": 30,
+    "mean": 3.2333,
+    "median": 0.0,
+    "min": 0.0,
+    "max": 33.0
+   },
+   "ab_diff_vs_bgA_db": {
+    "n": 30,
+    "mean": -29.7083,
+    "median": -28.64,
+    "min": -54.24,
+    "max": -17.24
+   },
+   "identity_pass": 30
+  }
+ },
+ "f4_negatives": {
+  "note": "音乐重层共 2 段，不足 3 段，从待听审标注顺序补 1 段（blender_sintel_g0010；粗标未听审，负例结论按弱证据对待）",
+  "clips": [
+   {
+    "clip_id": "blender_sintel_g0000",
+    "layer": "音乐重",
+    "bleed": {
+     "orig": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bgA": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bgB": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bleed_bgA_ratio": null,
+     "bleed_bgB_ratio": null
+    },
+    "no_vad_probe_bgA": {
+     "words": 1,
+     "vad": false,
+     "audio_sec": 30.0
+    },
+    "no_vad_probe_bgB": {
+     "words": 1,
+     "vad": false,
+     "audio_sec": 30.0
+    }
+   },
+   {
+    "clip_id": "blender_sintel_g0001",
+    "layer": "音乐重",
+    "bleed": {
+     "orig": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bgA": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bgB": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bleed_bgA_ratio": null,
+     "bleed_bgB_ratio": null
+    },
+    "no_vad_probe_bgA": {
+     "words": 0,
+     "vad": false,
+     "audio_sec": 30.0
+    },
+    "no_vad_probe_bgB": {
+     "words": 0,
+     "vad": false,
+     "audio_sec": 30.0
+    }
+   },
+   {
+    "clip_id": "blender_sintel_g0010",
+    "layer": "待听审标注",
+    "bleed": {
+     "orig": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bgA": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bgB": {
+      "words": 0,
+      "vad": true,
+      "audio_sec": 30.0
+     },
+     "bleed_bgA_ratio": null,
+     "bleed_bgB_ratio": null
+    },
+    "no_vad_probe_bgA": {
+     "words": 0,
+     "vad": false,
+     "audio_sec": 30.0
+    },
+    "no_vad_probe_bgB": {
+     "words": 0,
+     "vad": false,
+     "audio_sec": 30.0
+    }
+   }
+  ]
+ },
+ "conclusions": {
+  "identity": "相减恒等成立：30 段全部逐样本 bit 级相等（max|Δ|=0）",
+  "subtract_vs_instrumental": "背景A与背景B差异能量（相对背景A）总体均值 -29.7083 dB；bleed 均值 相减=0.1 vs 模型 instrumental=0.1",
+  "f4_negatives": "音乐重层共 2 段，不足 3 段，从待听审标注顺序补 1 段（blender_sintel_g0010；粗标未听审，负例结论按弱证据对待）"
+ },
+ "clips_skipped_missing_products": []
+}
