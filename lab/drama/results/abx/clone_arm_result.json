@@ -1,0 +1,18 @@
+{
+ "arm": "clone-vs-original (CosyVoice3 zero_shot same-text)",
+ "date": "2026-09-25",
+ "listener": "user(N=1)",
+ "n": 5,
+ "correct_which_syn": 4,
+ "detectability": 0.8,
+ "chance": 0.5,
+ "p_two_tailed": 0.38,
+ "similarity_mean": 2.8,
+ "similarity_by_lang": {
+  "zh": 4.0,
+  "en": 2.0
+ },
+ "pair_design": "zh=博主参考音(25s干净口播+逐字稿,主线标准链); en=Sintel单人短句(3s,参考取自分离stem,情绪化表演语音)",
+ "conclusion": "克隆可辨(80%,方向性):相似度强依赖参考音质量——干净长参考4.0/5 vs 分离stem短参考2.0/5;瓶颈从背景分离转移到克隆参考音",
+ "note": "n=5 初判;en参考音先天不足(短+分离伪影+情绪语音),2.0分不能单独归因克隆引擎"
+}
