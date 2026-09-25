@@ -15,7 +15,7 @@
  "note_substitute": "【替代决策·显著】今晚无 CosyVoice（.venv-lab 安装过重留待次日）：主臂（分离床+真克隆回混）与克隆对照臂（克隆声 vs 原声直比）今晚缺席，克隆版次日补装环境后补制备——不静默降质。本清单只测分离对照臂（F1 复审修正版）：B=背景A(票05 相减床)+分离人声×(+2dB) 回混重建+母带响度对齐。",
  "note_design": "设计要点：票05 已证 背景A+分离人声=原混（bit 级恒等），'重建后对齐原混 LUFS'恒为 0 dB，照字面做 A/B 完全相同、ABX 不可判。按票面'更干净设计在 note 说明后采用'条款：B = 背景A + 分离人声×g，g=固定 +2.0 dB 对白再平衡（真实换声链中'新对白'按参考对白 LUFS 落位后的代表性残差），再做 B 成片 integrated LUFS 对齐 A（主增益级）与 true peak 联合防护（A/B 同增益，目标 −1.2 dBTP，验收线 −1.0 留 0.2 dB 余量）。A/B 差异=分离伪影+对白电平再平衡+母带响度处理，与真实换声链的分离/回混部分同构。",
  "note_F9": "判据口径：分档(50/65%)优先于显著性检验；闸门判定用总体 18 试次，分层(stratum 字段)只报告不判闸。",
- "note_answer": "answer 字段留给听者：盲听 play/ 副本后，X 像 _1 就填 \"1\"，像 _2 就填 \"2\"（null=未听）。晨间分析解码（answer_decode）：play_order=\"AB\" 时 _1=A/_2=B，\"BA\" 反之；答对 = (answer==\"1\" and X==\"A\") or (answer==\"2\" and X==\"B\")。听前别看 X 与 play_order 列。",
+ "note_answer": "晨间分析答对判定(按 play_order 分支,听者 answer 取 \"1\"/\"2\"): play_order==\"AB\" 时 答对=(answer==\"1\" and X==\"A\") or (answer==\"2\" and X==\"B\"); play_order==\"BA\" 时 答对=(answer==\"1\" and X==\"B\") or (answer==\"2\" and X==\"A\")。 _1/_2 对应 play_files 顺序,与 A/B 标签的映射已含在 play_order 中。",
  "trials": [
   {
    "clip_id": "bili_liangjian_ep01_g0001_g0002",

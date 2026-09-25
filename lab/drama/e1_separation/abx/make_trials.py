@@ -193,7 +193,7 @@ def verify(trials_path: Path) -> int:
         ids_seen.add(t["clip_id"])
         if t.get("X") not in ("A", "B"):
             problems.append(f"{tid}: X 非法 {t.get('X')}")
-        if t.get("answer") not in (None, "A", "B"):
+        if t.get("answer") not in (None, "A", "B", "1", "2"):
             problems.append(f"{tid}: answer 非法 {t.get('answer')}")
         if t.get("play_order") not in ("AB", "BA"):
             problems.append(f"{tid}: play_order 非法 {t.get('play_order')}")
