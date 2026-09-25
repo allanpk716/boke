@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-09-25T09:00:00+08:00",
+  "python": {
+    "version": "3.11.9",
+    "executable": "C:\\Users\\allan716\\scoop\\apps\\python\\current\\python.exe",
+    "platform": "Windows-10-10.0.19045-SP0"
+  },
+  "gpu": {
+    "source": "nvidia-smi",
+    "devices": [
+      {
+        "name": "NVIDIA GeForce RTX 3060",
+        "memory_total_mib": 12288,
+        "driver_version": "560.70"
+      }
+    ]
+  },
+  "ffmpeg": {
+    "path": "C:\\Users\\allan716\\scoop\\shims\\ffmpeg.EXE",
+    "version": "ffmpeg version 6.0-full_build-www.gyan.dev Copyright (c) 2000-2023 the FFmpeg developers"
+  },
+  "ffprobe": {
+    "path": "C:\\Users\\allan716\\scoop\\shims\\ffprobe.EXE",
+    "version": "ffprobe version 6.0-full_build-www.gyan.dev Copyright (c) 2007-2023 the FFmpeg developers"
+  },
+  "current_interpreter_pkgs": {
+    "audio_separator": "missing",
+    "faster_whisper": "missing",
+    "whisper": "missing",
+    "museval": "missing",
+    "speechbrain": "missing",
+    "torch": "2.5.1+cu121",
+    "soundfile": "missing",
+    "scipy": "1.17.1",
+    "matplotlib": "3.10.9",
+    "pyyaml": "6.0.3"
+  },
+  "venv_lab": {
+    "exists": true,
+    "python_path": "C:\\Users\\allan716\\orca\\workspaces\\boke\\调研声音背景分离合成\\.venv-lab\\Scripts\\python.exe",
+    "python_version": "3.11.9",
+    "pkgs": {
+      "audio-separator": "0.47.0",
+      "faster-whisper": "1.2.1",
+      "openai-whisper": "missing",
+      "museval": "0.4.1",
+      "speechbrain": "1.1.1",
+      "torch": "2.14.0+cu126",
+      "soundfile": "0.14.0",
+      "scipy": "1.17.1",
+      "matplotlib": "3.11.2",
+      "pyyaml": "6.0.3"
+    },
+    "status": "ready",
+    "torch_cuda": {
+      "torch_version": "2.14.0+cu126",
+      "cuda_available": true,
+      "cuda_version": "12.6",
+      "device_name": "NVIDIA GeForce RTX 3060",
+      "device_mem_total_mib": 12287
+    }
+  },
+  "torch_cuda": {
+    "torch_version": "2.14.0+cu126",
+    "cuda_available": true,
+    "cuda_version": "12.6",
+    "device_name": "NVIDIA GeForce RTX 3060",
+    "device_mem_total_mib": 12287
+  }
+}

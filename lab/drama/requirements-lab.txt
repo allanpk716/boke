@@ -1,0 +1,12 @@
+# lab/drama 研究环境依赖（只装进 .venv-lab；建环境步骤见 tools/setup_env.md）
+# 红线：严禁动主线 .venv / .venv-diar，严禁 pip install 到系统 python。
+# 安装命令（与协调者 2026-09-25 实际执行一致，不锁版本；如需版本快照，装完跑 pip freeze）：
+#   pip install "audio-separator[gpu]" faster-whisper museval soundfile pyyaml speechbrain matplotlib scipy
+audio-separator[gpu]
+faster-whisper
+museval
+soundfile
+pyyaml
+speechbrain
+matplotlib
+scipy
