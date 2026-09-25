@@ -150,7 +150,8 @@ def build() -> Path:
         "note_answer": (
             "answer 字段留给听者：盲听 play/ 副本后，X 像 _1 就填 \"1\"，像 _2 就填 \"2\"（null=未听）。"
             "晨间分析解码（answer_decode）：play_order=\"AB\" 时 _1=A/_2=B，\"BA\" 反之；"
-            "答对 = (answer==\"1\" and X==\"A\") or (answer==\"2\" and X==\"B\")。听前别看 X 与 play_order 列。"
+            "答对按 play_order 分支：AB 序=(answer==\"1\" and X==\"A\") or (answer==\"2\" and X==\"B\")；"
+            "BA 序=(answer==\"1\" and X==\"B\") or (answer==\"2\" and X==\"A\")。听前别看 X 与 play_order 列。"
         ),
         "trials": trials,
     }
