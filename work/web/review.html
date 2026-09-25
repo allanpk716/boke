@@ -32,6 +32,8 @@ button:disabled{background:#aaa;cursor:not-allowed}
 #statusCard .pvbtns{display:flex;gap:10px;margin-top:8px}
 #statusCard audio{width:100%;margin-top:8px}
 #statusCard .stale{background:#fdf0e7;color:#b06a00;border-radius:6px;padding:4px 10px;font-size:12px;display:inline-block;margin-top:6px}
+#archCard{display:none;background:#fdf0e7;border:1px solid #e8a13a;border-radius:10px;padding:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06);font-size:14px}
+#archCard .cand{margin:6px 0}
 #speakers{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
 .card{background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:2px solid transparent}
 .card.host{border-color:#e8a13a;background:#fffdf7}
@@ -77,6 +79,7 @@ input[type=text]{width:130px}
   </div>
   <div id="verdict" class="dub"></div>
   <div id="statusCard"></div>
+  <div id="archCard"></div>
   <div id="speakers"></div>
   <div id="libCard"><b>人物库</b> <span class="note">(主持人/常客:参考音全局复用;主持人须参考音+转写稿齐备且非本期分P来源)</span><div id="persons"><div class="empty">加载中…</div></div></div>
   <div id="footbar">
@@ -113,11 +116,13 @@ let LIB=null, EP=null, PERSONS=[], curBv=null, curPart=0;
 const EDITS={};            // part号 -> {verdict, speakers:[…用户决策]}
 let dirty=false;           // 当前 part 用户改过:轮询不重渲染说话人卡(防丢输入)
 const SIGS={};             // part号 -> 说话人 id 签名(rediarize 后自动重建)
+let ARCH_NOTE=null;        // 最近一次提交的归档回执(拦截提示块数据源,票06)
 
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function langTag(l){const m={zh:["zh","中文"],en:["en","英语"],ja:["ja","日语"],ko:["ko","韩语"]}[l]||[l?"unk":"",l||""];return l?`<span class="tag ${m[0]}">${esc(m[1])}</span>`:""}
 function talkMin(sec){return sec==null?"":`${(sec/60).toFixed(1)}分钟`}
 function fmtS(x){return x==null||isNaN(x)?"":Number(x).toFixed(2)}
+function langGroup(l){const n={zh:"中文",en:"英语",ja:"日语",ko:"韩语"}[l];return (n||l||"语言未识别")+"组"}
 // 声纹建议徽章(票05四态):suggest/uncalibrated/compete/桩不可用;unknown 只显分数不预填
 function voiceBadge(sg){
  if(!sg)return"";
@@ -182,7 +187,7 @@ function renderEps(){const box=document.getElementById("eps");box.innerHTML="";
   d.innerHTML=`<div class="epTitle">${esc(g.title)}</div>
    <small>${esc(g.date||"")} · ${esc(g.bvid)} · ${g.parts.map(p=>p.status.replace("待","")).join("/")}</small>
    ${need?`<small class="need">👉 ${need} 个分P待核对</small>`:""}`;
-  d.onclick=async()=>{curBv=g.bvid;curPart=0;dirty=false;await loadEpisode(g.bvid);};
+  d.onclick=async()=>{curBv=g.bvid;curPart=0;dirty=false;ARCH_NOTE=null;renderArchNote(null);await loadEpisode(g.bvid);};
   box.appendChild(d);});
 }
 
@@ -205,7 +210,7 @@ function renderPart(){const p=part();const tabs=document.getElementById("ptabs")
  if(!EP){document.getElementById("video").src="";document.getElementById("verdict").innerHTML="";return;}
  EP.parts.forEach((pt,i)=>{const t=document.createElement("div");t.className="ptab"+(i===curPart?" on":"");
   t.innerHTML=`P${pt.part}`+(pt.suggest==="skip"?'<span class="skipflag">建议跳过</span>':"");
-  t.onclick=()=>{curPart=i;dirty=false;renderPart();renderSpeakers();renderStatus();};
+  t.onclick=()=>{curPart=i;dirty=false;ARCH_NOTE=null;renderArchNote(null);renderPart();renderSpeakers();renderStatus();};
   tabs.appendChild(t);});
  const v=document.getElementById("video");
  const want=p&&p.media_url?p.media_url:"";
@@ -268,6 +273,30 @@ async function retryP(){const p=part();
   const d=await r.json();
   if(!r.ok||!d.ok){setStatus("❌ "+(d&&d.error||r.status),true);return;}
   setStatus("重试已提交…");await loadEpisode(EP.bvid);
+ }catch(e){setStatus("❌ 网络错误",true);}}
+
+// ---------- 归档拦截提示块(票06 D6:默认拦下,试听后可「仍入库」人工裁决) ----------
+function renderArchNote(a){
+ const box=document.getElementById("archCard");
+ if(!a||!(a.blocked||[]).length){box.style.display="none";box.innerHTML="";return;}
+ box.style.display="";
+ box.innerHTML=`<b>⚠ ${a.blocked.length} 条新样本与人物现有声纹档案明显不符,默认未入库</b>
+  <div class="note">新样本均分低于同人分布 p5(认错人/坏样本的常见信号);可试听核对,确认无误再「仍入库」</div>`+
+  a.blocked.map(b=>`<div class="cand">
+   ${b.sample_url?`<audio controls preload="none" src="${esc(b.sample_url)}"></audio>`:`<span class="note">(样本不在服务目录:${esc(b.sample_path||"")})</span>`}
+   <span class="note"><b>${esc(b.spk)}</b> → ${esc(b.person||"?")} ${langTag(b.lang)} 均分 ${fmtS(b.score)} &lt; p5 ${fmtS(b.p5)}</span>
+   <button class="small" onclick="forceArchive('${esc(b.spk)}')">仍入库</button></div>`).join("")+
+  `<div class="row"><button class="small ghost" onclick="ARCH_NOTE=null;renderArchNote(null)">忽略,保持不入库</button></div>`;
+}
+async function forceArchive(spk){
+ try{const r=await fetch("/api/review/archive_force",{method:"POST",
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({bvid:EP.bvid,part:part().part,spk})});
+  const d=await r.json();
+  if(!r.ok||!d.ok){setStatus("❌ 仍入库失败:"+(d&&d.error||r.status),true);return;}
+  setStatus(`✅ 已仍入库:${spk} → ${d.person}(${langGroup(d.lang)}现有 ${d.total_after} 条)`);
+  if(ARCH_NOTE){ARCH_NOTE.blocked=(ARCH_NOTE.blocked||[]).filter(b=>b.spk!==spk);
+   renderArchNote(ARCH_NOTE);}
  }catch(e){setStatus("❌ 网络错误",true);}}
 async function rediarize(){const p=part();
  const n=parseInt(prompt("重跑分人:最多几个人?(既有决策将清空重来)","4"),10);
@@ -410,6 +439,7 @@ document.getElementById("submitBtn").onclick=async()=>{
   speakers:e.speakers.map(s=>({
    id:s.id,note:s.note||"",host:!!s.host,
    host_person:s.host?(s.host_person||PERSONS[0]&&PERSONS[0].name):null,
+   person:s.host?null:(s.host_person||null), // 声纹归档目标(建议预填/人工指认,提交=确认;票06)
    merge_into:s.merge||null,
    voice:s.host?"clone":s.voice,
    preset_voice:s.voice==="preset"?s.preset_voice:null,
@@ -421,7 +451,13 @@ document.getElementById("submitBtn").onclick=async()=>{
   if(!r.ok||!d.ok){setStatus("❌ "+(d&&d.error||r.status),true);return;}
   if(d.voided){setStatus("已提交重跑分人,决策已清空");delete EDITS[p.part];}
   else if(d.excluded)setStatus(`✅ P${p.part} 已按你的确认排除(全中文跳过)`);
-  else setStatus(`✅ 已提交(决策 ${d.dec_hash}),小样生成中…`);
+  else{let m=`✅ 已提交(决策 ${d.dec_hash}),小样生成中…`; // 归档回显(D4:已为圆脸归档 2 条(中文组现有 8 条))
+   const sums=(d.archive&&d.archive.summaries)||[];
+   if(sums.length)m+=" | "+sums.map(s=>`已为${s.person}归档 ${s.archived} 条(${langGroup(s.lang)}现有 ${s.total} 条)`).join(";");
+   if(d.archive&&d.archive.archive_error)m+=` | ⚠ 声纹归档未完成:${d.archive.archive_error}`;
+   setStatus(m);}
+  ARCH_NOTE=d.archive||null; // 拦截提示块(D6:试听+仍入库),切走自动收起
+  renderArchNote(ARCH_NOTE);
   dirty=false;await loadEpisode(EP.bvid);
  }catch(e){setStatus("❌ 网络错误",true);}};
 
