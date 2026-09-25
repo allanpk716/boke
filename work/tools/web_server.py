@@ -14,6 +14,15 @@ API 路由(全部 JSON;页面轮询 /api/library 每 2s 刷新):
   GET  /api/episode/<bvid>              期详情(parts/说话人样本/langid/小样/成品;
                                         每说话人附声纹建议 suggest,票05)
   GET  /api/persons                     人物库(参考音附可试听 URL;refs 全量带 use)
+  GET  /api/persons/<name>/archive      声纹档案列表(票07):按语言分组返回
+                                        persons_emb 条目(person/lang/ref_path/
+                                        bvid/part/spk/ts/model/valid/audio_url,
+                                        不外露 vec);组计数只算有效条目,失效单列;
+                                        valid = F11 ref_path 文件存在性
+  DELETE /api/persons/<name>/archive    删一条归档条目 {ref_path}(票07):走票03
+                                        级联清单——删 refs 条目(use=voiceid)+
+                                        persons_emb 向量记录+自动样本文件(仅动
+                                        web 音频目录内的文件);幂等可重试
   POST /api/ingest                      {bv} 或 {items:[...]} 导入;cookie 失效 423
   POST /api/review                      每分P决策 JSON → 03 应用器 → 05 小样(后台)
                                         + 票06 归档闭环(同步):按最终说话人集合
@@ -39,8 +48,11 @@ API 路由(全部 JSON;页面轮询 /api/library 每 2s 刷新):
 声纹建议(票05):分析/重跑分人完成后自动跑 voiceid.identify 落
 work/<stem>/voiceid.json(桩/mock 分 P 落 available:false);GET /api/episode
 读它,档案(persons_emb.json)/阈值(voiceid_thresholds.json)比它新则重算
-一次再返回(毫秒级)。分人有无 embeddings 一律查 spk_emb 两件产物文件
-存在性,不依赖 diarize.run() 返回键(票01 评审裁定:resume 早退分支无键)。
+一次再返回(毫秒级)。识别读档处按 ref_path 存在性过滤(F11,票07):样本
+文件已缺失的条目视为失效,不参与打分与计数——票02 VoiceArchive 读侧无注入
+点,过滤落在 _voiceid_compute 装载处(_ref_valid)。分人有无 embeddings
+一律查 spk_emb 两件产物文件存在性,不依赖 diarize.run() 返回键(票01 评审
+裁定:resume 早退分支无键)。
 
 绑定 0.0.0.0:8765;测试用 make_server("127.0.0.1", 0, app) 起随机端口实例。
 """
@@ -77,6 +89,7 @@ from boke.persons import PersonLibrary                   # noqa: E402
 from boke.review_apply import DecisionError              # noqa: E402
 
 _EP_RE = re.compile(r"^/api/episode/([A-Za-z0-9]+)$")
+_PERSONS_ARCHIVE_RE = re.compile(r"^/api/persons/([^/]+)/archive$")
 _PREVIEW_RE = re.compile(r"^/api/preview/([^/]+)/(\d+)$")
 _RETRY_RE = re.compile(r"^/api/retry/([^/]+)/(\d+)$")
 _SPK_RE = re.compile(r"^\[(SPK_\d+)\]")
@@ -291,6 +304,8 @@ class App:
             entries = voiceid.VoiceArchive(path=self.persons_emb_path).entries()
         except RuntimeError as e:
             return {"available": False, "reason": f"persons-emb-damaged:{e}"}
+        # F11(票07):样本文件已缺失的条目视为失效,不参与识别打分
+        entries = [e for e in entries if self._ref_valid(e.get("ref_path"))]
         try:
             thresholds = voiceid.load_thresholds(self.thresholds_path)
         except RuntimeError:
@@ -572,6 +587,19 @@ class App:
             return "/audio/" + rel.as_posix()
         except (ValueError, OSError):
             return None
+
+    @staticmethod
+    def _ref_valid(ref_path):
+        """F11 条目有效性:ref_path 指向的样本文件存在才有效。
+
+        绝对路径按字面校验(票04 裁定:归档条目 ref_path 一律绝对路径,即
+        本服务唯一会写进 persons_emb.json 的形态);相对路径无法定位(历史/
+        手写形态,管道从不产生)不误杀、按有效计;空/缺失 → 无效。
+        """
+        if not ref_path:
+            return False
+        p = Path(str(ref_path))
+        return p.exists() if p.is_absolute() else True
 
     # ---------- URL 映射 ----------
 
@@ -964,6 +992,105 @@ class App:
             return 400, {"ok": False, "error": str(e)}
         return 200, {"ok": True, "ref": ref, "person": self.persons.get(person)}
 
+    # ---------- /api/persons/<name>/archive(票07:档案列表 + 删除) ----------
+
+    def api_persons_archive(self, name):
+        """声纹档案列表(persons_emb.json,票07 US10 管理入口):按语言分组,
+        条目 = person/lang/ref_path/bvid/part/spk/ts/model + valid(F11 存在性)
+        + audio_url(试听);vec 不外露给页面。组计数只算有效条目,失效单列。"""
+        if self.persons.get(name) is None:
+            return 404, {"ok": False, "error": f"人物不存在:{name}"}
+        try:
+            entries = voiceid.VoiceArchive(
+                path=self.persons_emb_path).entries(person=name)
+        except RuntimeError as e:
+            return 500, {"ok": False, "error": f"{e}"}
+        groups, order = {}, []
+        for e in entries:
+            lang = e.get("lang")
+            if lang not in groups:
+                groups[lang] = []
+                order.append(lang)
+            row = {k: v for k, v in e.items() if k != "vec"}
+            row["valid"] = self._ref_valid(row.get("ref_path"))
+            row["audio_url"] = (self._audio_url(row["ref_path"])
+                                if row["valid"] else None)
+            groups[lang].append(row)
+        out = []
+        for lang in sorted(order, key=lambda l: (l is None, str(l))):
+            rows = groups[lang]
+            out.append({
+                "lang": lang,
+                "count": sum(1 for r in rows if r["valid"]),
+                "invalid": sum(1 for r in rows if not r["valid"]),
+                "entries": rows,
+            })
+        return 200, {"ok": True, "person": name, "groups": out,
+                     "total": sum(g["count"] for g in out),
+                     "invalid_total": sum(g["invalid"] for g in out)}
+
+    def api_persons_archive_delete(self, name, body):
+        """删一条归档条目 {ref_path}(票07):票03 remove_ref 给级联清单,这里
+        执行另外两步——VoiceArchive.remove_by_ref_path 清向量记录、删自动样本
+        文件(仅动 web 音频目录内,防误删任意外部文件;clone 手动上传的原文件
+        本就只清缓存不删,票03 口径)。refs 条目已不在且向量/样本文件有残留
+        (上次删除半途失败)→ 继续清干净;条目处处都不在 → 404 不虚报。
+        删除改变档案 → 阈值重算(D7 口径,失败降级不拦删除)。"""
+        ref_path = str((body or {}).get("ref_path") or "").strip()
+        if not ref_path:
+            return 400, {"ok": False, "error": "缺 ref_path"}
+        if self.persons.get(name) is None:
+            return 404, {"ok": False, "error": f"人物不存在:{name}"}
+        try:
+            arch = voiceid.VoiceArchive(path=self.persons_emb_path)
+        except RuntimeError as e:
+            return 500, {"ok": False, "error": f"向量缓存文件损坏:{e}"}
+        try:
+            cas = self.persons.remove_ref(name, ref_path)
+            ref_entries_removed = len(cas["ref_entries_removed"])
+            to_delete = list(cas["ref_paths_to_delete"])
+        except KeyError as e:
+            leftover = any(x.get("ref_path") == ref_path
+                           for x in arch.entries(person=name)) or \
+                (self._sample_in_webdir(ref_path) and Path(ref_path).exists())
+            if not leftover:
+                return 404, {"ok": False, "error": str(e)}
+            ref_entries_removed, to_delete = 0, [ref_path]
+        cache_removed = arch.remove_by_ref_path(ref_path)
+        deleted_files = [p for p in to_delete if self._safe_unlink_sample(p)]
+        payload = {"ok": True, "person": name, "ref_path": ref_path,
+                   "ref_entries_removed": ref_entries_removed,
+                   "cache_removed": cache_removed,
+                   "sample_files_deleted": deleted_files}
+        try:
+            self._recalibrate_thresholds()
+            payload["recalibrated"] = True
+        except Exception as e:
+            payload["recalibrated"] = False
+            payload["recalibrate_error"] = f"{e}"
+        return 200, payload
+
+    def _sample_in_webdir(self, p):
+        """路径 resolved 后是否落在 web 音频目录内(本服务写样本的唯一位置)。"""
+        try:
+            base = Path(self.web_audio_dir).resolve()
+            pp = Path(str(p)).resolve()
+            return pp != base and base in pp.parents
+        except OSError:
+            return False
+
+    def _safe_unlink_sample(self, p):
+        """删自动样本文件;只对 web 音频目录内的路径动手(DELETE 的 ref_path
+        不可信为任意文件路径)。文件已不在按已清理计(返回 True,如实计数由
+        调用方对半途重试传残留清单保证)。"""
+        if not self._sample_in_webdir(p):
+            return False
+        try:
+            Path(str(p)).resolve().unlink(missing_ok=True)
+            return True
+        except OSError:
+            return False
+
 
 # ---------------- HTTP 层 ----------------
 
@@ -1053,6 +1180,9 @@ class Handler(SimpleHTTPRequestHandler):
             return app.api_episode(m.group(1))
         if path == "/api/persons":
             return app.api_persons()
+        m = _PERSONS_ARCHIVE_RE.match(path)
+        if m:
+            return app.api_persons_archive(unquote(m.group(1)))
         return 404, {"ok": False, "error": f"无此接口:{path}"}
 
     def _save(self, fname):
@@ -1096,6 +1226,31 @@ class Handler(SimpleHTTPRequestHandler):
         except Exception as e:
             code, obj = 500, {"ok": False, "error": f"服务器内部错误:{e}"}
         return self._json(obj, code)
+
+    def do_DELETE(self):
+        """API DELETE(票07:删归档条目);body 解析同 do_POST。"""
+        path = urlsplit(self.path).path
+        if not path.startswith("/api/"):
+            return self.send_error(404)
+        app = getattr(self.server, "app", None)
+        if app is None:
+            return self._json({"ok": False, "error": "API 未初始化"}, 500)
+        try:
+            body = self._body()
+        except ValueError as e:
+            return self._json({"ok": False,
+                               "error": f"body 不是合法 JSON:{e}"}, 400)
+        try:
+            code, obj = self._api_delete(app, path, body)
+        except Exception as e:
+            code, obj = 500, {"ok": False, "error": f"服务器内部错误:{e}"}
+        return self._json(obj, code)
+
+    def _api_delete(self, app, path, body):
+        m = _PERSONS_ARCHIVE_RE.match(path)
+        if m:
+            return app.api_persons_archive_delete(unquote(m.group(1)), body)
+        return 404, {"ok": False, "error": f"无此接口:{path}"}
 
     def _api_post(self, app, path, body):
         if path == "/api/ingest":

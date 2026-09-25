@@ -387,10 +387,46 @@ function renderPersons(){const box=document.getElementById("persons");
     ${r.audio_url?`<audio controls preload="none" src="${esc(r.audio_url)}"></audio>`:`<span class="note">(参考音文件不在服务目录:${esc(r.audio)})</span>`}
     <span class="note">${esc(r.lang||"")}${r.transcript?" · 有转写稿(可当主持人)":" · 无转写稿(只可 cross 克隆)"}${r.source&&r.source.kind==="episode"?` · 收录自 ${esc(r.source.bvid)} P${r.source.part} ${esc(r.source.spk)}`:" · 手动收录"}</span></div>`).join("");
   const extra=vidN?`<div class="note">另有 ${vidN} 条自动归档声纹样本(use=voiceid,只用于声纹建议,不参与克隆选音/主持人挂接)</div>`:"";
+  const open=!!ARCH_OPEN[p.name];   // 票07:声纹档案管理区(展开按需拉取)
   return `<div class="person" style="background:${bg};border-left:4px solid ${edge};border-radius:8px;padding:8px 10px;margin:6px 0">
    <div class="avatar" style="background:${edge}33;border:2px solid ${edge}">👤</div>
-   <div style="flex:1"><b style="color:${edge}">${esc(p.name)}</b> ${langTag(p.main_lang)} <span class="note">${esc(p.note||"")}</span>${refs}${extra}</div></div>`;}).join("");
+   <div style="flex:1"><b style="color:${edge}">${esc(p.name)}</b> ${langTag(p.main_lang)} <span class="note">${esc(p.note||"")}</span>${refs}${extra}
+    <div class="row"><button class="small ghost" onclick="toggleArchive(${i})">${open?"▾":"▸"} 声纹档案(${vidN})</button>
+     <span class="note">(自动归档样本管理:试听/删除;失效条不参与识别与计数)</span></div>
+    ${open?renderArchive(i):""}</div></div>`;}).join("");
 }
+
+// ---------- 声纹档案管理区(票07:人物×语言分组列表/试听/删除;F11 失效标记) ----------
+const ARCH={}, ARCH_OPEN={};   // 人物名 → /archive 响应缓存;展开状态
+function toggleArchive(i){const p=PERSONS[i];if(!p)return;
+ if(ARCH_OPEN[p.name]){ARCH_OPEN[p.name]=false;renderPersons();return;}
+ ARCH_OPEN[p.name]=true;renderPersons();
+ if(!ARCH[p.name])loadArchive(i);}
+async function loadArchive(i){const p=PERSONS[i];if(!p)return;
+ try{const r=await fetch("/api/persons/"+encodeURIComponent(p.name)+"/archive");
+  const d=await r.json();
+  if(d.ok){ARCH[p.name]=d;if(ARCH_OPEN[p.name])renderPersons();}}catch(e){}}
+function renderArchive(i){const p=PERSONS[i];const d=ARCH[p.name];
+ if(!d)return '<div class="note">档案加载中…</div>';
+ if(!(d.groups||[]).length)return '<div class="note">暂无声纹档案(提交核对并分配人物后自动归档到这里)</div>';
+ return d.groups.map((g,gi)=>`<div style="margin:6px 0 2px">
+  <b>${esc(langGroup(g.lang))} ${g.count} 条</b>${g.invalid?` <span class="tag warn">另有 ${g.invalid} 条失效</span>`:""}
+  ${g.entries.map((e,ei)=>`<div class="cand" ${e.valid?"":'style="opacity:.45"'}>
+   ${e.valid?(e.audio_url?`<audio controls preload="none" src="${esc(e.audio_url)}"></audio>`:`<span class="note">(样本不在服务目录:${esc(e.ref_path)})</span>`):`<span class="tag warn">文件缺失(失效)</span>`}
+   <span class="note">${e.bvid?`${esc(e.bvid)} P${esc(e.part)} ${esc(e.spk||"")}`:"来源未知"}${e.model?` · ${esc(e.model)}`:""}${e.ts?` · ${esc(e.ts)}`:""}</span>
+   <button class="small ghost" onclick="delArchive(${i},${gi},${ei})">删除</button></div>`).join("")}
+  </div>`).join("");}
+async function delArchive(i,gi,ei){const p=PERSONS[i];if(!p)return;
+ const g=((ARCH[p.name]||{}).groups||[])[gi];const e=g&&g.entries[ei];
+ if(!e)return;
+ if(!confirm("删除该归档条目?将级联清理参考音条目、声纹向量与样本文件,不可恢复"))return;
+ try{const r=await fetch("/api/persons/"+encodeURIComponent(p.name)+"/archive",
+  {method:'DELETE',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({ref_path:e.ref_path})});
+  const d=await r.json();
+  if(!r.ok||!d.ok){setStatus("❌ 删除失败:"+(d&&d.error||r.status),true);return;}
+  setStatus(`✅ 已删除「${p.name}」的归档条目(向量记录 ${d.cache_removed} 条、样本文件 ${d.sample_files_deleted.length} 个)`);
+  loadArchive(i);}catch(e){setStatus("❌ 网络错误",true);}}
 
 // ---------- 存入人物库弹窗 ----------
 let libCtx=null;
