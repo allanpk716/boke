@@ -1,29 +1,27 @@
 {
- "arm": "reference-quality (CosyVoice3 zero_shot, 同句held-out文本只变参考音)",
+ "arm": "参考音质量实验(条件盲,单听者)",
  "date": "2026-09-28",
- "listener": "user(N=1, 条件盲打分 sim 1-5, 页8797)",
- "n": 7,
- "design": "zh 4条件(25s净基线/6s净/25s脏混音乐SNR6dB/换源25s净)+en 3条件(3s脏基线/6.5s脏/~12s脏拼接0.35s gap);每语言同一句held-out文本,与锚点参考音对比打相似度",
- "sim_by_condition": {
-  "R1_zh_25s_clean_baseline": 4,
-  "R2_zh_6s_clean": 3,
-  "R3_zh_25s_dirty_music6dB": 4,
-  "R4_zh_25s_clean_alt_source": 4,
-  "R5_en_3s_dirty_baseline": 3,
-  "R6_en_6p5s_dirty": 4,
-  "R7_en_12s_dirty_concat": 3
+ "design": "同一引擎(CosyVoice3 zero_shot)+同一句held-out,只变参考音;7条件;听者对'合成像不像真声锚点'打1-5",
+ "scores": {
+  "R1 zh 25s净(基线)": 4,
+  "R2 zh 6s净": 3,
+  "R3 zh 25s脏(混音乐SNR6dB)": 4,
+  "R4 zh 另一条25s净(换源)": 4,
+  "R5 en 3s脏(基线)": 3,
+  "R6 en 6.5s脏": 4,
+  "R7 en ~12s脏拼接": 3
  },
- "sim_mean_by_lang": {
-  "zh": 3.75,
-  "en": 3.33
+ "means": {
+  "zh": 3.8,
+  "en": 3.3
  },
- "effects": {
-  "duration": "≥6s 即达 3-4 分(zh 6s=3 vs 25s=4; en 3s=3 vs 6.5s=4),25s 仅 +1",
-  "dirtiness": "SNR 6dB 音乐残留几乎无伤(zh 净=4 脏=4)",
-  "concat": "多句拼接无增益(en 12s拼接=3 < 6.5s单段=4,可能 n=1 噪声)"
- },
- "conclusion": "参考音 ≥6s 即可支撑克隆相似度 3-4/5;脏(6dB音乐)不额外毁;拼接不加分",
- "correction": "修正克隆臂(0f10bd9)结论:'分离stem当参考音不可行'的强版本不成立——上一轮 en 2.0 主因是 3s 太短+情绪语音域差,不是'脏';瓶颈从'参考音脏'改判'参考音短'",
- "engineering": "每演员攒 ≥6s(建议 10s+)相对干净独白即可;多句拼接未见增益",
- "note": "n=1/条件,单人单次打分,波动 ±1 分正常;方向性结论可信,细节勿过度解读"
+ "findings": [
+  "时长效应存在但不剧烈:参考音>=6s 相似度即可达3-4分(zh 6s=3/25s=4;en 3s=3/6.5s=4)",
+  "脏度几乎无伤:25s净=4 vs 25s脏(混音乐6dB)=4——轻中度音乐残留不毁克隆",
+  "多句拼接(~12s带gap)未见增益(3分),低于单段6.5s(4分);可能因prompt内间隙/情绪不连贯,或单次采样波动",
+  "换源稳定:两条不同参考音(ref01/ref02)均4分",
+  "结论修正:上一轮'en 2.0分=分离stem当参考音不可行'归因错误——真因是参考太短(3s)+情绪台词域差;6.5s分离stem即可达4分。瓶颈从'参考音脏'改判为'参考音短'"
+ ],
+ "caveats": "每条件n=1(单听者单次打分),±1分波动正常;方向性可信,细节(如拼接是否真降)勿过度解读",
+ "answer_file": "results/abx/answers_refq.json"
 }
