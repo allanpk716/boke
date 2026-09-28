@@ -1,0 +1,29 @@
+{
+ "arm": "reference-quality (CosyVoice3 zero_shot, 同句held-out文本只变参考音)",
+ "date": "2026-09-28",
+ "listener": "user(N=1, 条件盲打分 sim 1-5, 页8797)",
+ "n": 7,
+ "design": "zh 4条件(25s净基线/6s净/25s脏混音乐SNR6dB/换源25s净)+en 3条件(3s脏基线/6.5s脏/~12s脏拼接0.35s gap);每语言同一句held-out文本,与锚点参考音对比打相似度",
+ "sim_by_condition": {
+  "R1_zh_25s_clean_baseline": 4,
+  "R2_zh_6s_clean": 3,
+  "R3_zh_25s_dirty_music6dB": 4,
+  "R4_zh_25s_clean_alt_source": 4,
+  "R5_en_3s_dirty_baseline": 3,
+  "R6_en_6p5s_dirty": 4,
+  "R7_en_12s_dirty_concat": 3
+ },
+ "sim_mean_by_lang": {
+  "zh": 3.75,
+  "en": 3.33
+ },
+ "effects": {
+  "duration": "≥6s 即达 3-4 分(zh 6s=3 vs 25s=4; en 3s=3 vs 6.5s=4),25s 仅 +1",
+  "dirtiness": "SNR 6dB 音乐残留几乎无伤(zh 净=4 脏=4)",
+  "concat": "多句拼接无增益(en 12s拼接=3 < 6.5s单段=4,可能 n=1 噪声)"
+ },
+ "conclusion": "参考音 ≥6s 即可支撑克隆相似度 3-4/5;脏(6dB音乐)不额外毁;拼接不加分",
+ "correction": "修正克隆臂(0f10bd9)结论:'分离stem当参考音不可行'的强版本不成立——上一轮 en 2.0 主因是 3s 太短+情绪语音域差,不是'脏';瓶颈从'参考音脏'改判'参考音短'",
+ "engineering": "每演员攒 ≥6s(建议 10s+)相对干净独白即可;多句拼接未见增益",
+ "note": "n=1/条件,单人单次打分,波动 ±1 分正常;方向性结论可信,细节勿过度解读"
+}
