@@ -1,0 +1,437 @@
+Sliding Window Attention is enabled but not implemented for `sdpa`; unexpected results may be encountered.
+C:\WorkSpace\agent\boke\.venv\Lib\site-packages\lightning\fabric\__init__.py:41: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2026-09-29 11:07:32,024 INFO input frame rate=25
+C:\WorkSpace\agent\boke\.venv\Lib\site-packages\torch\nn\utils\weight_norm.py:143: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+C:\WorkSpace\agent\boke\.venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+2026-09-29 11:07:43,648 DEBUG Starting new HTTPS connection (1): www.modelscope.cn:443
+2026-09-29 11:07:44,331 DEBUG https://www.modelscope.cn:443 "GET /api/v1/models/pengzhendong/wetext/revisions HTTP/1.1" 403 137
+2026-09-29 11:07:44,332 - modelscope - ERROR - Authentication token does not exist, 
+2026-09-29 11:07:44,332 INFO no frontend is avaliable
+Downloading Model to directory: C:\Users\allan716\.cache\modelscope\hub\pengzhendong/wetext
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:08:17,291 WARNING synthesis text ¶À×ÔÒ»ÈË¸ÏÂ·£¬Ê²Ã´×¼±¸¶¼Ã»ÓÐ£¬Äã¿ÉÕæÊÇ¸öÉµ¹Ï¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:08:21,330 INFO synthesis text ¶À×ÔÒ»ÈË¸ÏÂ·£¬Ê²Ã´×¼±¸¶¼Ã»ÓÐ£¬Äã¿ÉÕæÊÇ¸öÉµ¹Ï¡£
+D:\boke_media\tools\CosyVoice\cosyvoice\cli\model.py:103: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with self.llm_context, torch.cuda.amp.autocast(self.fp16 is True and hasattr(self.llm, 'vllm') is False):
+D:\boke_media\tools\CosyVoice\cosyvoice\cli\model.py:426: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(self.fp16):
+2026-09-29 11:08:29,463 INFO yield speech len 4.44, rtf 1.831823748511237
+  0%|          | 0/1 [00:12<?, ?it/s]
+[A] E01 win=4.46s dur=4.34s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:08:29,466 WARNING synthesis text ËãÄã×ßÔË£¬Ñª»¹Ã»Á÷¸ÉÄØ¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:08:33,512 INFO synthesis text ËãÄã×ßÔË£¬Ñª»¹Ã»Á÷¸ÉÄØ¡£
+2026-09-29 11:08:39,141 INFO yield speech len 2.28, rtf 2.468676211541159
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] E02 win=3.89s dur=2.16s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:08:39,144 WARNING synthesis text ÊÇÊ²Ã´·ç°ÑÄã´µµ½ÊØÃÅÈËµÄµØ½çÀ´µÄ£¿ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:08:43,109 INFO synthesis text ÊÇÊ²Ã´·ç°ÑÄã´µµ½ÊØÃÅÈËµÄµØ½çÀ´µÄ£¿
+2026-09-29 11:08:49,379 INFO yield speech len 2.88, rtf 2.1772450043095484
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] E03 win=1.82s dur=2.76s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:08:49,383 WARNING synthesis text ÎÒÔÚÕÒÒ»¸öÈË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:08:53,457 INFO synthesis text ÎÒÔÚÕÒÒ»¸öÈË¡£
+2026-09-29 11:08:57,842 INFO yield speech len 1.04, rtf 4.2158848964251
+  0%|          | 0/1 [00:08<?, ?it/s]
+[A] E04 win=3.34s dur=0.90s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:08:57,845 WARNING synthesis text ÊÇºÜÖØÒªµÄÈË°É£¿Ò»Î»Öª¼º£¿ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:09:02,296 INFO synthesis text ÊÇºÜÖØÒªµÄÈË°É£¿Ò»Î»Öª¼º£¿
+2026-09-29 11:09:08,575 INFO yield speech len 3.08, rtf 2.0386543366816134
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] E05 win=2.6s dur=2.98s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:09:08,578 WARNING synthesis text ´ÓÎÒ¼ÇÊÂÆð£¬ÎÒ¾ÍÒ»Ö±ÊÇ¹ÂÁãÁãÒ»¸öÈË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:09:12,523 INFO synthesis text ´ÓÎÒ¼ÇÊÂÆð£¬ÎÒ¾ÍÒ»Ö±ÊÇ¹ÂÁãÁãÒ»¸öÈË¡£
+2026-09-29 11:09:18,916 INFO yield speech len 3.04, rtf 2.102989193640257
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] E06 win=2.13s dur=2.94s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:09:18,919 WARNING synthesis text ÂíÉÏ¾ÍºÃÁË£¬Ðê¡­¡­¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:09:22,895 INFO synthesis text ÂíÉÏ¾ÍºÃÁË£¬Ðê¡­¡­¡£
+2026-09-29 11:09:28,293 INFO yield speech len 2.04, rtf 2.646550711463479
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] E07 win=3.97s dur=1.92s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:09:28,296 WARNING synthesis text ºÙ£¬±ðÂÒ¶¯¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:09:32,305 INFO synthesis text ºÙ£¬±ðÂÒ¶¯¡£
+2026-09-29 11:09:37,130 INFO yield speech len 1.44, rtf 3.3511079019970365
+  0%|          | 0/1 [00:08<?, ?it/s]
+[A] E08 win=0.91s dur=1.30s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:09:37,133 WARNING synthesis text ÄãÖ»ÊÇÃ»ÓÐ¿´¼û¡­¡­¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:09:41,748 INFO synthesis text ÄãÖ»ÊÇÃ»ÓÐ¿´¼û¡­¡­¡£
+2026-09-29 11:09:46,402 INFO yield speech len 1.28, rtf 3.6361128091812134
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] E09 win=2.2s dur=1.14s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:09:46,404 WARNING synthesis text ÕâÀï¿ÉÊÇÁúµÄÁìµØ£¬ÐÁÌØ¶û¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:09:50,529 INFO synthesis text ÕâÀï¿ÉÊÇÁúµÄÁìµØ£¬ÐÁÌØ¶û¡£
+2026-09-29 11:09:57,088 INFO yield speech len 3.0, rtf 2.186392068862915
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] E10 win=3.5s dur=2.90s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:09:57,091 WARNING synthesis text Äã±ÈÄãÏëÏóµÄÒª½üµÃ¶à¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:10:01,326 INFO synthesis text Äã±ÈÄãÏëÏóµÄÒª½üµÃ¶à¡£
+2026-09-29 11:10:06,253 INFO yield speech len 1.52, rtf 3.2414866121191728
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] E11 win=0.92s dur=1.42s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:10:06,256 WARNING synthesis text You're not getting away, you little bastard! too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:10:10,346 INFO synthesis text You're not getting away, you little bastard!
+2026-09-29 11:10:17,268 INFO yield speech len 3.68, rtf 1.8806890948959019
+  0%|          | 0/1 [00:11<?, ?it/s]
+[A] Z01 win=2.22s dur=3.56s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:10:17,270 WARNING synthesis text See those tents up on the hillside? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:10:21,313 INFO synthesis text See those tents up on the hillside?
+2026-09-29 11:10:26,906 INFO yield speech len 2.12, rtf 2.638504640111383
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] Z02 win=1.62s dur=2.02s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:10:26,909 WARNING synthesis text Colonel, they're too far out. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:10:30,848 INFO synthesis text Colonel, they're too far out.
+2026-09-29 11:10:36,429 INFO yield speech len 2.36, rtf 2.3649501598487466
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] Z03 win=1.46s dur=2.24s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:10:36,432 WARNING synthesis text Oh come on, be straight with me, damn it! too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:10:40,453 INFO synthesis text Oh come on, be straight with me, damn it!
+2026-09-29 11:10:46,074 INFO yield speech len 2.44, rtf 2.303839316133593
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] Z04 win=1.58s dur=2.30s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:10:46,077 WARNING synthesis text Going up against an enemy this damn tough. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:10:50,002 INFO synthesis text Going up against an enemy this damn tough.
+2026-09-29 11:10:56,686 INFO yield speech len 3.28, rtf 2.037828143050031
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] Z05 win=1.9s dur=3.16s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:10:56,690 WARNING synthesis text Who do you think you are, some rich man's precious little daughter? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:11:00,894 INFO synthesis text Who do you think you are, some rich man's precious little daughter?
+2026-09-29 11:11:09,625 INFO yield speech len 4.92, rtf 1.7747613472667167
+  0%|          | 0/1 [00:12<?, ?it/s]
+[A] Z07 win=1.9s dur=4.80s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:11:09,629 WARNING synthesis text Don't push your luck, kid. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:11:13,948 INFO synthesis text Don't push your luck, kid.
+2026-09-29 11:11:18,928 INFO yield speech len 1.8, rtf 2.766983906428019
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] Z08 win=1.66s dur=1.70s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:11:18,931 WARNING synthesis text Was gonna keep that one for myself, actually. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:11:22,928 INFO synthesis text Was gonna keep that one for myself, actually.
+2026-09-29 11:11:29,865 INFO yield speech len 3.6, rtf 1.927002403471205
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] Z10 win=1.62s dur=3.46s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:11:29,869 WARNING synthesis text This bunch of Japs isn't like the ones we've faced before. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:11:34,080 INFO synthesis text This bunch of Japs isn't like the ones we've faced before.
+2026-09-29 11:11:41,715 INFO yield speech len 4.24, rtf 1.8007535979432878
+  0%|          | 0/1 [00:11<?, ?it/s]
+[A] Z12 win=2.26s dur=4.12s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:11:41,718 WARNING synthesis text They snuck up from the cliff side. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:11:45,811 INFO synthesis text They snuck up from the cliff side.
+2026-09-29 11:11:51,732 INFO yield speech len 2.56, rtf 2.312715444713831
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] Z13 win=1.26s dur=2.38s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:11:51,735 WARNING synthesis text But you're not much better yourself. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:11:55,949 INFO synthesis text But you're not much better yourself.
+2026-09-29 11:12:03,805 INFO yield speech len 3.64, rtf 2.1582558914855285
+  0%|          | 0/1 [00:12<?, ?it/s]
+[A] Z14 win=1.78s dur=3.50s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:12:03,842 WARNING synthesis text That New First Regiment of yours has only just been thrown together. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:12:08,902 INFO synthesis text That New First Regiment of yours has only just been thrown together.
+2026-09-29 11:12:16,092 INFO yield speech len 3.68, rtf 1.9538383121075837
+  0%|          | 0/1 [00:12<?, ?it/s]
+[A] Z15 win=2.06s dur=3.54s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:12:16,095 WARNING synthesis text So Ding Wei just waltzes in, thinking he can grab the easy pickings. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:12:20,251 INFO synthesis text So Ding Wei just waltzes in, thinking he can grab the easy pickings.
+2026-09-29 11:12:28,804 INFO yield speech len 4.88, rtf 1.7526767781523407
+  0%|          | 0/1 [00:12<?, ?it/s]
+[A] Z17 win=2.18s dur=4.78s bursts=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:12:28,809 WARNING synthesis text You can be pissed all you want¡ªit won't do a damn bit of good. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:12:33,584 INFO synthesis text You can be pissed all you want¡ªit won't do a damn bit of good.
+2026-09-29 11:12:39,881 INFO yield speech len 2.8, rtf 2.2492022173745294
+  0%|          | 0/1 [00:11<?, ?it/s]
+[A] Z18 win=1.26s dur=2.70s bursts=1
+[calib] en2zh: 0.180 s/char (n=11)
+[calib] zh2en: 0.375 s/word (n=14)
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:12:39,885 WARNING synthesis text Ò»¸öÈË¸ÏÂ·»¹ºÁÎÞ×¼±¸£¬Äã¿ÉÕæÊÇ¸öÉµ¹Ï¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:12:44,021 INFO synthesis text Ò»¸öÈË¸ÏÂ·»¹ºÁÎÞ×¼±¸£¬Äã¿ÉÕæÊÇ¸öÉµ¹Ï¡£
+2026-09-29 11:12:50,021 INFO yield speech len 2.68, rtf 2.2390170773463463
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:12:50,025 WARNING synthesis text ¹ÂÉí¸ÏÂ·£¬ºÁÎÞ×¼±¸£¬Äã¿ÉÕæÉµ¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:12:54,410 INFO synthesis text ¹ÂÉí¸ÏÂ·£¬ºÁÎÞ×¼±¸£¬Äã¿ÉÕæÉµ¡£
+2026-09-29 11:13:02,163 INFO yield speech len 4.4, rtf 1.7620464346625586
+  0%|          | 0/1 [00:12<?, ?it/s]
+[B] E01 win=4.46 dur=4.28 bursts=1 speed=1.0 ev=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:13:02,166 WARNING synthesis text ÄãµÄÑª»¹ÔÚÁ÷£¬ÒÑ¾­ËãÊÇ×ß´óÔËÁË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:13:06,720 INFO synthesis text ÄãµÄÑª»¹ÔÚÁ÷£¬ÒÑ¾­ËãÊÇ×ß´óÔËÁË¡£
+2026-09-29 11:13:12,945 INFO yield speech len 2.76, rtf 2.2554562575575234
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:13:12,949 WARNING synthesis text ÄãµÄÑª»¹ÔÚÁ÷£¬ËãÄã×ßÔË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:13:18,255 INFO synthesis text ÄãµÄÑª»¹ÔÚÁ÷£¬ËãÄã×ßÔË¡£
+2026-09-29 11:13:24,465 INFO yield speech len 2.6, rtf 2.388595067537748
+  0%|          | 0/1 [00:11<?, ?it/s]
+[B] E02 win=3.89 dur=2.44 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:13:24,468 WARNING synthesis text ÊØÃÅÈËÖ®µØ£¬ºÎÊÂ£¿ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:13:28,650 INFO synthesis text ÊØÃÅÈËÖ®µØ£¬ºÎÊÂ£¿
+2026-09-29 11:13:34,256 INFO yield speech len 2.0, rtf 2.8030269145965576
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] E03 win=1.82 dur=1.88 bursts=1 speed=1.0 ev=0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:13:34,258 WARNING synthesis text ÎÒÒªÕÒµÄ£¬ÊÇÄ³Ò»¸öÈË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:13:38,668 INFO synthesis text ÎÒÒªÕÒµÄ£¬ÊÇÄ³Ò»¸öÈË¡£
+2026-09-29 11:13:44,955 INFO yield speech len 2.56, rtf 2.4558905512094498
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:13:44,958 WARNING synthesis text ÎÒÔÚÑ°ÕÒÒ»¸öÈË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:13:49,350 INFO synthesis text ÎÒÔÚÑ°ÕÒÒ»¸öÈË¡£
+2026-09-29 11:13:55,265 INFO yield speech len 2.52, rtf 2.347446434081547
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] E04 win=3.34 dur=2.40 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:13:55,269 WARNING synthesis text ÊÇÄãÖ¿°®µÄÈË£¿»¹ÊÇÖªÒô£¿ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:13:59,438 INFO synthesis text ÊÇÄãÖ¿°®µÄÈË£¿»¹ÊÇÖªÒô£¿
+2026-09-29 11:14:06,087 INFO yield speech len 3.28, rtf 2.027019567605926
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:14:06,090 WARNING synthesis text ÊÇÄãÖ¿°®µÄÈË£¿»¹ÊÇÖªÒô£¿ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:14:10,152 INFO synthesis text ÊÇÄãÖ¿°®µÄÈË£¿»¹ÊÇÖªÒô£¿
+2026-09-29 11:14:16,220 INFO yield speech len 2.34, rtf 2.5929077058775816
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:14:16,224 WARNING synthesis text ÊÇÖÁÇ×Ö®ÈË£¿»¹ÊÇÖªÒô£¿ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:14:21,479 INFO synthesis text ÊÇÖÁÇ×Ö®ÈË£¿»¹ÊÇÖªÒô£¿
+2026-09-29 11:14:27,874 INFO yield speech len 2.92, rtf 2.1902846146936286
+  0%|          | 0/1 [00:11<?, ?it/s]
+[B] E05 win=2.6 dur=2.80 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:14:27,877 WARNING synthesis text ¼ÇÊÂÆðÎÒ¾ÍÒ»¸öÈË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:14:32,121 INFO synthesis text ¼ÇÊÂÆðÎÒ¾ÍÒ»¸öÈË¡£
+2026-09-29 11:14:36,825 INFO yield speech len 1.36, rtf 3.4584005089367134
+  0%|          | 0/1 [00:08<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:14:36,831 WARNING synthesis text ÎÒÒ»Ö±¹ÂÉíÒ»ÈË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:14:41,220 INFO synthesis text ÎÒÒ»Ö±¹ÂÉíÒ»ÈË¡£
+2026-09-29 11:14:46,515 INFO yield speech len 2.04, rtf 2.595289197622561
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] E06 win=2.13 dur=1.92 bursts=1 speed=1.0 ev=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:14:46,518 WARNING synthesis text ÎÒÃÇºÜ¿ì¾Í»áÍê³ÉÁË¡£Ðê¡­¡­¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:14:51,122 INFO synthesis text ÎÒÃÇºÜ¿ì¾Í»áÍê³ÉÁË¡£Ðê¡­¡­¡£
+2026-09-29 11:14:57,536 INFO yield speech len 2.24, rtf 2.863272279500961
+  0%|          | 0/1 [00:11<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:14:57,542 WARNING synthesis text ¾Í¿ìºÃÁË¡£Ðê¡­¡­¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:15:02,827 INFO synthesis text ¾Í¿ìºÃÁË¡£Ðê¡­¡­¡£
+2026-09-29 11:15:08,664 INFO yield speech len 1.92, rtf 3.0402985711892447
+  0%|          | 0/1 [00:11<?, ?it/s]
+[B] E07 win=3.97 dur=1.78 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:15:08,709 WARNING synthesis text Î¹£¬×øºÃ¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:15:16,058 INFO synthesis text Î¹£¬×øºÃ¡£
+2026-09-29 11:15:20,278 INFO yield speech len 0.88, rtf 4.793456467715177
+  0%|          | 0/1 [00:11<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:15:20,284 WARNING synthesis text Î¹£¬×øºÃ¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:15:24,776 INFO synthesis text Î¹£¬×øºÃ¡£
+2026-09-29 11:15:29,162 INFO yield speech len 1.26, rtf 3.4812193068246993
+  0%|          | 0/1 [00:08<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:15:29,164 WARNING synthesis text ×øºÃ¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:15:33,221 INFO synthesis text ×øºÃ¡£
+2026-09-29 11:15:37,441 INFO yield speech len 0.84, rtf 5.024421498889015
+  0%|          | 0/1 [00:08<?, ?it/s]
+[B] E08 win=0.91 dur=0.72 bursts=1 speed=1.0 ev=3
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:15:37,443 WARNING synthesis text ÄãÖ»²»¹ýÃ»ÓÐ¿´¼û¡­¡­¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:15:41,570 INFO synthesis text ÄãÖ»²»¹ýÃ»ÓÐ¿´¼û¡­¡­¡£
+2026-09-29 11:15:46,961 INFO yield speech len 2.0, rtf 2.695581316947937
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:15:46,964 WARNING synthesis text ÄãÖ»²»¹ýÃ»ÓÐ¿´¼û¡­¡­¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:15:50,970 INFO synthesis text ÄãÖ»²»¹ýÃ»ÓÐ¿´¼û¡­¡­¡£
+2026-09-29 11:15:56,305 INFO yield speech len 2.28, rtf 2.339805741059153
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] E09 win=2.2 dur=2.16 bursts=1 speed=0.855 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:15:56,307 WARNING synthesis text ÐÁÌØ¶û£¬ÕâÀï¿ÉÊÇÁú×åµÄÁìµØ¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:16:00,642 INFO synthesis text ÐÁÌØ¶û£¬ÕâÀï¿ÉÊÇÁú×åµÄÁìµØ¡£
+2026-09-29 11:16:06,207 INFO yield speech len 2.16, rtf 2.5762795298187817
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:16:06,209 WARNING synthesis text ÐÁÌØ¶û£¬ÕâÀïÊÇÁúµÄ¹ú¶È¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:16:11,637 INFO synthesis text ÐÁÌØ¶û£¬ÕâÀïÊÇÁúµÄ¹ú¶È¡£
+2026-09-29 11:16:18,493 INFO yield speech len 2.72, rtf 2.5208317181643314
+  0%|          | 0/1 [00:12<?, ?it/s]
+[B] E10 win=3.5 dur=2.58 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:16:18,502 WARNING synthesis text ½üÔÚåë³ß¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:16:23,165 INFO synthesis text ½üÔÚåë³ß¡£
+2026-09-29 11:16:27,986 INFO yield speech len 1.32, rtf 3.652468955878055
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:16:27,989 WARNING synthesis text ½üÔÚåë³ß¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:16:32,278 INFO synthesis text ½üÔÚåë³ß¡£
+2026-09-29 11:16:36,508 INFO yield speech len 0.68, rtf 6.220501661300658
+  0%|          | 0/1 [00:08<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:16:36,510 WARNING synthesis text ºÜ½üÁË¡£ too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:16:40,738 INFO synthesis text ºÜ½üÁË¡£
+2026-09-29 11:16:44,734 INFO yield speech len 0.84, rtf 4.758112487338838
+  0%|          | 0/1 [00:08<?, ?it/s]
+[B] E11 win=0.92 dur=0.72 bursts=1 speed=1.0 ev=3
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:16:44,737 WARNING synthesis text You little bastard, you can't escape! too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:16:49,001 INFO synthesis text You little bastard, you can't escape!
+2026-09-29 11:16:58,588 INFO yield speech len 3.44, rtf 2.786989128866861
+  0%|          | 0/1 [00:13<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:16:58,592 WARNING synthesis text You're not getting away, punk. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:17:02,995 INFO synthesis text You're not getting away, punk.
+2026-09-29 11:17:09,777 INFO yield speech len 2.92, rtf 2.3223574030889225
+  0%|          | 0/1 [00:11<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:17:09,780 WARNING synthesis text You're not getting away, punk. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:17:14,711 INFO synthesis text You're not getting away, punk.
+2026-09-29 11:17:21,687 INFO yield speech len 2.58, rtf 2.70392331042031
+  0%|          | 0/1 [00:11<?, ?it/s]
+[B] Z01 win=2.22 dur=2.48 bursts=1 speed=1.252 ev=3
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:17:21,690 WARNING synthesis text See the hillside tents? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:17:25,970 INFO synthesis text See the hillside tents?
+2026-09-29 11:17:32,378 INFO yield speech len 2.12, rtf 3.022705608943723
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:17:32,382 WARNING synthesis text See the hillside tents? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:17:38,013 INFO synthesis text See the hillside tents?
+2026-09-29 11:17:44,999 INFO yield speech len 2.1, rtf 3.326889900934128
+  0%|          | 0/1 [00:12<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:17:45,002 WARNING synthesis text See the tents? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:17:49,702 INFO synthesis text See the tents?
+2026-09-29 11:17:54,581 INFO yield speech len 1.28, rtf 3.8117028772830963
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z02 win=1.62 dur=1.18 bursts=1 speed=1.0 ev=3
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:17:54,584 WARNING synthesis text Colonel, too far! too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:17:58,939 INFO synthesis text Colonel, too far!
+2026-09-29 11:18:04,951 INFO yield speech len 2.44, rtf 2.4638742697043496
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:18:04,954 WARNING synthesis text Too far! too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:18:09,358 INFO synthesis text Too far!
+2026-09-29 11:18:13,541 INFO yield speech len 0.6, rtf 6.9716449578603115
+  0%|          | 0/1 [00:08<?, ?it/s]
+[B] Z03 win=1.46 dur=0.50 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:18:13,544 WARNING synthesis text Speak honestly, damn it! too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:18:18,379 INFO synthesis text Speak honestly, damn it!
+2026-09-29 11:18:25,204 INFO yield speech len 2.84, rtf 2.4030237130715815
+  0%|          | 0/1 [00:11<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:18:25,207 WARNING synthesis text Tell the truth! too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:18:29,798 INFO synthesis text Tell the truth!
+2026-09-29 11:18:34,216 INFO yield speech len 0.84, rtf 5.25923768679301
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z04 win=1.58 dur=0.70 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:18:34,220 WARNING synthesis text Battling such a tough enemy. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:18:38,494 INFO synthesis text Battling such a tough enemy.
+2026-09-29 11:18:45,047 INFO yield speech len 2.92, rtf 2.244013139646347
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:18:45,050 WARNING synthesis text Such a tough foe. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:18:49,557 INFO synthesis text Such a tough foe.
+2026-09-29 11:18:55,698 INFO yield speech len 2.52, rtf 2.436909978351896
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:18:55,701 WARNING synthesis text Such a tough foe. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:18:59,894 INFO synthesis text Such a tough foe.
+2026-09-29 11:19:05,448 INFO yield speech len 1.52, rtf 3.653778684766669
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z05 win=1.9 dur=1.42 bursts=1 speed=1.263 ev=3
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:19:05,452 WARNING synthesis text Think you're some rich princess? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:19:09,650 INFO synthesis text Think you're some rich princess?
+2026-09-29 11:19:16,155 INFO yield speech len 2.68, rtf 2.4273238964934847
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:19:16,159 WARNING synthesis text Think you're some rich princess? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:19:20,472 INFO synthesis text Think you're some rich princess?
+2026-09-29 11:19:26,387 INFO yield speech len 1.62, rtf 3.650908999972873
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:19:26,390 WARNING synthesis text Some rich girl, huh? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:19:30,846 INFO synthesis text Some rich girl, huh?
+2026-09-29 11:19:36,703 INFO yield speech len 2.24, rtf 2.6146892990384782
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:19:36,707 WARNING synthesis text Some rich girl, huh? too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:19:40,987 INFO synthesis text Some rich girl, huh?
+2026-09-29 11:19:46,299 INFO yield speech len 1.54, rtf 3.4493502084310954
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z07 win=1.9 dur=1.44 bursts=1 speed=1.116 ev=4
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:19:46,302 WARNING synthesis text Don't push it, kid. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:19:50,700 INFO synthesis text Don't push it, kid.
+2026-09-29 11:19:55,728 INFO yield speech len 1.4, rtf 3.5909587996346612
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:19:55,731 WARNING synthesis text Know your place. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:20:00,369 INFO synthesis text Know your place.
+2026-09-29 11:20:05,397 INFO yield speech len 1.4, rtf 3.591611555644444
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z08 win=1.66 dur=1.30 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:20:05,408 WARNING synthesis text I was saving it. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:20:09,954 INFO synthesis text I was saving it.
+2026-09-29 11:20:14,806 INFO yield speech len 1.24, rtf 3.9132654666900635
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:20:14,809 WARNING synthesis text Was saving this. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:20:19,449 INFO synthesis text Was saving this.
+2026-09-29 11:20:25,320 INFO yield speech len 2.08, rtf 2.8222592977377086
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:20:25,323 WARNING synthesis text Was saving this. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:20:29,829 INFO synthesis text Was saving this.
+2026-09-29 11:20:35,031 INFO yield speech len 1.44, rtf 3.6119353440072803
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z10 win=1.62 dur=1.36 bursts=1 speed=1.21 ev=3
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:20:35,033 WARNING synthesis text These Japs aren't like the last. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:20:39,282 INFO synthesis text These Japs aren't like the last.
+2026-09-29 11:20:45,424 INFO yield speech len 2.44, rtf 2.5171819280405514
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] Z12 win=2.26 dur=2.34 bursts=1 speed=1.0 ev=0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:20:45,428 WARNING synthesis text From the cliff. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:20:49,800 INFO synthesis text From the cliff.
+2026-09-29 11:20:55,560 INFO yield speech len 2.0, rtf 2.8799500465393066
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:20:55,564 WARNING synthesis text Up the cliff side. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:20:59,797 INFO synthesis text Up the cliff side.
+2026-09-29 11:21:04,867 INFO yield speech len 1.52, rtf 3.335204563642803
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z13 win=1.26 dur=1.38 bursts=1 speed=1.0 ev=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:21:04,870 WARNING synthesis text But you're no better. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:21:09,329 INFO synthesis text But you're no better.
+2026-09-29 11:21:15,152 INFO yield speech len 2.08, rtf 2.79891135600897
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:21:15,154 WARNING synthesis text But you're no better. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:21:19,682 INFO synthesis text But you're no better.
+2026-09-29 11:21:27,017 INFO yield speech len 2.94, rtf 2.4948802935022885
+  0%|          | 0/1 [00:11<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:21:27,020 WARNING synthesis text You're no better. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:21:31,490 INFO synthesis text You're no better.
+2026-09-29 11:21:36,751 INFO yield speech len 1.68, rtf 3.1315577881676813
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:21:36,753 WARNING synthesis text You're no better. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:21:41,145 INFO synthesis text You're no better.
+2026-09-29 11:21:46,285 INFO yield speech len 1.52, rtf 3.381642699241638
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z14 win=1.78 dur=1.38 bursts=1 speed=0.865 ev=4
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:21:46,288 WARNING synthesis text Your new regiment just started. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:21:50,515 INFO synthesis text Your new regiment just started.
+2026-09-29 11:21:58,422 INFO yield speech len 3.96, rtf 1.9969972697171299
+  0%|          | 0/1 [00:12<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:21:58,426 WARNING synthesis text It just got going. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:22:02,656 INFO synthesis text It just got going.
+2026-09-29 11:22:07,505 INFO yield speech len 1.2, rtf 4.040858546892802
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z15 win=2.06 dur=1.08 bursts=1 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:22:07,508 WARNING synthesis text Ding Wei wants a freebie. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:22:11,872 INFO synthesis text Ding Wei wants a freebie.
+2026-09-29 11:22:17,411 INFO yield speech len 1.6, rtf 3.462166041135788
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:22:17,415 WARNING synthesis text Ding Wei wants the easy pickings. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:22:21,816 INFO synthesis text Ding Wei wants the easy pickings.
+2026-09-29 11:22:27,940 INFO yield speech len 2.52, rtf 2.4298491932096935
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] Z17 win=2.18 dur=2.38 bursts=1 speed=1.0 ev=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 11:22:27,943 WARNING synthesis text Anger won't help. too short than prompt text You are a helpful assistant.<|endofprompt|>·þÆ·¸ù±¾·þ²»µ½ÄãÒòÎªÄãÓÐ¹¤×÷µ«ÊÇÊµ¼ÊÉÏ¸ù±¾¾ÍÊÇÁ¬GrowlË®Á¬ÄÇÐ©ÈÕ³£³ÔºÈ¶¼²»Ì«ÄÜÂòµÄÄÇÐ©ÈË½Ð×öLSLINEÄÇÎÒÃÇÕâ±ßÓÐÐ©ÈË¾Í°ÑÛÀöË¼ÏßµÈÍ¬ÓÚÕ¹ÉÏÏß²»ÊÇÒ»¸ö¶«Î÷µ«ÊÇÓÐµãÄÇ¸öÒâË¼¾­¼ÃÑ§ÈË¸ù±¾²»ÓÃ°®ÀöË¼ÏßµÄÃÀ¹ú¼ÒÍ¥ÍêÈ«¿ÉÒÔÒ²È·ÊµÄÜ¹»ÒÀ¿¿¸üÉÙµÄ×ÊÔ´À´Î¬³ÖÉú»îÕâ¶«Î÷Í¦ºÃµ«ÕâÊÇ¶þÕ½µÄÊ±ºòÈÕ±¾ÈËÈ¥¸ãÇÖÂÔÈ»ºóºóÀ´·¢, this may lead to bad performance
+2026-09-29 11:22:32,618 INFO synthesis text Anger won't help.
+2026-09-29 11:22:37,424 INFO yield speech len 1.28, rtf 3.7547750398516655
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] Z18 win=1.26 dur=1.14 bursts=1 speed=1.0 ev=0
+[C] E01 atempo=0.973
+[C] E02 atempo=0.555
+[C] E03 atempo=1.516
+[C] E04 atempo=0.269
+[C] E05 atempo=1.146
+[C] E06 atempo=1.380
+[C] E07 atempo=0.484
+[C] E08 atempo=1.429
+[C] E09 atempo=0.518
+[C] E10 atempo=0.829
+[C] E11 atempo=1.543
+[C] Z01 atempo=1.604
+[C] Z02 atempo=1.247
+[C] Z03 atempo=1.534
+[C] Z04 atempo=1.456
+[C] Z05 atempo=1.663
+[C] Z07 atempo=2.526
+[C] Z08 atempo=1.024
+[C] Z10 atempo=2.136
+[C] Z12 atempo=1.823
+[C] Z13 atempo=1.889
+[C] Z14 atempo=1.966
+[C] Z15 atempo=1.718
+[C] Z17 atempo=2.193
+[C] Z18 atempo=2.143
+
+==== æ±‡æ€»(Â±10% è¿›çª—) ====
+[en2zh] n=11
+  A: è¿›çª— 1/11 (9%)  è¶…çª— 5/11
+  B: è¿›çª— 5/11 (45%)  è¶…çª— 0/11
+  B å›žç‚‰å¥æ•°: 10/11  speedâ‰ 1 å¥æ•°: 1 (>1.15: 0)
+  C atempo å‡å€¼ 0.967; >1.15: 4/11 (>1.3: 4, >1.5: 2; <0.87(æ‹–æ…¢): 5)
+[zh2en] n=14
+  A: è¿›çª— 1/14 (7%)  è¶…çª— 13/14
+  B: è¿›çª— 4/14 (29%)  è¶…çª— 1/14
+  B å›žç‚‰å¥æ•°: 12/14  speedâ‰ 1 å¥æ•°: 5 (>1.15: 3)
+  C atempo å‡å€¼ 1.780; >1.15: 13/14 (>1.3: 12, >1.5: 11; <0.87(æ‹–æ…¢): 0)

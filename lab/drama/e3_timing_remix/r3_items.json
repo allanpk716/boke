@@ -1,0 +1,130 @@
+[
+ {
+  "item": "E01_1_0",
+  "sid": "E01",
+  "dir": "en2zh",
+  "tempo": 1.0,
+  "free": "独自一人赶路，什么准备都没有，你可真是个傻瓜。",
+  "win_dur": 4.46
+ },
+ {
+  "item": "E01_1_15",
+  "sid": "E01",
+  "dir": "en2zh",
+  "tempo": 1.15,
+  "free": "独自一人赶路，什么准备都没有，你可真是个傻瓜。",
+  "win_dur": 4.46
+ },
+ {
+  "item": "E01_1_3",
+  "sid": "E01",
+  "dir": "en2zh",
+  "tempo": 1.3,
+  "free": "独自一人赶路，什么准备都没有，你可真是个傻瓜。",
+  "win_dur": 4.46
+ },
+ {
+  "item": "E01_1_5",
+  "sid": "E01",
+  "dir": "en2zh",
+  "tempo": 1.5,
+  "free": "独自一人赶路，什么准备都没有，你可真是个傻瓜。",
+  "win_dur": 4.46
+ },
+ {
+  "item": "E07_1_0",
+  "sid": "E07",
+  "dir": "en2zh",
+  "tempo": 1.0,
+  "free": "马上就好了，嘘……",
+  "win_dur": 3.97
+ },
+ {
+  "item": "E07_1_15",
+  "sid": "E07",
+  "dir": "en2zh",
+  "tempo": 1.15,
+  "free": "马上就好了，嘘……",
+  "win_dur": 3.97
+ },
+ {
+  "item": "E07_1_3",
+  "sid": "E07",
+  "dir": "en2zh",
+  "tempo": 1.3,
+  "free": "马上就好了，嘘……",
+  "win_dur": 3.97
+ },
+ {
+  "item": "E07_1_5",
+  "sid": "E07",
+  "dir": "en2zh",
+  "tempo": 1.5,
+  "free": "马上就好了，嘘……",
+  "win_dur": 3.97
+ },
+ {
+  "item": "Z12_1_0",
+  "sid": "Z12",
+  "dir": "zh2en",
+  "tempo": 1.0,
+  "free": "This bunch of Japs isn't like the ones we've faced before.",
+  "win_dur": 2.26
+ },
+ {
+  "item": "Z12_1_15",
+  "sid": "Z12",
+  "dir": "zh2en",
+  "tempo": 1.15,
+  "free": "This bunch of Japs isn't like the ones we've faced before.",
+  "win_dur": 2.26
+ },
+ {
+  "item": "Z12_1_3",
+  "sid": "Z12",
+  "dir": "zh2en",
+  "tempo": 1.3,
+  "free": "This bunch of Japs isn't like the ones we've faced before.",
+  "win_dur": 2.26
+ },
+ {
+  "item": "Z12_1_5",
+  "sid": "Z12",
+  "dir": "zh2en",
+  "tempo": 1.5,
+  "free": "This bunch of Japs isn't like the ones we've faced before.",
+  "win_dur": 2.26
+ },
+ {
+  "item": "Z01_1_0",
+  "sid": "Z01",
+  "dir": "zh2en",
+  "tempo": 1.0,
+  "free": "You're not getting away, you little bastard!",
+  "win_dur": 2.22
+ },
+ {
+  "item": "Z01_1_15",
+  "sid": "Z01",
+  "dir": "zh2en",
+  "tempo": 1.15,
+  "free": "You're not getting away, you little bastard!",
+  "win_dur": 2.22
+ },
+ {
+  "item": "Z01_1_3",
+  "sid": "Z01",
+  "dir": "zh2en",
+  "tempo": 1.3,
+  "free": "You're not getting away, you little bastard!",
+  "win_dur": 2.22
+ },
+ {
+  "item": "Z01_1_5",
+  "sid": "Z01",
+  "dir": "zh2en",
+  "tempo": 1.5,
+  "free": "You're not getting away, you little bastard!",
+  "win_dur": 2.22
+ }
+]

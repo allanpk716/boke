@@ -23,22 +23,25 @@ def atempo(src, dst, factor):
 
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
-    rows = json.loads((HERE / "e3_synth_result.json").read_text(encoding="utf-8"))
-    pick = []
-    for d in ("en2zh", "zh2en"):
+    # en2zh 取配置1(out/,零复读); zh2en 取配置2(out_x/,zh 参考跨语言,零复读)
+    pool = []
+    for d, src, outdir in (("en2zh", "e3_synth_result.json", "out"),
+                           ("zh2en", "e3_synth_result_x.json", "out_x")):
+        rows = json.loads((HERE / src).read_text(encoding="utf-8"))
         cand = [r for r in rows if r["dir"] == d and 2.5 <= r["win_dur"] <= 5.0]
         cand = cand or [r for r in rows if r["dir"] == d]
         cand.sort(key=lambda r: -r["win_dur"])
-        pick.extend(cand[:2])
+        for r in cand[:2]:
+            pool.append((r, HERE / outdir))
     items = []
-    for r in pick:
+    for r, outdir in pool:
         for t in TEMPOS:
             item = f"{r['id']}_{str(t).replace('.', '_')}"
             dst = R3 / f"{item}.wav"
             if abs(t - 1.0) < 1e-6:
-                shutil.copy(HERE / "out" / f"{r['id']}_A.wav", dst)
+                shutil.copy(outdir / f"{r['id']}_A.wav", dst)
             else:
-                atempo(HERE / "out" / f"{r['id']}_A.wav", dst, t)
+                atempo(outdir / f"{r['id']}_A.wav", dst, t)
             items.append({"item": item, "sid": r["id"], "dir": r["dir"],
                           "tempo": t, "free": r["free"],
                           "win_dur": r["win_dur"]})
