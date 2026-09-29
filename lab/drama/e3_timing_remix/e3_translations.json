@@ -1,0 +1,527 @@
+[
+ {
+  "id": "E01",
+  "dir": "en2zh",
+  "win_dur": 4.46,
+  "text": "You're a fool for traveling alone, so completely unprepared.",
+  "free": "独自一人赶路，什么准备都没有，你可真是个傻瓜。",
+  "cands": [
+   {
+    "t": "孤身赶路，毫无准备，你可真傻。",
+    "est_s": 3.0
+   },
+   {
+    "t": "独自赶路，太傻了。",
+    "est_s": 1.8
+   },
+   {
+    "t": "一个人赶路还毫无准备，你可真是个傻瓜。",
+    "est_s": 4.3
+   }
+  ]
+ },
+ {
+  "id": "E02",
+  "dir": "en2zh",
+  "win_dur": 3.89,
+  "text": "You're lucky your blood's still flowing.",
+  "free": "算你走运，血还没流干呢。",
+  "cands": [
+   {
+    "t": "你的血还在流，算你走运。",
+    "est_s": 2.5
+   },
+   {
+    "t": "算你命大。",
+    "est_s": 1.0
+   },
+   {
+    "t": "你的血还在流，已经算是走大运了。",
+    "est_s": 3.5
+   }
+  ]
+ },
+ {
+  "id": "E03",
+  "dir": "en2zh",
+  "win_dur": 1.82,
+  "text": "What brings you to the land of the gatekeepers?",
+  "free": "是什么风把你吹到守门人的地界来的？",
+  "cands": [
+   {
+    "t": "你为何来此？",
+    "est_s": 1.5
+   },
+   {
+    "t": "何事来此？",
+    "est_s": 1.0
+   },
+   {
+    "t": "守门人之地，何事？",
+    "est_s": 1.8
+   }
+  ]
+ },
+ {
+  "id": "E04",
+  "dir": "en2zh",
+  "win_dur": 3.34,
+  "text": "I'm searching for someone.",
+  "free": "我在找一个人。",
+  "cands": [
+   {
+    "t": "我在寻找一个人。",
+    "est_s": 1.8
+   },
+   {
+    "t": "我在找人。",
+    "est_s": 1.0
+   },
+   {
+    "t": "我要找的，是某一个人。",
+    "est_s": 2.3
+   }
+  ]
+ },
+ {
+  "id": "E05",
+  "dir": "en2zh",
+  "win_dur": 2.6,
+  "text": "Someone very dear? A kindred spirit?",
+  "free": "是很重要的人吧？一位知己？",
+  "cands": [
+   {
+    "t": "是至亲之人？还是知音？",
+    "est_s": 2.3
+   },
+   {
+    "t": "是挚爱？还是知音？",
+    "est_s": 1.8
+   },
+   {
+    "t": "是你挚爱的人？还是知音？",
+    "est_s": 2.5
+   }
+  ]
+ },
+ {
+  "id": "E06",
+  "dir": "en2zh",
+  "win_dur": 2.13,
+  "text": "I've been alone for as long as I can remember.",
+  "free": "从我记事起，我就一直是孤零零一个人。",
+  "cands": [
+   {
+    "t": "我一直孤身一人。",
+    "est_s": 1.8
+   },
+   {
+    "t": "我总是一个人。",
+    "est_s": 1.5
+   },
+   {
+    "t": "记事起我就一个人。",
+    "est_s": 2.0
+   }
+  ]
+ },
+ {
+  "id": "E07",
+  "dir": "en2zh",
+  "win_dur": 3.97,
+  "text": "We're almost done. Shhh...",
+  "free": "马上就好了，嘘……",
+  "cands": [
+   {
+    "t": "就快好了。嘘……",
+    "est_s": 1.5
+   },
+   {
+    "t": "快好了。嘘。",
+    "est_s": 1.2
+   },
+   {
+    "t": "我们很快就会完成了。嘘……",
+    "est_s": 2.8
+   }
+  ]
+ },
+ {
+  "id": "E08",
+  "dir": "en2zh",
+  "win_dur": 0.91,
+  "text": "Hey, sit still.",
+  "free": "嘿，别乱动。",
+  "cands": [
+   {
+    "t": "坐好。",
+    "est_s": 0.7
+   },
+   {
+    "t": "别动。",
+    "est_s": 0.6
+   },
+   {
+    "t": "喂，坐好。",
+    "est_s": 0.9
+   }
+  ]
+ },
+ {
+  "id": "E09",
+  "dir": "en2zh",
+  "win_dur": 2.2,
+  "text": "You've only failed to see...",
+  "free": "你只是没有看见……",
+  "cands": [
+   {
+    "t": "你只是没有看到……",
+    "est_s": 1.9
+   },
+   {
+    "t": "你只是没看见……",
+    "est_s": 1.6
+   },
+   {
+    "t": "你只不过没有看见……",
+    "est_s": 2.1
+   }
+  ]
+ },
+ {
+  "id": "E10",
+  "dir": "en2zh",
+  "win_dur": 3.5,
+  "text": "These are dragon lands, Sintel.",
+  "free": "这里可是龙的领地，辛特尔。",
+  "cands": [
+   {
+    "t": "辛特尔，这里是龙的国度。",
+    "est_s": 2.8
+   },
+   {
+    "t": "这里是龙域，辛特尔。",
+    "est_s": 2.0
+   },
+   {
+    "t": "辛特尔，这里可是龙族的领地。",
+    "est_s": 3.1
+   }
+  ]
+ },
+ {
+  "id": "E11",
+  "dir": "en2zh",
+  "win_dur": 0.92,
+  "text": "You are closer than you know.",
+  "free": "你比你想象的要近得多。",
+  "cands": [
+   {
+    "t": "近在咫尺。",
+    "est_s": 0.85
+   },
+   {
+    "t": "很近了。",
+    "est_s": 0.65
+   },
+   {
+    "t": "已经很近了。",
+    "est_s": 0.9
+   }
+  ]
+ },
+ {
+  "id": "Z01",
+  "dir": "zh2en",
+  "win_dur": 2.22,
+  "text": "你个兔崽子跑不掉了",
+  "free": "You're not getting away, you little bastard!",
+  "cands": [
+   {
+    "t": "You're not getting away, punk.",
+    "est_s": 1.9
+   },
+   {
+    "t": "Nowhere to run!",
+    "est_s": 1.2
+   },
+   {
+    "t": "You little bastard, you can't escape!",
+    "est_s": 2.2
+   }
+  ]
+ },
+ {
+  "id": "Z02",
+  "dir": "zh2en",
+  "win_dur": 1.62,
+  "text": "看到山坡上的帐篷了吗",
+  "free": "See those tents up on the hillside?",
+  "cands": [
+   {
+    "t": "See the tents?",
+    "est_s": 1.2
+   },
+   {
+    "t": "See them?",
+    "est_s": 0.8
+   },
+   {
+    "t": "See the hillside tents?",
+    "est_s": 1.5
+   }
+  ]
+ },
+ {
+  "id": "Z03",
+  "dir": "zh2en",
+  "win_dur": 1.46,
+  "text": "团长距离太远",
+  "free": "Colonel, they're too far out.",
+  "cands": [
+   {
+    "t": "Colonel, too far!",
+    "est_s": 1.2
+   },
+   {
+    "t": "Too far!",
+    "est_s": 0.8
+   },
+   {
+    "t": "Colonel, we're too far!",
+    "est_s": 1.5
+   }
+  ]
+ },
+ {
+  "id": "Z04",
+  "dir": "zh2en",
+  "win_dur": 1.58,
+  "text": "你给我凭良心说话呀",
+  "free": "Oh come on, be straight with me, damn it!",
+  "cands": [
+   {
+    "t": "Tell the truth!",
+    "est_s": 1.2
+   },
+   {
+    "t": "Be honest!",
+    "est_s": 0.8
+   },
+   {
+    "t": "Speak honestly, damn it!",
+    "est_s": 1.5
+   }
+  ]
+ },
+ {
+  "id": "Z05",
+  "dir": "zh2en",
+  "win_dur": 1.9,
+  "text": "跟这样强悍的对手交火",
+  "free": "Going up against an enemy this damn tough...",
+  "cands": [
+   {
+    "t": "Battling such a tough enemy",
+    "est_s": 1.9
+   },
+   {
+    "t": "Such a tough foe",
+    "est_s": 1.5
+   },
+   {
+    "t": "Trading fire with fierce foes",
+    "est_s": 1.9
+   }
+  ]
+ },
+ {
+  "id": "Z07",
+  "dir": "zh2en",
+  "win_dur": 1.9,
+  "text": "你以为你是大户人家的小姐",
+  "free": "Who do you think you are, some rich man's precious little daughter?",
+  "cands": [
+   {
+    "t": "Some rich girl, huh?",
+    "est_s": 1.5
+   },
+   {
+    "t": "Rich little princess?",
+    "est_s": 1.2
+   },
+   {
+    "t": "Think you're some rich princess?",
+    "est_s": 1.9
+   }
+  ]
+ },
+ {
+  "id": "Z08",
+  "dir": "zh2en",
+  "win_dur": 1.66,
+  "text": "你小子可别不识抬举",
+  "free": "Don't push your luck, kid.",
+  "cands": [
+   {
+    "t": "Don't push it, kid",
+    "est_s": 1.5
+   },
+   {
+    "t": "Know your place",
+    "est_s": 1.2
+   },
+   {
+    "t": "Don't be ungrateful, kid",
+    "est_s": 1.6
+   }
+  ]
+ },
+ {
+  "id": "Z10",
+  "dir": "zh2en",
+  "win_dur": 1.62,
+  "text": "本来想自己留着的",
+  "free": "Was gonna keep that one for myself, actually.",
+  "cands": [
+   {
+    "t": "I was saving it",
+    "est_s": 1.5
+   },
+   {
+    "t": "Was saving this",
+    "est_s": 1.2
+   },
+   {
+    "t": "Gonna keep it myself",
+    "est_s": 1.6
+   }
+  ]
+ },
+ {
+  "id": "Z12",
+  "dir": "zh2en",
+  "win_dur": 2.26,
+  "text": "这批鬼子跟以前的鬼子不一样",
+  "free": "This bunch of Japs isn't like the ones we've faced before.",
+  "cands": [
+   {
+    "t": "These Japs aren't the same.",
+    "est_s": 1.9
+   },
+   {
+    "t": "These Japs are different.",
+    "est_s": 1.5
+   },
+   {
+    "t": "These Japs aren't like the last.",
+    "est_s": 2.3
+   }
+  ]
+ },
+ {
+  "id": "Z13",
+  "dir": "zh2en",
+  "win_dur": 1.26,
+  "text": "从断崖那边摸上来",
+  "free": "They snuck up from the cliff side.",
+  "cands": [
+   {
+    "t": "Up the cliff side.",
+    "est_s": 1.3
+   },
+   {
+    "t": "From the cliff.",
+    "est_s": 1.1
+   },
+   {
+    "t": "Sneaking up the cliff.",
+    "est_s": 1.3
+   }
+  ]
+ },
+ {
+  "id": "Z14",
+  "dir": "zh2en",
+  "win_dur": 1.78,
+  "text": "可是你比我强到哪儿去了",
+  "free": "But you're not much better yourself.",
+  "cands": [
+   {
+    "t": "But you're no better.",
+    "est_s": 1.5
+   },
+   {
+    "t": "You're no better.",
+    "est_s": 1.2
+   },
+   {
+    "t": "How are you any better?",
+    "est_s": 1.8
+   }
+  ]
+ },
+ {
+  "id": "Z15",
+  "dir": "zh2en",
+  "win_dur": 2.06,
+  "text": "你那新一团刚刚搞起来",
+  "free": "That New First Regiment of yours has only just been thrown together.",
+  "cands": [
+   {
+    "t": "Your new regiment just started.",
+    "est_s": 1.9
+   },
+   {
+    "t": "It just got going.",
+    "est_s": 1.5
+   },
+   {
+    "t": "Your New First Regiment just started.",
+    "est_s": 2.1
+   }
+  ]
+ },
+ {
+  "id": "Z17",
+  "dir": "zh2en",
+  "win_dur": 2.18,
+  "text": "人家丁伟来了就想捡现成的",
+  "free": "So Ding Wei just waltzes in, thinking he can grab the easy pickings.",
+  "cands": [
+   {
+    "t": "Ding Wei wants the easy pickings.",
+    "est_s": 2.1
+   },
+   {
+    "t": "Ding Wei wants a freebie.",
+    "est_s": 1.8
+   },
+   {
+    "t": "Ding Wei shows up wanting ready-made spoils.",
+    "est_s": 2.3
+   }
+  ]
+ },
+ {
+  "id": "Z18",
+  "dir": "zh2en",
+  "win_dur": 1.26,
+  "text": "你有气也没用",
+  "free": "You can be pissed all you want—it won't do a damn bit of good.",
+  "cands": [
+   {
+    "t": "Anger won't help.",
+    "est_s": 1.1
+   },
+   {
+    "t": "Save it.",
+    "est_s": 0.9
+   },
+   {
+    "t": "Getting pissed won't help.",
+    "est_s": 1.3
+   }
+  ]
+ }
+]

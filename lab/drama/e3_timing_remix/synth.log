@@ -1,0 +1,417 @@
+Sliding Window Attention is enabled but not implemented for `sdpa`; unexpected results may be encountered.
+C:\WorkSpace\agent\boke\.venv\Lib\site-packages\lightning\fabric\__init__.py:41: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2026-09-29 10:35:43,978 INFO input frame rate=25
+C:\WorkSpace\agent\boke\.venv\Lib\site-packages\torch\nn\utils\weight_norm.py:143: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+C:\WorkSpace\agent\boke\.venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+2026-09-29 10:35:55,968 DEBUG Starting new HTTPS connection (1): www.modelscope.cn:443
+2026-09-29 10:35:56,630 DEBUG https://www.modelscope.cn:443 "GET /api/v1/models/pengzhendong/wetext/revisions HTTP/1.1" 403 137
+2026-09-29 10:35:56,631 - modelscope - ERROR - Authentication token does not exist, 
+2026-09-29 10:35:56,631 INFO no frontend is avaliable
+Downloading Model to directory: C:\Users\allan716\.cache\modelscope\hub\pengzhendong/wetext
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:36:09,822 WARNING synthesis text 独自一人赶路，什么准备都没有，你可真是个傻瓜。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:36:14,566 INFO synthesis text 独自一人赶路，什么准备都没有，你可真是个傻瓜。
+D:\boke_media\tools\CosyVoice\cosyvoice\cli\model.py:103: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with self.llm_context, torch.cuda.amp.autocast(self.fp16 is True and hasattr(self.llm, 'vllm') is False):
+D:\boke_media\tools\CosyVoice\cosyvoice\cli\model.py:426: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(self.fp16):
+2026-09-29 10:36:23,426 INFO yield speech len 4.44, rtf 1.9956910932386243
+  0%|          | 0/1 [00:13<?, ?it/s]
+[A] E01 win=4.46s dur=4.34s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:36:23,430 WARNING synthesis text 算你走运，血还没流干呢。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:36:27,692 INFO synthesis text 算你走运，血还没流干呢。
+2026-09-29 10:36:33,807 INFO yield speech len 2.28, rtf 2.6821616448854146
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] E02 win=3.89s dur=2.16s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:36:33,813 WARNING synthesis text 是什么风把你吹到守门人的地界来的？ too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:36:38,403 INFO synthesis text 是什么风把你吹到守门人的地界来的？
+2026-09-29 10:36:45,006 INFO yield speech len 2.88, rtf 2.2927729619873896
+  0%|          | 0/1 [00:11<?, ?it/s]
+[A] E03 win=1.82s dur=2.76s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:36:45,009 WARNING synthesis text 我在找一个人。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:36:49,240 INFO synthesis text 我在找一个人。
+2026-09-29 10:36:53,851 INFO yield speech len 1.04, rtf 4.434084663024315
+  0%|          | 0/1 [00:08<?, ?it/s]
+[A] E04 win=3.34s dur=0.90s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:36:53,854 WARNING synthesis text 是很重要的人吧？一位知己？ too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:36:58,112 INFO synthesis text 是很重要的人吧？一位知己？
+2026-09-29 10:37:04,797 INFO yield speech len 3.08, rtf 2.1706507577524556
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] E05 win=2.6s dur=2.98s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:37:04,801 WARNING synthesis text 从我记事起，我就一直是孤零零一个人。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:37:09,016 INFO synthesis text 从我记事起，我就一直是孤零零一个人。
+2026-09-29 10:37:15,683 INFO yield speech len 3.04, rtf 2.1930013048021415
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] E06 win=2.13s dur=2.94s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:37:15,686 WARNING synthesis text 马上就好了，嘘……。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:37:19,862 INFO synthesis text 马上就好了，嘘……。
+2026-09-29 10:37:25,470 INFO yield speech len 2.04, rtf 2.7486721674601235
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] E07 win=3.97s dur=1.92s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:37:25,472 WARNING synthesis text 嘿，别乱动。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:37:29,652 INFO synthesis text 嘿，别乱动。
+2026-09-29 10:37:34,595 INFO yield speech len 1.44, rtf 3.432993425263299
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] E08 win=0.91s dur=1.30s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:37:34,598 WARNING synthesis text 你只是没有看见……。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:37:38,856 INFO synthesis text 你只是没有看见……。
+2026-09-29 10:37:43,673 INFO yield speech len 1.28, rtf 3.7632307037711143
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] E09 win=2.2s dur=1.14s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:37:43,675 WARNING synthesis text 这里可是龙的领地，辛特尔。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:37:47,988 INFO synthesis text 这里可是龙的领地，辛特尔。
+2026-09-29 10:37:54,661 INFO yield speech len 3.0, rtf 2.2243321736653647
+  0%|          | 0/1 [00:10<?, ?it/s]
+[A] E10 win=3.5s dur=2.90s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:37:54,664 WARNING synthesis text 你比你想象的要近得多。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:37:59,304 INFO synthesis text 你比你想象的要近得多。
+2026-09-29 10:38:03,989 INFO yield speech len 1.52, rtf 3.0824596944608187
+  0%|          | 0/1 [00:09<?, ?it/s]
+[A] E11 win=0.92s dur=1.42s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:03,993 WARNING synthesis text You're not getting away, you little bastard! too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:04,381 INFO synthesis text You're not getting away, you little bastard!
+2026-09-29 10:38:11,903 INFO yield speech len 7.6, rtf 0.9897284131301077
+  0%|          | 0/1 [00:07<?, ?it/s]
+[A] Z01 win=2.22s dur=7.50s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:11,907 WARNING synthesis text See those tents up on the hillside? too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:12,304 INFO synthesis text See those tents up on the hillside?
+2026-09-29 10:38:17,710 INFO yield speech len 5.4, rtf 1.0011080900828042
+  0%|          | 0/1 [00:05<?, ?it/s]
+[A] Z02 win=1.62s dur=5.28s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:17,714 WARNING synthesis text Colonel, they're too far out. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:18,079 INFO synthesis text Colonel, they're too far out.
+2026-09-29 10:38:22,545 INFO yield speech len 4.32, rtf 1.0338550364529644
+  0%|          | 0/1 [00:04<?, ?it/s]
+[A] Z03 win=1.46s dur=4.20s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:22,549 WARNING synthesis text Oh come on, be straight with me, damn it! too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:22,935 INFO synthesis text Oh come on, be straight with me, damn it!
+2026-09-29 10:38:28,822 INFO yield speech len 5.84, rtf 1.0080483270018068
+  0%|          | 0/1 [00:06<?, ?it/s]
+[A] Z04 win=1.58s dur=5.68s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:28,826 WARNING synthesis text Going up against an enemy this damn tough. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:29,213 INFO synthesis text Going up against an enemy this damn tough.
+2026-09-29 10:38:34,817 INFO yield speech len 5.56, rtf 1.0079714462911482
+  0%|          | 0/1 [00:05<?, ?it/s]
+[A] Z05 win=1.9s dur=5.42s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:34,821 WARNING synthesis text Who do you think you are, some rich man's precious little daughter? too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:35,250 INFO synthesis text Who do you think you are, some rich man's precious little daughter?
+2026-09-29 10:38:41,922 INFO yield speech len 6.4, rtf 1.0425673052668571
+  0%|          | 0/1 [00:07<?, ?it/s]
+[A] Z07 win=1.9s dur=6.40s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:41,929 WARNING synthesis text Don't push your luck, kid. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:42,368 INFO synthesis text Don't push your luck, kid.
+2026-09-29 10:38:48,740 INFO yield speech len 6.16, rtf 1.0344036600806497
+  0%|          | 0/1 [00:06<?, ?it/s]
+[A] Z08 win=1.66s dur=6.02s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:48,743 WARNING synthesis text Was gonna keep that one for myself, actually. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:49,130 INFO synthesis text Was gonna keep that one for myself, actually.
+2026-09-29 10:38:56,383 INFO yield speech len 6.68, rtf 1.08577091536836
+  0%|          | 0/1 [00:07<?, ?it/s]
+[A] Z10 win=1.62s dur=6.56s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:38:56,388 WARNING synthesis text This bunch of Japs isn't like the ones we've faced before. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:38:56,823 INFO synthesis text This bunch of Japs isn't like the ones we've faced before.
+2026-09-29 10:39:03,415 INFO yield speech len 5.84, rtf 1.1288188499947116
+  0%|          | 0/1 [00:07<?, ?it/s]
+[A] Z12 win=2.26s dur=5.70s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:39:03,419 WARNING synthesis text They snuck up from the cliff side. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:39:03,808 INFO synthesis text They snuck up from the cliff side.
+2026-09-29 10:39:09,123 INFO yield speech len 5.28, rtf 1.0064586997032166
+  0%|          | 0/1 [00:05<?, ?it/s]
+[A] Z13 win=1.26s dur=5.16s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:39:09,126 WARNING synthesis text But you're not much better yourself. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:39:09,522 INFO synthesis text But you're not much better yourself.
+2026-09-29 10:39:15,660 INFO yield speech len 6.0, rtf 1.023038109143575
+  0%|          | 0/1 [00:06<?, ?it/s]
+[A] Z14 win=1.78s dur=5.90s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:39:15,664 WARNING synthesis text That New First Regiment of yours has only just been thrown together. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:39:16,077 INFO synthesis text That New First Regiment of yours has only just been thrown together.
+2026-09-29 10:39:23,040 INFO yield speech len 6.52, rtf 1.0679277174311914
+  0%|          | 0/1 [00:07<?, ?it/s]
+[A] Z15 win=2.06s dur=6.46s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:39:23,043 WARNING synthesis text So Ding Wei just waltzes in, thinking he can grab the easy pickings. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:39:23,454 INFO synthesis text So Ding Wei just waltzes in, thinking he can grab the easy pickings.
+2026-09-29 10:39:30,560 INFO yield speech len 7.0, rtf 1.0150799751281738
+  0%|          | 0/1 [00:07<?, ?it/s]
+[A] Z17 win=2.18s dur=6.90s
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:39:30,564 WARNING synthesis text You can be pissed all you want—it won't do a damn bit of good. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:39:30,939 INFO synthesis text You can be pissed all you want—it won't do a damn bit of good.
+2026-09-29 10:39:43,210 INFO yield speech len 12.72, rtf 0.9647528143049036
+  0%|          | 0/1 [00:12<?, ?it/s]
+[A] Z18 win=1.26s dur=12.58s
+[calib] en2zh: 0.180 s/char (n=11)
+[calib] zh2en: 0.754 s/word (n=14)
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:39:43,217 WARNING synthesis text 一个人赶路还毫无准备，你可真是个傻瓜。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:39:47,273 INFO synthesis text 一个人赶路还毫无准备，你可真是个傻瓜。
+2026-09-29 10:39:54,258 INFO yield speech len 3.4, rtf 2.0544507223017074
+  0%|          | 0/1 [00:11<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:39:54,262 WARNING synthesis text 孤身赶路，毫无准备，你可真傻。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:39:58,349 INFO synthesis text 孤身赶路，毫无准备，你可真傻。
+2026-09-29 10:40:04,479 INFO yield speech len 2.88, rtf 2.1284744143486023
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] E01 win=4.46 dur=2.78 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:40:04,482 WARNING synthesis text 你的血还在流，已经算是走大运了。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:40:08,898 INFO synthesis text 你的血还在流，已经算是走大运了。
+2026-09-29 10:40:15,452 INFO yield speech len 2.92, rtf 2.244660870669639
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:40:15,455 WARNING synthesis text 你的血还在流，算你走运。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:40:20,039 INFO synthesis text 你的血还在流，算你走运。
+2026-09-29 10:40:25,419 INFO yield speech len 2.2, rtf 2.445577491413463
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] E02 win=3.89 dur=2.06 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:40:25,421 WARNING synthesis text 守门人之地，何事？ too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:40:29,492 INFO synthesis text 守门人之地，何事？
+2026-09-29 10:40:34,760 INFO yield speech len 2.04, rtf 2.582744172975129
+  0%|          | 0/1 [00:09<?, ?it/s]
+[B] E03 win=1.82 dur=1.92 speed=1.0 ev=0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:40:34,763 WARNING synthesis text 我要找的，是某一个人。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:40:38,752 INFO synthesis text 我要找的，是某一个人。
+2026-09-29 10:40:44,387 INFO yield speech len 2.16, rtf 2.6083596326686718
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:40:44,389 WARNING synthesis text 我在寻找一个人。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:40:48,795 INFO synthesis text 我在寻找一个人。
+2026-09-29 10:40:54,782 INFO yield speech len 2.28, rtf 2.6258546009398347
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] E04 win=3.34 dur=2.18 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:40:54,785 WARNING synthesis text 是你挚爱的人？还是知音？ too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:40:59,136 INFO synthesis text 是你挚爱的人？还是知音？
+2026-09-29 10:41:05,646 INFO yield speech len 2.92, rtf 2.2296040025475907
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] E05 win=2.6 dur=2.74 speed=1.0 ev=0
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:41:05,649 WARNING synthesis text 记事起我就一个人。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:41:09,806 INFO synthesis text 记事起我就一个人。
+2026-09-29 10:41:14,351 INFO yield speech len 1.2, rtf 3.7872584660847983
+  0%|          | 0/1 [00:08<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:41:14,353 WARNING synthesis text 我一直孤身一人。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:41:18,515 INFO synthesis text 我一直孤身一人。
+2026-09-29 10:41:24,105 INFO yield speech len 1.92, rtf 2.911502495408058
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:41:24,109 WARNING synthesis text 我一直孤身一人。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:41:28,544 INFO synthesis text 我一直孤身一人。
+2026-09-29 10:41:34,107 INFO yield speech len 2.28, rtf 2.439851300758228
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] E06 win=2.13 dur=2.10 speed=0.836 ev=3
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:41:34,109 WARNING synthesis text 我们很快就会完成了。嘘……。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:41:38,326 INFO synthesis text 我们很快就会完成了。嘘……。
+2026-09-29 10:41:44,628 INFO yield speech len 2.44, rtf 2.5833317490874745
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:41:44,632 WARNING synthesis text 就快好了。嘘……。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:41:49,099 INFO synthesis text 就快好了。嘘……。
+2026-09-29 10:41:54,786 INFO yield speech len 1.8, rtf 3.1593808862898083
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] E07 win=3.97 dur=1.70 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:41:54,789 WARNING synthesis text 喂，坐好。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:41:59,464 INFO synthesis text 喂，坐好。
+2026-09-29 10:42:04,953 INFO yield speech len 1.6, rtf 3.430633544921875
+  0%|          | 0/1 [00:10<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:42:04,957 WARNING synthesis text 坐好。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:42:09,515 INFO synthesis text 坐好。
+2026-09-29 10:42:13,761 INFO yield speech len 0.68, rtf 6.243839684654684
+  0%|          | 0/1 [00:08<?, ?it/s]
+[B] E08 win=0.91 dur=0.58 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:42:13,764 WARNING synthesis text 你只不过没有看见……。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:42:18,084 INFO synthesis text 你只不过没有看见……。
+2026-09-29 10:42:22,993 INFO yield speech len 1.28, rtf 3.8353124633431435
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:42:22,995 WARNING synthesis text 你只是没有看到……。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:42:27,201 INFO synthesis text 你只是没有看到……。
+2026-09-29 10:42:32,991 INFO yield speech len 2.28, rtf 2.5391133208023877
+  0%|          | 0/1 [00:10<?, ?it/s]
+[B] E09 win=2.2 dur=2.14 speed=1.0 ev=1
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:42:32,996 WARNING synthesis text 辛特尔，这里可是龙族的领地。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:42:37,155 INFO synthesis text 辛特尔，这里可是龙族的领地。
+2026-09-29 10:42:42,628 INFO yield speech len 2.2, rtf 2.4877840822393242
+  0%|          | 0/1 [00:09<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:42:42,631 WARNING synthesis text 辛特尔，这里是龙的国度。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:42:46,660 INFO synthesis text 辛特尔，这里是龙的国度。
+2026-09-29 10:42:51,617 INFO yield speech len 1.76, rtf 2.8166029940951955
+  0%|          | 0/1 [00:08<?, ?it/s]
+[B] E10 win=3.5 dur=1.64 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:42:51,619 WARNING synthesis text 近在咫尺。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:42:55,795 INFO synthesis text 近在咫尺。
+2026-09-29 10:43:00,143 INFO yield speech len 1.12, rtf 3.8827555520193915
+  0%|          | 0/1 [00:08<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:00,145 WARNING synthesis text 近在咫尺。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:43:04,297 INFO synthesis text 近在咫尺。
+2026-09-29 10:43:08,552 INFO yield speech len 0.86, rtf 4.947515698366387
+  0%|          | 0/1 [00:08<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:08,554 WARNING synthesis text 很近了。 too short than prompt text You are a helpful assistant.<|endofprompt|>服品根本服不到你因为你有工作但是实际上根本就是连Growl水连那些日常吃喝都不太能买的那些人叫做LSLINE那我们这边有些人就把愛丽思线等同于展上线不是一个东西但是有点那个意思经济学人根本不用爱丽思线的美国家庭完全可以也确实能够依靠更少的资源来维持生活这东西挺好但这是二战的时候日本人去搞侵略然后后来发, this may lead to bad performance
+2026-09-29 10:43:12,821 INFO synthesis text 很近了。
+2026-09-29 10:43:16,903 INFO yield speech len 0.96, rtf 4.25241564710935
+  0%|          | 0/1 [00:08<?, ?it/s]
+[B] E11 win=0.92 dur=0.84 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:16,905 WARNING synthesis text Nowhere to run! too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:17,328 INFO synthesis text Nowhere to run!
+2026-09-29 10:43:21,527 INFO yield speech len 4.0, rtf 1.0498582124710083
+  0%|          | 0/1 [00:04<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:21,531 WARNING synthesis text You're not getting away, punk. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:21,927 INFO synthesis text You're not getting away, punk.
+2026-09-29 10:43:26,341 INFO yield speech len 4.32, rtf 1.0217943125300937
+  0%|          | 0/1 [00:04<?, ?it/s]
+[B] Z01 win=2.22 dur=4.22 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:26,344 WARNING synthesis text See them? too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:26,723 INFO synthesis text See them?
+2026-09-29 10:43:29,432 INFO yield speech len 2.4, rtf 1.12881600856781
+  0%|          | 0/1 [00:03<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:29,435 WARNING synthesis text See the tents? too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:29,813 INFO synthesis text See the tents?
+2026-09-29 10:43:33,394 INFO yield speech len 3.2, rtf 1.1195091158151627
+  0%|          | 0/1 [00:03<?, ?it/s]
+[B] Z02 win=1.62 dur=3.20 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:33,397 WARNING synthesis text Too far! too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:33,780 INFO synthesis text Too far!
+2026-09-29 10:43:36,518 INFO yield speech len 2.4, rtf 1.1409271756807964
+  0%|          | 0/1 [00:03<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:36,522 WARNING synthesis text Colonel, too far! too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:36,917 INFO synthesis text Colonel, too far!
+2026-09-29 10:43:41,990 INFO yield speech len 4.8, rtf 1.0568137963612876
+  0%|          | 0/1 [00:05<?, ?it/s]
+[B] Z03 win=1.46 dur=4.80 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:41,993 WARNING synthesis text Be honest! too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:42,388 INFO synthesis text Be honest!
+2026-09-29 10:43:45,204 INFO yield speech len 2.4, rtf 1.173060437043508
+  0%|          | 0/1 [00:03<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:45,208 WARNING synthesis text Tell the truth! too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:45,658 INFO synthesis text Tell the truth!
+2026-09-29 10:43:49,474 INFO yield speech len 3.2, rtf 1.1925629526376724
+  0%|          | 0/1 [00:04<?, ?it/s]
+[B] Z04 win=1.58 dur=3.20 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:49,479 WARNING synthesis text Such a tough foe. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:49,884 INFO synthesis text Such a tough foe.
+2026-09-29 10:43:54,274 INFO yield speech len 4.0, rtf 1.0975781679153442
+  0%|          | 0/1 [00:04<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:54,278 WARNING synthesis text Battling such a tough enemy. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:43:54,745 INFO synthesis text Battling such a tough enemy.
+2026-09-29 10:43:59,876 INFO yield speech len 4.52, rtf 1.1351442442531081
+  0%|          | 0/1 [00:05<?, ?it/s]
+[B] Z05 win=1.9 dur=4.38 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:43:59,879 WARNING synthesis text Rich little princess? too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:00,325 INFO synthesis text Rich little princess?
+2026-09-29 10:44:04,030 INFO yield speech len 3.2, rtf 1.1580082029104233
+  0%|          | 0/1 [00:04<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:04,034 WARNING synthesis text Some rich girl, huh? too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:04,465 INFO synthesis text Some rich girl, huh?
+2026-09-29 10:44:09,524 INFO yield speech len 4.8, rtf 1.0539905726909637
+  0%|          | 0/1 [00:05<?, ?it/s]
+[B] Z07 win=1.9 dur=4.80 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:09,528 WARNING synthesis text Know your place. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:09,956 INFO synthesis text Know your place.
+2026-09-29 10:44:13,442 INFO yield speech len 3.2, rtf 1.0895764082670212
+  0%|          | 0/1 [00:03<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:13,446 WARNING synthesis text Don't push it, kid. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:13,838 INFO synthesis text Don't push it, kid.
+2026-09-29 10:44:18,397 INFO yield speech len 4.32, rtf 1.0553471468113087
+  0%|          | 0/1 [00:04<?, ?it/s]
+[B] Z08 win=1.66 dur=4.18 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:18,400 WARNING synthesis text Was saving this. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:18,813 INFO synthesis text Was saving this.
+2026-09-29 10:44:22,264 INFO yield speech len 3.2, rtf 1.078205406665802
+  0%|          | 0/1 [00:03<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:22,267 WARNING synthesis text I was saving it. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:22,650 INFO synthesis text I was saving it.
+2026-09-29 10:44:26,828 INFO yield speech len 4.0, rtf 1.0444960594177246
+  0%|          | 0/1 [00:04<?, ?it/s]
+[B] Z10 win=1.62 dur=4.00 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:26,832 WARNING synthesis text These Japs are different. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:27,255 INFO synthesis text These Japs are different.
+2026-09-29 10:44:32,328 INFO yield speech len 4.8, rtf 1.056730995575587
+  0%|          | 0/1 [00:05<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:32,331 WARNING synthesis text These Japs aren't the same. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:32,729 INFO synthesis text These Japs aren't the same.
+2026-09-29 10:44:37,396 INFO yield speech len 4.52, rtf 1.0326652927736266
+  0%|          | 0/1 [00:05<?, ?it/s]
+[B] Z12 win=2.26 dur=4.38 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:37,402 WARNING synthesis text From the cliff. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:37,866 INFO synthesis text From the cliff.
+2026-09-29 10:44:41,268 INFO yield speech len 3.2, rtf 1.0631445050239563
+  0%|          | 0/1 [00:03<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:41,271 WARNING synthesis text Up the cliff side. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:41,704 INFO synthesis text Up the cliff side.
+2026-09-29 10:44:45,656 INFO yield speech len 3.48, rtf 1.1357246459215538
+  0%|          | 0/1 [00:04<?, ?it/s]
+[B] Z13 win=1.26 dur=3.36 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:45,659 WARNING synthesis text You're no better. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:46,104 INFO synthesis text You're no better.
+2026-09-29 10:44:50,317 INFO yield speech len 4.0, rtf 1.0532399415969849
+  0%|          | 0/1 [00:04<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:50,320 WARNING synthesis text But you're no better. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:50,721 INFO synthesis text But you're no better.
+2026-09-29 10:44:55,401 INFO yield speech len 4.08, rtf 1.147000754580778
+  0%|          | 0/1 [00:05<?, ?it/s]
+[B] Z14 win=1.78 dur=3.96 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:55,404 WARNING synthesis text It just got going. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:44:55,792 INFO synthesis text It just got going.
+2026-09-29 10:44:59,902 INFO yield speech len 4.0, rtf 1.027632713317871
+  0%|          | 0/1 [00:04<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:44:59,906 WARNING synthesis text Your new regiment just started. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:45:00,317 INFO synthesis text Your new regiment just started.
+2026-09-29 10:45:05,148 INFO yield speech len 4.8, rtf 1.0063913464546204
+  0%|          | 0/1 [00:05<?, ?it/s]
+[B] Z15 win=2.06 dur=4.80 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:45:05,151 WARNING synthesis text Ding Wei wants a freebie. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:45:05,534 INFO synthesis text Ding Wei wants a freebie.
+2026-09-29 10:45:10,054 INFO yield speech len 4.24, rtf 1.0660332891176332
+  0%|          | 0/1 [00:04<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:45:10,058 WARNING synthesis text Ding Wei wants the easy pickings. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:45:10,447 INFO synthesis text Ding Wei wants the easy pickings.
+2026-09-29 10:45:15,441 INFO yield speech len 4.76, rtf 1.049134010026435
+  0%|          | 0/1 [00:05<?, ?it/s]
+[B] Z17 win=2.18 dur=4.66 speed=1.0 ev=2
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:45:15,445 WARNING synthesis text Save it. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:45:15,824 INFO synthesis text Save it.
+2026-09-29 10:45:18,574 INFO yield speech len 2.4, rtf 1.1451850334803264
+  0%|          | 0/1 [00:03<?, ?it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]2026-09-29 10:45:18,576 WARNING synthesis text Anger won't help. too short than prompt text You are a helpful assistant.<|endofprompt|>You're a fool for traveling alone, so completely unprepared. You're lucky your blood's still flowing., this may lead to bad performance
+2026-09-29 10:45:18,954 INFO synthesis text Anger won't help.
+2026-09-29 10:45:22,950 INFO yield speech len 3.68, rtf 1.0858676355818042
+  0%|          | 0/1 [00:04<?, ?it/s]
+[B] Z18 win=1.26 dur=3.58 speed=1.0 ev=2
+[C] E01 atempo=0.973
+[C] E02 atempo=0.555
+[C] E03 atempo=1.516
+[C] E04 atempo=0.269
+[C] E05 atempo=1.146
+[C] E06 atempo=1.380
+[C] E07 atempo=0.484
+[C] E08 atempo=1.429
+[C] E09 atempo=0.518
+[C] E10 atempo=0.829
+[C] E11 atempo=1.543
+[C] Z01 atempo=3.378
+[C] Z02 atempo=3.259
+[C] Z03 atempo=2.877
+[C] Z04 atempo=3.595
+[C] Z05 atempo=2.853
+[C] Z07 atempo=3.368
+[C] Z08 atempo=3.627
+[C] Z10 atempo=4.049
+[C] Z12 atempo=2.522
+[C] Z13 atempo=4.095
+[C] Z14 atempo=3.315
+[C] Z15 atempo=3.136
+[C] Z17 atempo=3.165
+[C] Z18 atempo=9.984
+Traceback (most recent call last):
+  File "C:\Users\allan716\orca\workspaces\boke\调研声音背景分离合成\lab\drama\e3_timing_remix\e3_synth.py", line 202, in <module>
+    main()
+  File "C:\Users\allan716\orca\workspaces\boke\调研声音背景分离合成\lab\drama\e3_timing_remix\e3_synth.py", line 175, in main
+    json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\encoder.py", line 430, in _iterencode
+    yield from _iterencode_list(o, _current_indent_level)
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bool_ is not JSON serializable

@@ -1,0 +1,33 @@
+[en2zh] batch 1: ['E01', 'E02', 'E03', 'E04']
+  E01 win=4.46s free='独自一人赶路，什么准备都没有，你可真是个傻瓜。' cands=3
+  E02 win=3.89s free='算你走运，血还没流干呢。' cands=3
+  E03 win=1.82s free='是什么风把你吹到守门人的地界来的？' cands=3
+  E04 win=3.34s free='我在找一个人。' cands=3
+[en2zh] batch 2: ['E05', 'E06', 'E07', 'E08']
+  E05 win=2.6s free='是很重要的人吧？一位知己？' cands=3
+  E06 win=2.13s free='从我记事起，我就一直是孤零零一个人。' cands=3
+  E07 win=3.97s free='马上就好了，嘘……' cands=3
+  E08 win=0.91s free='嘿，别乱动。' cands=3
+[en2zh] batch 3: ['E09', 'E10', 'E11']
+  E09 win=2.2s free='你只是没有看见……' cands=3
+  E10 win=3.5s free='这里可是龙的领地，辛特尔。' cands=3
+  E11 win=0.92s free='你比你想象的要近得多。' cands=3
+[zh2en] batch 1: ['Z01', 'Z02', 'Z03', 'Z04']
+  Z01 win=2.22s free="You're not getting away, you little " cands=3
+  Z02 win=1.62s free='See those tents up on the hillside?' cands=3
+  Z03 win=1.46s free="Colonel, they're too far out." cands=3
+  Z04 win=1.58s free='Oh come on, be straight with me, dam' cands=3
+[zh2en] batch 2: ['Z05', 'Z07', 'Z08', 'Z10']
+  Z05 win=1.9s free='Going up against an enemy this damn ' cands=3
+  Z07 win=1.9s free='Who do you think you are, some rich ' cands=3
+  Z08 win=1.66s free="Don't push your luck, kid." cands=3
+  Z10 win=1.62s free='Was gonna keep that one for myself, ' cands=3
+[zh2en] batch 3: ['Z12', 'Z13', 'Z14', 'Z15']
+  Z12 win=2.26s free="This bunch of Japs isn't like the on" cands=3
+  Z13 win=1.26s free='They snuck up from the cliff side.' cands=3
+  Z14 win=1.78s free="But you're not much better yourself." cands=3
+  Z15 win=2.06s free='That New First Regiment of yours has' cands=3
+[zh2en] batch 4: ['Z17', 'Z18']
+  Z17 win=2.18s free='So Ding Wei just waltzes in, thinkin' cands=3
+  Z18 win=1.26s free='You can be pissed all you want—it wo' cands=3
+e3_translations.json: 25

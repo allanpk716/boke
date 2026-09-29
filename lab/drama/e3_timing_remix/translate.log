@@ -1,0 +1,16 @@
+[en2zh] batch 1: ['E01', 'E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08']
+  [retry 1] Remote end closed connection without response
+  [retry 2] <urlopen error [WinError 10060] ç”±äºè¿æ¥æ–¹åœ¨ä¸€æ®µæ—¶é—´åæ²¡æœ‰æ­£ç¡®ç­”å¤æˆ–è¿æ¥çš„ä¸»æœºæ²¡æœ‰ååº”ï¼Œè¿æ¥å°è¯•å¤±è´¥ã€‚>
+  [retry 3] Remote end closed connection without response
+Traceback (most recent call last):
+  File "C:\Users\allan716\orca\workspaces\boke\µ÷ÑĞÉùÒô±³¾°·ÖÀëºÏ³É\lab\drama\e3_timing_remix\e3_translate.py", line 134, in <module>
+    main()
+  File "C:\Users\allan716\orca\workspaces\boke\µ÷ÑĞÉùÒô±³¾°·ÖÀëºÏ³É\lab\drama\e3_timing_remix\e3_translate.py", line 120, in main
+    cands = arm_b(batch, tgt, extra)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\allan716\orca\workspaces\boke\µ÷ÑĞÉùÒô±³¾°·ÖÀëºÏ³É\lab\drama\e3_timing_remix\e3_translate.py", line 84, in arm_b
+    msg = ask([{"role": "system", "content": sysmsg},
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\allan716\orca\workspaces\boke\µ÷ÑĞÉùÒô±³¾°·ÖÀëºÏ³É\lab\drama\e3_timing_remix\e3_translate.py", line 38, in ask
+    raise RuntimeError("LLM Èı´ÎÊ§°Ü")
+RuntimeError: LLM Èı´ÎÊ§°Ü

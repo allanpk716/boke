@@ -1,0 +1,21 @@
+[en2zh] batch 1: ['E01', 'E02', 'E03', 'E04']
+  [retry 1] Remote end closed connection without response
+  [retry 2] <urlopen error [WinError 10060] Áî±‰∫éËøûÊé•ÊñπÂú®‰∏ÄÊÆµÊó∂Èó¥ÂêéÊ≤°ÊúâÊ≠£Á°ÆÁ≠îÂ§çÊàñËøûÊé•ÁöÑ‰∏ªÊú∫Ê≤°ÊúâÂèçÂ∫îÔºåËøûÊé•Â∞ùËØïÂ§±Ë¥•„ÄÇ> ‚Üí Êç¢ glm-5.3-flashx
+Traceback (most recent call last):
+  File "C:\Users\allan716\orca\workspaces\boke\µ˜—–…˘“Ù±≥æ∞∑÷¿Î∫œ≥…\lab\drama\e3_timing_remix\e3_translate.py", line 141, in <module>
+    main()
+  File "C:\Users\allan716\orca\workspaces\boke\µ˜—–…˘“Ù±≥æ∞∑÷¿Î∫œ≥…\lab\drama\e3_timing_remix\e3_translate.py", line 127, in main
+    cands = arm_b(batch, tgt, extra)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\allan716\orca\workspaces\boke\µ˜—–…˘“Ù±≥æ∞∑÷¿Î∫œ≥…\lab\drama\e3_timing_remix\e3_translate.py", line 95, in arm_b
+    arr = extract_json(msg)
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\allan716\orca\workspaces\boke\µ˜—–…˘“Ù±≥æ∞∑÷¿Î∫œ≥…\lab\drama\e3_timing_remix\e3_translate.py", line 57, in extract_json
+    return json.loads(txt)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\allan716\scoop\apps\python\current\Lib\json\decoder.py", line 340, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 128 (char 127)

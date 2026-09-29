@@ -1,0 +1,39 @@
+[drop] cue1 词数不足: 'This blade has a dark past.'
+[drop] cue2 词数不足: 'It has shed much innocent blood.'
+[en] E01 00:01:57.890 win=4.46s You're a fool for traveling alone, so completely unprepared.
+[en] E02 00:02:01.530 win=3.89s You're lucky your blood's still flowing.
+[en] E03 00:02:09.390 win=1.82s What brings you to the land of the gatekeepers?
+[en] E04 00:02:14.900 win=3.34s I'm searching for someone.
+[en] E05 00:02:17.860 win=2.60s Someone very dear? A kindred spirit?
+[drop] cue11 词数不足: 'A dangerous quest for a lone hunter.'
+[en] E06 00:02:32.950 win=2.13s I've been alone for as long as I can remember.
+[en] E07 00:03:27.250 win=3.97s We're almost done. Shhh...
+[en] E08 00:03:30.750 win=0.91s Hey, sit still.
+[drop] cue15 语音窗过短 0.64s
+[drop] cue16 词数不足: 'Get him, Scales! Come on!'
+[drop] cue18 词数不足: 'Yeah! Come on!'
+[drop] cue20 语音窗过短 0.70s
+[en] E09 00:07:32.560 win=2.20s You've only failed to see...
+[en] E10 00:07:37.680 win=3.50s These are dragon lands, Sintel.
+[en] E11 00:07:40.560 win=0.92s You are closer than you know.
+en2zh 窗: 11
+[zh] Z01 _g0016_g0017 win=2.22s lp=-0.39 你个兔崽子跑不掉了
+[zh] Z02 _g0016_g0017 win=1.62s lp=-0.39 看到山坡上的帐篷了吗
+[zh] Z03 _g0016_g0017 win=1.46s lp=-0.39 团长距离太远
+[zh] Z04 _g0019_g0020 win=1.58s lp=-0.431 你给那凭良心说话呀
+[zh] Z05 n_ep01_g0023 win=1.90s lp=-0.239 跟这样强悍的对手交伙
+[zh] Z06 _g0075_g0076 win=1.14s lp=-0.598 就你的手指呢
+[zh] Z07 _g0075_g0076 win=1.90s lp=-0.598 你以为你是大婚人家的小姐
+[zh] Z08 _g0075_g0076 win=1.66s lp=-0.526 你小子可别不识抬举
+[zh] Z09 _g0075_g0076 win=1.18s lp=-0.526 我这可是重点
+[zh] Z10 _g0075_g0076 win=1.62s lp=-0.526 本来想自己留着的
+[zh] Z11 _g0009_g0010 win=1.66s lp=-0.335 重担功威全在领事
+[zh] Z12 _g0009_g0010 win=2.26s lp=-0.335 这批鬼子跟以前的鬼子不一样
+[zh] Z13 _g0009_g0010 win=1.26s lp=-0.335 从断崖那边摸上来
+[zh] Z14 _g0073_g0074 win=1.78s lp=-0.291 可是你比我强到哪儿去了
+[zh] Z15 _g0073_g0074 win=2.06s lp=-0.291 你那新一团刚刚搞起来
+[zh] Z16 _g0073_g0074 win=1.22s lp=-0.291 不没你什么事了吗
+[zh] Z17 _g0073_g0074 win=2.18s lp=-0.291 人家丁伟来了就想现成的
+[zh] Z18 _g0073_g0074 win=1.26s lp=-0.291 你有气也没用
+zh2en 窗: 18
+e3_windows.json: 29

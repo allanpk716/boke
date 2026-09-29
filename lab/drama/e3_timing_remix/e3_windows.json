@@ -1,0 +1,303 @@
+[
+ {
+  "dir": "en2zh",
+  "id": "E01",
+  "clip": "sintel",
+  "t0": 117.89,
+  "t1": 122.35,
+  "win_dur": 4.46,
+  "text": "You're a fool for traveling alone, so completely unprepared.",
+  "asr_text": "a fool for traveling alone so completely unprepared. You're lucky your blood's",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E02",
+  "clip": "sintel",
+  "t0": 121.53,
+  "t1": 125.42,
+  "win_dur": 3.89,
+  "text": "You're lucky your blood's still flowing.",
+  "asr_text": "lucky your blood's still flowing. Thank you.",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E03",
+  "clip": "sintel",
+  "t0": 129.39,
+  "t1": 131.21,
+  "win_dur": 1.82,
+  "text": "What brings you to the land of the gatekeepers?",
+  "asr_text": "brings you to the land of the gatekeepers?",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E04",
+  "clip": "sintel",
+  "t0": 134.9,
+  "t1": 138.24,
+  "win_dur": 3.34,
+  "text": "I'm searching for someone.",
+  "asr_text": "I'm searching for someone. Someone very",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E05",
+  "clip": "sintel",
+  "t0": 137.86,
+  "t1": 140.46,
+  "win_dur": 2.6,
+  "text": "Someone very dear? A kindred spirit?",
+  "asr_text": "very dear? A kindred spirit?",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E06",
+  "clip": "sintel",
+  "t0": 152.95,
+  "t1": 155.08,
+  "win_dur": 2.13,
+  "text": "I've been alone for as long as I can remember.",
+  "asr_text": "Alone for as long as I can remember.",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E07",
+  "clip": "sintel",
+  "t0": 207.25,
+  "t1": 211.22,
+  "win_dur": 3.97,
+  "text": "We're almost done. Shhh...",
+  "asr_text": "Hey, sit",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E08",
+  "clip": "sintel",
+  "t0": 210.75,
+  "t1": 211.66,
+  "win_dur": 0.91,
+  "text": "Hey, sit still.",
+  "asr_text": "sit still.",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E09",
+  "clip": "sintel",
+  "t0": 452.56,
+  "t1": 454.76,
+  "win_dur": 2.2,
+  "text": "You've only failed to see...",
+  "asr_text": "You've only failed to see. These",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E10",
+  "clip": "sintel",
+  "t0": 457.68,
+  "t1": 461.18,
+  "win_dur": 3.5,
+  "text": "These are dragon lands, Sintel.",
+  "asr_text": "are dragon lands, Sintel. You are closer than",
+  "logprob": null
+ },
+ {
+  "dir": "en2zh",
+  "id": "E11",
+  "clip": "sintel",
+  "t0": 460.56,
+  "t1": 461.48,
+  "win_dur": 0.92,
+  "text": "You are closer than you know.",
+  "asr_text": "closer than you know.",
+  "logprob": null
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0016_g0017",
+  "t0": 37.15,
+  "t1": 39.37,
+  "win_dur": 2.22,
+  "text": "你个兔崽子跑不掉了",
+  "logprob": -0.39,
+  "id": "Z01"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0016_g0017",
+  "t0": 51.29,
+  "t1": 52.91,
+  "win_dur": 1.62,
+  "text": "看到山坡上的帐篷了吗",
+  "logprob": -0.39,
+  "id": "Z02"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0016_g0017",
+  "t0": 58.33,
+  "t1": 59.79,
+  "win_dur": 1.46,
+  "text": "团长距离太远",
+  "logprob": -0.39,
+  "id": "Z03"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0019_g0020",
+  "t0": 5.05,
+  "t1": 6.63,
+  "win_dur": 1.58,
+  "text": "你给那凭良心说话呀",
+  "logprob": -0.431,
+  "id": "Z04"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0023",
+  "t0": 0.8,
+  "t1": 2.7,
+  "win_dur": 1.9,
+  "text": "跟这样强悍的对手交伙",
+  "logprob": -0.239,
+  "id": "Z05"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0075_g0076",
+  "t0": 2.15,
+  "t1": 3.29,
+  "win_dur": 1.14,
+  "text": "就你的手指呢",
+  "logprob": -0.598,
+  "id": "Z06"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0075_g0076",
+  "t0": 11.87,
+  "t1": 13.77,
+  "win_dur": 1.9,
+  "text": "你以为你是大婚人家的小姐",
+  "logprob": -0.598,
+  "id": "Z07"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0075_g0076",
+  "t0": 41.61,
+  "t1": 43.27,
+  "win_dur": 1.66,
+  "text": "你小子可别不识抬举",
+  "logprob": -0.526,
+  "id": "Z08"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0075_g0076",
+  "t0": 43.69,
+  "t1": 44.87,
+  "win_dur": 1.18,
+  "text": "我这可是重点",
+  "logprob": -0.526,
+  "id": "Z09"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep01_g0075_g0076",
+  "t0": 45.65,
+  "t1": 47.27,
+  "win_dur": 1.62,
+  "text": "本来想自己留着的",
+  "logprob": -0.526,
+  "id": "Z10"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep02_g0009_g0010",
+  "t0": 21.09,
+  "t1": 22.75,
+  "win_dur": 1.66,
+  "text": "重担功威全在领事",
+  "logprob": -0.335,
+  "id": "Z11"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep02_g0009_g0010",
+  "t0": 28.05,
+  "t1": 30.31,
+  "win_dur": 2.26,
+  "text": "这批鬼子跟以前的鬼子不一样",
+  "logprob": -0.335,
+  "id": "Z12"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep02_g0009_g0010",
+  "t0": 37.17,
+  "t1": 38.43,
+  "win_dur": 1.26,
+  "text": "从断崖那边摸上来",
+  "logprob": -0.335,
+  "id": "Z13"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep02_g0073_g0074",
+  "t0": 32.01,
+  "t1": 33.79,
+  "win_dur": 1.78,
+  "text": "可是你比我强到哪儿去了",
+  "logprob": -0.291,
+  "id": "Z14"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep02_g0073_g0074",
+  "t0": 34.29,
+  "t1": 36.35,
+  "win_dur": 2.06,
+  "text": "你那新一团刚刚搞起来",
+  "logprob": -0.291,
+  "id": "Z15"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep02_g0073_g0074",
+  "t0": 41.13,
+  "t1": 42.35,
+  "win_dur": 1.22,
+  "text": "不没你什么事了吗",
+  "logprob": -0.291,
+  "id": "Z16"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep02_g0073_g0074",
+  "t0": 43.57,
+  "t1": 45.75,
+  "win_dur": 2.18,
+  "text": "人家丁伟来了就想现成的",
+  "logprob": -0.291,
+  "id": "Z17"
+ },
+ {
+  "dir": "zh2en",
+  "clip": "bili_liangjian_ep02_g0073_g0074",
+  "t0": 46.45,
+  "t1": 47.71,
+  "win_dur": 1.26,
+  "text": "你有气也没用",
+  "logprob": -0.291,
+  "id": "Z18"
+ }
+]
